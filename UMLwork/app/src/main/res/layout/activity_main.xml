@@ -1,19 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    tools:layout_editor_absoluteY="25dp"
+    android:background="@mipmap/init_bg">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+    <Button
+        android:id="@+id/star_game"
+        android:layout_width="97dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="108dp"
+        android:layout_marginEnd="92dp"
+        android:text="@string/start_game"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/show_rank"
+        android:layout_width="97dp"
+        android:layout_height="53dp"
+        android:text="@string/show_rank"
+        app:layout_constraintStart_toStartOf="@+id/set_bgm"
+        app:layout_constraintTop_toBottomOf="@+id/set_bgm" />
+
+    <Button
+        android:id="@+id/set_bgm"
+        android:layout_width="97dp"
+        android:layout_height="57dp"
+        android:text="@string/set_bgm"
+        app:layout_constraintStart_toStartOf="@+id/star_game"
+        app:layout_constraintTop_toBottomOf="@+id/star_game" />
+
+    <Button
+        android:id="@+id/exit_game"
+        android:layout_width="97dp"
+        android:layout_height="55dp"
+        android:text="@string/exit_game"
+        app:layout_constraintStart_toStartOf="@+id/show_rank"
+        app:layout_constraintTop_toBottomOf="@+id/show_rank" />
 
 </android.support.constraint.ConstraintLayout>

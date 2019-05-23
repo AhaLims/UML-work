@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">UMLwork</string>
+    <string name="start_game">开始游戏</string>
+    <string name="set_bgm">音效设置</string>
+    <string name="exit_game">退出游戏</string>
+    <string name="show_rank">游戏排行</string>
 </resources>
