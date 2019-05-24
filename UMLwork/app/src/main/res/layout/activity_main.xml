@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
+    tools:context="cdd.menu.MainActivity"
     tools:layout_editor_absoluteY="25dp"
     android:background="@mipmap/init_bg">
 
