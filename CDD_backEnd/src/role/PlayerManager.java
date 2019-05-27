@@ -6,8 +6,8 @@ import java.util.List;
 import card.Card;
 
 /*
- * ÓëÇ°¶Ë½»»¥µÄ²¿·Ö£ºgetSelectedCards »ñÈ¡±»Ñ¡ÖĞµÄÅÆµÄindexµÄÊı×é
- * sendCards ÓÃ»§Ñ¡ÖĞµÄÅÆ ×éÖ¯³ÉListµÄÊı¾İÀàĞÍ
+ * ä¸å‰ç«¯äº¤äº’çš„éƒ¨åˆ†ï¼šgetSelectedCards è·å–è¢«é€‰ä¸­çš„ç‰Œçš„indexçš„æ•°ç»„
+ * sendCards ç”¨æˆ·é€‰ä¸­çš„ç‰Œ ç»„ç»‡æˆListçš„æ•°æ®ç±»å‹
  */
 public class PlayerManager extends RoleManager{
 
@@ -17,7 +17,7 @@ public class PlayerManager extends RoleManager{
 		return null;
 	}
 
-	//ÓÉÇ°¶Ë¸ºÔğ¸ø½»»¥ »¹Ã»Ğ´...
+	//ç”±å‰ç«¯è´Ÿè´£ç»™äº¤äº’ è¿˜æ²¡å†™...
 
 
 	

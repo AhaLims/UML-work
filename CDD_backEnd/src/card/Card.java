@@ -1,9 +1,9 @@
 package card;
 
-public class Card implements Comparable<Card>{//ÊµÏÖÁËComparableµÄ½Ó¿Ú ÕâÑù¾ÍÊÇ¿ÉÒÔ±È½ÏµÄÁË
-	//°ü¿É¼û ËùÒÔ²»ÓÃĞ´import?
-	private int points;//µãÊı
-	private int weight;//´ú±íÅÆµÄÕæÊµÈ¨ÖØ ÆäÖĞ 1->14 2->15
+public class Card implements Comparable<Card>{//å®ç°äº†Comparableçš„æ¥å£ è¿™æ ·å°±æ˜¯å¯ä»¥æ¯”è¾ƒçš„äº†
+	//åŒ…å¯è§ æ‰€ä»¥ä¸ç”¨å†™import?
+	private int points;//ç‚¹æ•°
+	private int weight;//ä»£è¡¨ç‰Œçš„çœŸå®æƒé‡ å…¶ä¸­ 1->14 2->15
 	private CardColor cardColor;
 	
 	public Card(int p,CardColor color) {
@@ -11,19 +11,19 @@ public class Card implements Comparable<Card>{//ÊµÏÖÁËComparableµÄ½Ó¿Ú ÕâÑù¾ÍÊÇ¿
 		this.setWeight(p);
 		this.setCardColor(color);
 	}
-	//ÖØÔØcompareToº¯Êı ¿ÉÒÔÓÃÕâ¸öº¯Êı½øĞĞ±È½Ï
+	//é‡è½½compareToå‡½æ•° å¯ä»¥ç”¨è¿™ä¸ªå‡½æ•°è¿›è¡Œæ¯”è¾ƒ
 	@Override
 	public int compareTo(Card arg0) {
 		if(this.getWeight() > arg0.getWeight()) return 1;
 		else if(this.getWeight() == arg0.getWeight())
 		{
-			return this.getCardColor().compareTo(arg0.getCardColor());//Ã¶¾ÙÀàĞÍ±äÁ¿µÄ±È½Ï·½Ê½
+			return this.getCardColor().compareTo(arg0.getCardColor());//æšä¸¾ç±»å‹å˜é‡çš„æ¯”è¾ƒæ–¹å¼
 		}
-		return -1;//²»Âú×ãÉÏÃæµÄÇé¿ö ËµÃ÷card ±È´«½øÀ´µÄĞ¡
+		return -1;//ä¸æ»¡è¶³ä¸Šé¢çš„æƒ…å†µ è¯´æ˜card æ¯”ä¼ è¿›æ¥çš„å°
 
 	}
 	
-	//Ò»Ğ©ÎŞ¹Ø½ôÒªµÄset getxxxº¯Êı
+	//ä¸€äº›æ— å…³ç´§è¦çš„set getxxxå‡½æ•°
 	public CardColor getCardColor() {
 		return cardColor;
 	}
@@ -39,7 +39,7 @@ public class Card implements Comparable<Card>{//ÊµÏÖÁËComparableµÄ½Ó¿Ú ÕâÑù¾ÍÊÇ¿
 	public int getWeight() {
 		return weight;
 	}
-	//Í¨¹ıpointsÉèÖÃÈ¨ÖØ
+	//é€šè¿‡pointsè®¾ç½®æƒé‡
 	public void setWeight(int points) {
 		if(points == 1 )
 			this.weight = 14;
