@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.uml.umlwork" >
+    package="com.example.uml.umlwork">
 
     <application
         android:allowBackup="true"
@@ -8,13 +8,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-
-        >
-        <activity android:name="cdd.menu.MainActivity"
-                  android:screenOrientation="landscape"
-
-                  >
+        android:theme="@style/AppTheme">
+        <activity
+            android:name="cdd.menu.view.MainActivity"
+            android:screenOrientation="landscape"><!--横屏显示-->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,7 +19,11 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name="cdd.desk.view.deskActivity"
+            android:screenOrientation="landscape">  <!--横屏显示-->
 
+        </activity>
     </application>
 
 </manifest>
