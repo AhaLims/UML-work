@@ -11,18 +11,20 @@
         android:theme="@style/AppTheme">
         <activity
             android:name="cdd.menu.view.MainActivity"
-            android:screenOrientation="landscape"><!--横屏显示-->
+            android:screenOrientation="landscape"> <!-- 横屏显示 -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name="cdd.desk.view.deskActivity"
-            android:screenOrientation="landscape">  <!--横屏显示-->
+            android:screenOrientation="landscape"> <!-- 横屏显示 -->
 
+        </activity>
+        <activity android:name="cdd.bgm.view.bgmActivity"
+                  android:screenOrientation="landscape"> <!-- 横屏显示 -->
         </activity>
     </application>
 
