@@ -4,4 +4,5 @@
     <string name="set_bgm">音效设置</string>
     <string name="exit_game">退出游戏</string>
     <string name="show_rank">游戏排行</string>
+    <string name="music_2">Music 2：经凑版</string>
 </resources>

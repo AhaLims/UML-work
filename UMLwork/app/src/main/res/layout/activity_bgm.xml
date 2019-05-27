@@ -7,14 +7,97 @@
     android:background="@mipmap/game_bg"
     tools:context="cdd.bgm.view.bgmActivity">
 
-    <Button
-        android:id="@+id/returnButton"
-        android:layout_width="69dp"
-        android:layout_height="38dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="返回"
-        android:textSize="16dp"
+    <TextView
+        android:id="@+id/bgmTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:text="请选择你的背景音乐"
+        android:textColor="@android:color/white"
+        android:textSize="36sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/returnButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="352dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="?attr/actionModeCloseDrawable" />
+
+    <Button
+        android:id="@+id/startButton1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="200dp"
+        android:onClick="playMusic1"
+        android:text="播放"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bgmTitle" />
+
+    <Button
+        android:id="@+id/startButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:onClick="playMusic2"
+        android:text="播放"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/startButton1"
+        app:layout_constraintTop_toBottomOf="@+id/startButton1" />
+
+    <Button
+        android:id="@+id/startButton3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="18dp"
+        android:onClick="playMusic3"
+        android:text="播放"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.272"
+        app:layout_constraintStart_toEndOf="@+id/bgmTextView3"
+        app:layout_constraintTop_toBottomOf="@+id/startButton2" />
+
+    <TextView
+        android:id="@+id/bgmTextView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:text="Music 1：悠闲版"
+        android:textColor="@android:color/white"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@+id/bgmTitle"
+        app:layout_constraintTop_toBottomOf="@+id/bgmTitle" />
+
+    <TextView
+        android:id="@+id/bgmTextView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:text="Music 2：紧凑版"
+        android:textColor="@android:color/white"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@+id/bgmTextView1"
+        app:layout_constraintTop_toBottomOf="@+id/bgmTextView1" />
+
+    <TextView
+        android:id="@+id/bgmTextView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:text="Music3：鬼畜版"
+        android:textColor="@android:color/white"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@+id/bgmTextView2"
+        app:layout_constraintTop_toBottomOf="@+id/bgmTextView2" />
+
 </android.support.constraint.ConstraintLayout>
