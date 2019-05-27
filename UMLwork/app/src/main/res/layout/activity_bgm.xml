@@ -53,20 +53,6 @@
         app:layout_constraintEnd_toEndOf="@+id/startButton1"
         app:layout_constraintTop_toBottomOf="@+id/startButton1" />
 
-    <Button
-        android:id="@+id/startButton3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="18dp"
-        android:onClick="playMusic3"
-        android:text="播放"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.272"
-        app:layout_constraintStart_toEndOf="@+id/bgmTextView3"
-        app:layout_constraintTop_toBottomOf="@+id/startButton2" />
-
     <TextView
         android:id="@+id/bgmTextView1"
         android:layout_width="wrap_content"
@@ -99,5 +85,17 @@
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="@+id/bgmTextView2"
         app:layout_constraintTop_toBottomOf="@+id/bgmTextView2" />
+
+    <Button
+        android:id="@+id/startButton3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="27dp"
+        android:layout_marginEnd="1dp"
+        android:onClick="playMusic3"
+        android:text="播放"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/startButton2"
+        app:layout_constraintTop_toBottomOf="@+id/startButton2" />
 
 </android.support.constraint.ConstraintLayout>
