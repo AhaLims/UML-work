@@ -3,16 +3,19 @@ package card;
 public class Card implements Comparable<Card>{//ÊµÏÖÁËComparableµÄ½Ó¿Ú ÕâÑù¾ÍÊÇ¿ÉÒÔ±È½ÏµÄÁË
 	//°ü¿É¼û ËùÒÔ²»ÓÃĞ´import?
 	private int points;//µãÊı
+	private int weight;//´ú±íÅÆµÄÕæÊµÈ¨ÖØ ÆäÖĞ 1->14 2->15
 	private CardColor cardColor;
+	
 	public Card(int p,CardColor color) {
 		this.setPoints(p);
+		this.setWeight(p);
 		this.setCardColor(color);
 	}
 	//ÖØÔØcompareToº¯Êı ¿ÉÒÔÓÃÕâ¸öº¯Êı½øĞĞ±È½Ï
 	@Override
 	public int compareTo(Card arg0) {
-		if(this.getPoints() > arg0.getPoints()) return 1;
-		else if(this.getPoints() == arg0.getPoints())
+		if(this.getWeight() > arg0.getWeight()) return 1;
+		else if(this.getWeight() == arg0.getWeight())
 		{
 			return this.getCardColor().compareTo(arg0.getCardColor());//Ã¶¾ÙÀàĞÍ±äÁ¿µÄ±È½Ï·½Ê½
 		}
@@ -32,6 +35,17 @@ public class Card implements Comparable<Card>{//ÊµÏÖÁËComparableµÄ½Ó¿Ú ÕâÑù¾ÍÊÇ¿
 	}
 	public void setPoints(int points) {
 		this.points = points;
+	}
+	public int getWeight() {
+		return weight;
+	}
+	//Í¨¹ıpointsÉèÖÃÈ¨ÖØ
+	public void setWeight(int points) {
+		if(points == 1 )
+			this.weight = 14;
+		else if(points == 2)
+			this.weight = 15;
+		else this.weight = points;
 	}
 	
 }
