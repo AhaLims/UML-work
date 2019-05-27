@@ -1,8 +1,8 @@
 package card;
 
 public enum CardColor{
-	 Diamond,//·½¿é
-	 Club,//Ã·»¨
-	 Heart,//ºìÌÒ
-	 Spade//ºÚÌÒ
+	 Diamond,//æ–¹å—
+	 Club,//é»‘æ¡ƒ
+	 Heart,//çº¢æ˜Ÿ
+	 Spade//è‘µæ‰‡
 }
