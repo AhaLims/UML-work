@@ -12,6 +12,14 @@ public class Card implements Comparable<Card>{//实现了Comparable的接口 这
 		this.setCardColor(color);
 	}
 	//重载compareTo函数 可以用这个函数进行比较
+	//-------------------从多态的角度出发 cards不应该在这里定义排序规则--------------------------//
+	//-------------------职责不对--------------------------------------------------------//
+	//信息专家原则:
+	//问题：谁比较卡片的大小？
+	//条件：card类拥有card的color,point等信息，
+	//方案就是 把比较卡片的大小的职责分配给 card
+	//缺点：不支持高内聚，也不支持多态
+	//方案：捏造出一个 比较的类来专门执行这一个职责
 	@Override
 	public int compareTo(Card arg0) {
 		if(this.getWeight() > arg0.getWeight()) return 1;
@@ -20,7 +28,6 @@ public class Card implements Comparable<Card>{//实现了Comparable的接口 这
 			return this.getCardColor().compareTo(arg0.getCardColor());//枚举类型变量的比较方式
 		}
 		return -1;//不满足上面的情况 说明card 比传进来的小
-
 	}
 	
 	//一些无关紧要的set getxxx函数

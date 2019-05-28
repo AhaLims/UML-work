@@ -9,11 +9,17 @@ import java.util.List;
  * 功能：
  * 1.jugdeType 判断出牌的类型 
  * 2.canDisplay 判断牌是否能被出
- * 3.order 对手牌进行排序
+ * 3.order 对手牌进行排序  
  */
 
+
+
 //应该都是静态的方法....??
-public class CardsManager{
+//---------------------“比较牌”的方法应该单独抽象成类----------------------------//
+//可以这样做  接口：比较牌的接口 然后有一个函数xxx(card1,card2) return true/false;
+//---------------------用 CardsManager 的接口--------------------------------//
+//---------------------不要写成静态方法 最好用单实例模式---------------------------//
+public class CardsManager {
 	/*
 	 * 参数：牌数组
 	 * 功能：判断牌的类型 因为之前排序过所以比较好判断
@@ -21,6 +27,7 @@ public class CardsManager{
 	 */
 	public static CardsType jugdeType(List<Card> list) {
 		int len = list.size();
+		
 		//只可能是：cardSingle,//单牌。
 		//cardsCouple,//对子。
 		//cards3,//3不带。
