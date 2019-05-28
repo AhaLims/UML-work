@@ -19,8 +19,6 @@ import cdd.menu.view.MainActivity;
 public class bgmActivity extends AppCompatActivity implements bgmContract.View{
     private ImageButton btnReturn;
     private MediaPlayer mediaPlayer;//MediaPlayer对象
-    private boolean isPause=false;//是否暂停
-    private File file;//要播放的文件
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -29,9 +27,6 @@ public class bgmActivity extends AppCompatActivity implements bgmContract.View{
         setContentView(R.layout.activity_bgm);
 
         btnReturn  =  findViewById(R.id.returnButton); //绑定返回菜单按钮
-       /* final Button btnStart1=(Button)findViewById(R.id.startButton1);//播放1
-        final Button btnStart2=(Button)findViewById(R.id.startButton2);//播放2
-        final Button btnStart3=(Button)findViewById(R.id.startButton3);//播放3*/
 
         //开始游戏按钮点击事件：跳转到deskActivity
        btnReturn.setOnClickListener(new View.OnClickListener()
@@ -44,43 +39,59 @@ public class bgmActivity extends AppCompatActivity implements bgmContract.View{
             }
         });
 
-        //对MediaPlayer对象添加事件监听，当播放完成时重新开始音乐播放
-        /*mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener()
-        {
-            @Override
-            public void onCompletion(MediaPlayer mp)
-            {
-                play();
-            }
-        });*/
+
     }
 
     //播放音乐的方法
-
-
-    public void playMusic1(View view)//播放按钮1匹配
+    public void playMusic1(View v)//播放按钮1匹配
     {
-        try
+            if(mediaPlayer==null)//判断当前播放器是否在工作，若没有工作则开始播放，若正在工作则把当前音乐停止之后换成music 1
+            {
+                mediaPlayer = MediaPlayer.create(this, R.raw.m1);
+                mediaPlayer.start();//播放音乐
+                mediaPlayer.setLooping(true);//这是播放器循环播放当前music的方法
+            }
+            else
+            {
+                mediaPlayer.stop();
+                mediaPlayer = MediaPlayer.create(this, R.raw.m1);
+                mediaPlayer.start();//播放音乐
+                mediaPlayer.setLooping(true);
+            }
+
+    }
+
+    public void playMusic2(View v)//匹配播放按钮2
+    {
+        if(mediaPlayer==null)//判断当前播放器是否在工作，若没有工作则开始播放，若正在工作则把当前音乐停止之后换成music 2
         {
-            mediaPlayer.reset();//从新设置要播放的音乐
-            //mediaPlayer.setDataSource(file.getAbsolutePath());
-            //mediaPlayer.prepare();//预加载音频
-            mediaPlayer = MediaPlayer.create(this, R.raw.leisure);
+            mediaPlayer = MediaPlayer.create(this, R.raw.m2);
             mediaPlayer.start();//播放音乐
-        }catch (Exception e) {
-            e.printStackTrace();
-            Log.e("err",e.getMessage());
+            mediaPlayer.setLooping(true);
         }
-        return ;
+        else
+        {
+            mediaPlayer.stop();
+            mediaPlayer = MediaPlayer.create(this, R.raw.m2);
+            mediaPlayer.start();//播放音乐
+            mediaPlayer.setLooping(true);
+        }
     }
 
-    public void playMusic2(View view)
+    public void playMusic3(View v)//匹配播放按钮3
     {
-
-    }
-
-    public void playMusic3(View view)
-    {
-
+        if (mediaPlayer==null)//判断当前播放器是否在工作，若没有工作则开始播放，若正在工作则把当前音乐停止之后换成music 3
+        {
+            mediaPlayer = MediaPlayer.create(this, R.raw.m3);
+            mediaPlayer.start();//播放音乐
+            mediaPlayer.setLooping(true);
+        }
+        else
+        {
+            mediaPlayer.stop();
+            mediaPlayer = MediaPlayer.create(this, R.raw.m3);
+            mediaPlayer.start();//播放音乐
+            mediaPlayer.setLooping(true);
+        }
     }
 }
