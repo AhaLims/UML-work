@@ -25,12 +25,21 @@ public class Card implements Comparable<Card>{//实现了Comparable的接口 这
 	
 	//一些无关紧要的set getxxx函数
 	public CardColor getCardColor() {
+		//测试相关的代码
+		if(cardColor == CardColor.Diamond)System.out.print("Diamond");
+		else if(cardColor == CardColor.Club)System.out.print("Club");
+		else if(cardColor == CardColor.Heart)System.out.print("Heart");
+		else if(cardColor == CardColor.Spade)System.out.print("Spade");
+		
 		return cardColor;
 	}
 	public void setCardColor(CardColor cardColor) {
 		this.cardColor = cardColor;
 	}
 	public int getPoints() {
+		//测试相关的代码
+		System.out.println(points);
+		
 		return points;
 	}
 	public void setPoints(int points) {

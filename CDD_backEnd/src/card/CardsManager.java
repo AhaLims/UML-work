@@ -4,10 +4,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 //问题：对cards type进行排序行不行 就是判断牌能不能出
-/*
+/*  测试完成
  * CardsManager:对牌进行管理判断
  * 功能：
- * 1.jugdeType 判断出牌的类型
+ * 1.jugdeType 判断出牌的类型 
  * 2.canDisplay 判断牌是否能被出
  * 3.order 对手牌进行排序
  */

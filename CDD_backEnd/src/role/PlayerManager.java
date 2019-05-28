@@ -11,10 +11,14 @@ import card.Card;
  */
 public class PlayerManager extends RoleManager{
 
+	//这里为了方便本次测试 先默认只出一张牌 而且出的是最大的牌
 	@Override
 	public int[] selectCards(List<Card> previous) {
 		// TODO Auto-generated method stub
-		return null;
+		int[] selectedCards = new int[1];
+		int len = cards.size();
+		selectedCards[0] =  len - 1;
+		return selectedCards;
 	}
 
 	//由前端负责给交互 还没写...
