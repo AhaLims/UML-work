@@ -6,18 +6,22 @@ import java.util.List;
 import card.Card;
 
 /*
- * ÓëÇ°¶Ë½»»¥µÄ²¿·Ö£ºgetSelectedCards »ñÈ¡±»Ñ¡ÖĞµÄÅÆµÄindexµÄÊı×é
- * sendCards ÓÃ»§Ñ¡ÖĞµÄÅÆ ×éÖ¯³ÉListµÄÊı¾İÀàĞÍ
+ * ä¸å‰ç«¯äº¤äº’çš„éƒ¨åˆ†ï¼šgetSelectedCards è·å–è¢«é€‰ä¸­çš„ç‰Œçš„indexçš„æ•°ç»„
+ * sendCards ç”¨æˆ·é€‰ä¸­çš„ç‰Œ ç»„ç»‡æˆListçš„æ•°æ®ç±»å‹
  */
 public class PlayerManager extends RoleManager{
 
+	//è¿™é‡Œä¸ºäº†æ–¹ä¾¿æœ¬æ¬¡æµ‹è¯• å…ˆé»˜è®¤åªå‡ºä¸€å¼ ç‰Œ è€Œä¸”å‡ºçš„æ˜¯æœ€å¤§çš„ç‰Œ
 	@Override
 	public int[] selectCards(List<Card> previous) {
 		// TODO Auto-generated method stub
-		return null;
+		int[] selectedCards = new int[1];
+		int len = cards.size();
+		selectedCards[0] =  len - 1;
+		return selectedCards;
 	}
 
-	//ÓÉÇ°¶Ë¸ºÔğ¸ø½»»¥ »¹Ã»Ğ´...
+	//ç”±å‰ç«¯è´Ÿè´£ç»™äº¤äº’ è¿˜æ²¡å†™...
 
 
 	

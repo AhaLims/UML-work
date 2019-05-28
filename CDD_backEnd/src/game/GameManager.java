@@ -9,22 +9,21 @@ import card.*;
 
 import role.*;
 /*
- * ´¦ÀíÍæ¼ÒµÄ ÅÆ ¸üĞÂÅÆ ³öÅÆÂß¼­ ÊÇ·ñ³öÍêÁËÅÆ
- * ·¢ÅÆ ³öÅÆ ¸üĞÂÅÆ
- * GameInit  Ã¿Ò»¾ÖÓÎÏ·µÄ¿ªÊ¼ ×öÒ»Ğ©ÓÎÏ·µÄ³õÊ¼»¯¹¤×÷ undo 
- * inGame ÓÎÏ·ÖĞ undo
- * nextTurn() ÏÂÒ»ÂÖ³öÅÆ undo
- * isEnd() ÅĞ¶ÏÓÎÏ·ÊÇ²»ÊÇ½áÊøÁË 
- * changeTurn() ¸Ä±äturn »»ÏÂ¼Ò³öÅÆ
+ * å¤„ç†ç©å®¶çš„ ç‰Œ æ›´æ–°ç‰Œ å‡ºç‰Œé€»è¾‘ æ˜¯å¦å‡ºå®Œäº†ç‰Œ
+ * å‘ç‰Œ å‡ºç‰Œ æ›´æ–°ç‰Œ
+ * GameInit  æ¯ä¸€å±€æ¸¸æˆçš„å¼€å§‹ åšä¸€äº›æ¸¸æˆçš„åˆå§‹åŒ–å·¥ä½œ  ã€æµ‹è¯•å®Œæˆã€‘
+ * inGame æ¸¸æˆä¸­ undo
+ *                                                                      æš‚æ—¶å»æ‰ nextTurn() ä¸‹ä¸€è½®å‡ºç‰Œ undo
+ * isEnd() åˆ¤æ–­æ¸¸æˆæ˜¯ä¸æ˜¯ç»“æŸäº† 
+ * changeTurn() æ”¹å˜turn æ¢ä¸‹å®¶å‡ºç‰Œ
  */
-//Ó¦¸ÃÓµÓĞËÄÖÖ½ÇÉ«?
+//åº”è¯¥æ‹¥æœ‰å››ç§è§’è‰²?
 public  class GameManager{
-	public static GameManager gameManager;//ÊÇ»á×Ô¶¯³õÊ¼»¯Îª¿ÕÖ¸ÕëµÄ°É....
+	public static GameManager gameManager;//æ˜¯ä¼šè‡ªåŠ¨åˆå§‹åŒ–ä¸ºç©ºæŒ‡é’ˆçš„å§....
 	final static int CardAmount = 52;
-	public 
-	RoleManager[] role;
+	public RoleManager[] role;
 	int turn;
-	public GameManager getGameManager()//µ¥ÀıÄ£Ê½
+	public static GameManager getGameManager()//å•ä¾‹æ¨¡å¼
 	{
 		if(gameManager == null)
 		{
@@ -40,16 +39,16 @@ public  class GameManager{
 		RobotManager robot2 = new RobotManager();*/
 		role = new RoleManager[4];
 		role[0] = new PlayerManager();
-		for(int i = 1;i<4;i++)
+		for(int i = 1;i < 4;i++)
 		{
 			role[i] = new RobotManager();
 		}
-		turn = 0;//Ä¬ÈÏ´Óplayer ¿ªÊ¼³öÅÆ
+		turn = 0;//é»˜è®¤ä»player å¼€å§‹å‡ºç‰Œ
 	}
 
 	public void GameInit()
 	{
-		//³õÊ¼»¯ÅÆ
+		//åˆå§‹åŒ–ç‰Œ
 		Card[] AllCards =  new Card[CardAmount];
 		for(int i = 0; i < 13; i++)
 		{
@@ -59,42 +58,60 @@ public  class GameManager{
 				AllCards[i * 4 + 3] = new Card(i + 1,CardColor.Spade);
 		}
 		
-		//´òÂÒË³Ğò Í¨¹ı½»»»ÅÆµÄ·½Ê½´òÂÒ
+		//æ‰“ä¹±é¡ºåº é€šè¿‡äº¤æ¢ç‰Œçš„æ–¹å¼æ‰“ä¹±
 		for(int i = 0; i < 200; i++){
 			Random random = new Random();
-			int a = random.nextInt(CardAmount) + 1;
-			int b = random.nextInt(CardAmount) + 1;
+			int a = random.nextInt(CardAmount);//nextInt è·å¾—[0,CardAmount)ä¹‹é—´çš„éšæœºintå€¼
+			int b = random.nextInt(CardAmount);
 			Card k = AllCards[a];
 			AllCards[a] = AllCards[b];
 			AllCards[b] = k;
 		}
-		//·¢ÅÆ
+		//å‘ç‰Œ
 		for(int i = 0;i < CardAmount;i++)
 		{
-			role[i % 3].getCards().add(AllCards[i]);
+			role[i % 4].getCards().add(AllCards[i]);
 		}
-		for(int i = 0; i < 3;i++)
+		for(int i = 0; i < 4;i++)
 		{
 			role[i].order();
 		}
 		turn = 0;
 	}
-	public void inGame()//ÓÎÏ·ÖĞµÄÖ÷Ñ­»·
+	public void inGame()//æ¸¸æˆä¸­çš„ä¸»å¾ªç¯
 	{
 		GameInit();
+		//ç”¨æ¥æµ‹è¯•çš„éƒ¨åˆ†
+		/*for(int i = 0;i < 4; i++)
+		{
+			role[i].showAllCard();
+		}*/
+		int previousTurn = turn;//ç”¨æ¥åˆ¤æ–­æ˜¯ä¸æ˜¯å…ˆæ‰‹çš„
+		int [] cardsIndex = null;
 		while(!isEnd())
 		{
-			//²»Í£µÄ½øĞĞÏÂÒ»ÂÖµÄÅĞ¶Ï ÕâÀïÄ¿Ç°»¹Ã»ÏëºÃÔõÃ´×ö
-			//role[turn].xxxxx();//role[turn]½øĞĞÄ³Ğ©¶¯×÷...???µ«ÄãÕâÀï»¹Ã»ÅĞ¶ÏÉÏÏÂ¼ÒÑ¼....
+			//ä¸åœçš„è¿›è¡Œä¸‹ä¸€è½®çš„åˆ¤æ–­ è¿™é‡Œç›®å‰è¿˜æ²¡æƒ³å¥½æ€ä¹ˆåš
+			//è¿™é‡Œåˆ¤æ–­æ˜¯ä¸æ˜¯å…ˆæ‰‹ï¼ˆæ˜¯ä¸æ˜¯æ²¡æœ‰ä¸Šå®¶ï¼‰
+			if(previousTurn == turn) {
+			cardsIndex = role[turn].selectCards(null);//role[turn]è¿›è¡ŒæŸäº›åŠ¨ä½œ...???ä½†ä½ è¿™é‡Œè¿˜æ²¡åˆ¤æ–­ä¸Šä¸‹å®¶é¸­....
+
+			}//ç°åœ¨checkCards å’Œ selectCardsä¸å…¼å®¹.....selectCardsè¿”å›çš„æ˜¯int[] checkéœ€è¦çš„æ˜¯List<card>
+			/*---------------éœ€è¦å†å¥½å¥½çœ‹çœ‹è¯­æ³• å¾ˆæ€•æœ‰é—®é¢˜---------------------*/
+			//å¯ä»¥æˆåŠŸå‡ºç‰Œ  ä½†è¿™é‡Œéœ€è¦è¿›è¡Œè½¬æ¢
+			if(role[turn].checkCards(null, role[turn].getSelectedCards(cardsIndex)))
+			{
+				previousTurn = turn;
+				role[turn].showCards(cardsIndex);
+			}
 			changeTurn();
 		}
 	}
-	//ÏÂÒ»ÂÖ³öÅÆ
-	private void nextTurn()
-	{
-		//²»ÖªµÀÒª¸ÉÊ²Ã´µÄ....
-	}
-	//ÅĞ¶ÏÓÎÏ·ÊÇ·ñ½áÊø
+	//ä¸‹ä¸€è½®å‡ºç‰Œ
+	//private void nextTurn()
+	//{
+		//ä¸çŸ¥é“è¦å¹²ä»€ä¹ˆçš„....
+	//}
+	//åˆ¤æ–­æ¸¸æˆæ˜¯å¦ç»“æŸ
 	private boolean isEnd()
 	{
 		for(int i = 0;i<4;i++)
@@ -103,7 +120,7 @@ public  class GameManager{
 		}
 		return false;
 	}
-	//¸Ä±äturn »»ÏÂ¼Ò³öÅÆ
+	//æ”¹å˜turn æ¢ä¸‹å®¶å‡ºç‰Œ
 	private int changeTurn(){
 		turn = (turn+1) % 4;
 		return turn;

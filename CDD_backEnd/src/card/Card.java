@@ -1,9 +1,9 @@
 package card;
 
-public class Card implements Comparable<Card>{//ÊµÏÖÁËComparableµÄ½Ó¿Ú ÕâÑù¾ÍÊÇ¿ÉÒÔ±È½ÏµÄÁË
-	//°ü¿É¼û ËùÒÔ²»ÓÃĞ´import?
-	private int points;//µãÊı
-	private int weight;//´ú±íÅÆµÄÕæÊµÈ¨ÖØ ÆäÖĞ 1->14 2->15
+public class Card implements Comparable<Card>{//å®ç°äº†Comparableçš„æ¥å£ è¿™æ ·å°±æ˜¯å¯ä»¥æ¯”è¾ƒçš„äº†
+	//åŒ…å¯è§ æ‰€ä»¥ä¸ç”¨å†™import?
+	private int points;//ç‚¹æ•°
+	private int weight;//ä»£è¡¨ç‰Œçš„çœŸå®æƒé‡ å…¶ä¸­ 1->14 2->15
 	private CardColor cardColor;
 	
 	public Card(int p,CardColor color) {
@@ -11,26 +11,42 @@ public class Card implements Comparable<Card>{//ÊµÏÖÁËComparableµÄ½Ó¿Ú ÕâÑù¾ÍÊÇ¿
 		this.setWeight(p);
 		this.setCardColor(color);
 	}
-	//ÖØÔØcompareToº¯Êı ¿ÉÒÔÓÃÕâ¸öº¯Êı½øĞĞ±È½Ï
+	//é‡è½½compareToå‡½æ•° å¯ä»¥ç”¨è¿™ä¸ªå‡½æ•°è¿›è¡Œæ¯”è¾ƒ
+	//-------------------ä»å¤šæ€çš„è§’åº¦å‡ºå‘ cardsä¸åº”è¯¥åœ¨è¿™é‡Œå®šä¹‰æ’åºè§„åˆ™--------------------------//
+	//-------------------èŒè´£ä¸å¯¹--------------------------------------------------------//
+	//ä¿¡æ¯ä¸“å®¶åŸåˆ™:
+	//é—®é¢˜ï¼šè°æ¯”è¾ƒå¡ç‰‡çš„å¤§å°ï¼Ÿ
+	//æ¡ä»¶ï¼šcardç±»æ‹¥æœ‰cardçš„color,pointç­‰ä¿¡æ¯ï¼Œ
+	//æ–¹æ¡ˆå°±æ˜¯ æŠŠæ¯”è¾ƒå¡ç‰‡çš„å¤§å°çš„èŒè´£åˆ†é…ç»™ card
+	//ç¼ºç‚¹ï¼šä¸æ”¯æŒé«˜å†…èšï¼Œä¹Ÿä¸æ”¯æŒå¤šæ€
+	//æ–¹æ¡ˆï¼šæé€ å‡ºä¸€ä¸ª æ¯”è¾ƒçš„ç±»æ¥ä¸“é—¨æ‰§è¡Œè¿™ä¸€ä¸ªèŒè´£
 	@Override
 	public int compareTo(Card arg0) {
 		if(this.getWeight() > arg0.getWeight()) return 1;
 		else if(this.getWeight() == arg0.getWeight())
 		{
-			return this.getCardColor().compareTo(arg0.getCardColor());//Ã¶¾ÙÀàĞÍ±äÁ¿µÄ±È½Ï·½Ê½
+			return this.getCardColor().compareTo(arg0.getCardColor());//æšä¸¾ç±»å‹å˜é‡çš„æ¯”è¾ƒæ–¹å¼
 		}
-		return -1;//²»Âú×ãÉÏÃæµÄÇé¿ö ËµÃ÷card ±È´«½øÀ´µÄĞ¡
-
+		return -1;//ä¸æ»¡è¶³ä¸Šé¢çš„æƒ…å†µ è¯´æ˜card æ¯”ä¼ è¿›æ¥çš„å°
 	}
 	
-	//Ò»Ğ©ÎŞ¹Ø½ôÒªµÄset getxxxº¯Êı
+	//ä¸€äº›æ— å…³ç´§è¦çš„set getxxxå‡½æ•°
 	public CardColor getCardColor() {
+		//æµ‹è¯•ç›¸å…³çš„ä»£ç 
+		if(cardColor == CardColor.Diamond)System.out.print("Diamond");
+		else if(cardColor == CardColor.Club)System.out.print("Club");
+		else if(cardColor == CardColor.Heart)System.out.print("Heart");
+		else if(cardColor == CardColor.Spade)System.out.print("Spade");
+		
 		return cardColor;
 	}
 	public void setCardColor(CardColor cardColor) {
 		this.cardColor = cardColor;
 	}
 	public int getPoints() {
+		//æµ‹è¯•ç›¸å…³çš„ä»£ç 
+		System.out.println(points);
+		
 		return points;
 	}
 	public void setPoints(int points) {
@@ -39,7 +55,7 @@ public class Card implements Comparable<Card>{//ÊµÏÖÁËComparableµÄ½Ó¿Ú ÕâÑù¾ÍÊÇ¿
 	public int getWeight() {
 		return weight;
 	}
-	//Í¨¹ıpointsÉèÖÃÈ¨ÖØ
+	//é€šè¿‡pointsè®¾ç½®æƒé‡
 	public void setWeight(int points) {
 		if(points == 1 )
 			this.weight = 14;

@@ -6,42 +6,86 @@ import java.util.List;
 
 import card.*;
 /*
- * RoleManager:playerManagerºÍRobotManagerµÄ³éÏó¸¸Àà
- * ÊµÏÖµÄ¹¦ÄÜÓĞ£º
- * selectCards Ğéº¯Êı ĞèÒª¸ù¾İ½ÇÉ«µÄ²»Í¬·Ö±ğÊµÏÖ
- * checkCards ¼ì²éµ±Ç°sendµÄÅÆÄÜ²»ÄÜ±»³ö
- * showedCards  ·µ»ØÕ¹Ê¾³öÀ´µÄCards  
- * refreshCards ¸üĞÂÅÆ£¨°Ñ³öµÄÅÆÒÆ³ı£©  
- * isEnd£ºÅĞ¶Ï¸ÃroleµÄÅÆÊÇ·ñ³öÍêÁË
- * getCardsAmount ·µ»ØÄ¿Ç°ÅÆµÄÊıÁ¿
- * ±ØĞëÊµÏÖµÄº¯Êı:sendCards
+ * RoleManager:playerManagerå’ŒRobotManagerçš„æŠ½è±¡çˆ¶ç±»
+ * å®ç°çš„åŠŸèƒ½æœ‰ï¼š
+ * selectCards è™šå‡½æ•° éœ€è¦æ ¹æ®è§’è‰²çš„ä¸åŒåˆ†åˆ«å®ç°
+ * checkCards æ£€æŸ¥å½“å‰sendçš„ç‰Œèƒ½ä¸èƒ½è¢«å‡º
+ * showedCards  è¿”å›å±•ç¤ºå‡ºæ¥çš„Cards  
+ * refreshCards æ›´æ–°ç‰Œï¼ˆæŠŠå‡ºçš„ç‰Œç§»é™¤ï¼‰  
+ * isEndï¼šåˆ¤æ–­è¯¥roleçš„ç‰Œæ˜¯å¦å‡ºå®Œäº†
+ * getCardsAmount è¿”å›ç›®å‰ç‰Œçš„æ•°é‡
+ * å¿…é¡»å®ç°çš„å‡½æ•°:sendCards
  * 
  */
-//¹²Í¬µã £ºĞèÒª³öÅÆ ¸üĞÂÅÆ ÅĞ¶ÏÊÇÏÈÊÖ»¹ÊÇºóÊÖ
+//å…±åŒç‚¹ ï¼šéœ€è¦å‡ºç‰Œ æ›´æ–°ç‰Œ åˆ¤æ–­æ˜¯å…ˆæ‰‹è¿˜æ˜¯åæ‰‹
 
-//Ò»¸öĞ¡ÎÊÌâ  ListÊÇ´«ÒıÓÃµÄÂğ ......ÌØ±ğÔÚCardsManagerµÄorderÄÇÀïĞèÒª×¢ÒâÕâµã.....
+//ä¸€ä¸ªå°é—®é¢˜  Listæ˜¯ä¼ å¼•ç”¨çš„å— ......ç‰¹åˆ«åœ¨CardsManagerçš„orderé‚£é‡Œéœ€è¦æ³¨æ„è¿™ç‚¹.....
 public abstract class RoleManager{
 	protected List<Card> cards;
-	//»ñÈ¡ÅÆ£¬²¢¶ÔÅÆ½øĞĞÅÅĞò
+	
+	//è·å–ç‰Œï¼Œå¹¶å¯¹ç‰Œè¿›è¡Œæ’åº
 	public RoleManager(){
-		cards = new ArrayList<Card>();//list ºÍarraylist...???
+		cards = new ArrayList<Card>();//list å’Œarraylist...???
 	}
-	//¿ÉÄÜÂß¼­ÉÏÓĞÎÊÌâ...List/ArrayList/Êı×é...???
-	//·µ»Ø±»Ñ¡ÖĞµÄindexµÄÊı×é
-	public abstract int[] selectCards(List<Card> previous);//ÕâÑùĞ´²»Ò»¶¨ºÃ....
-	//undo
-	public boolean checkCards(List<Card> sendedCards,List<Card> previous){
-		
-		return false;//¼ì²éÅÆÊÇ²»ÊÇÄÜ³ö 
+
+	
+	/*
+	 *               å¯èƒ½é€»è¾‘ä¸Šæœ‰é—®é¢˜...List/ArrayList/æ•°ç»„...???
+	 * å‚æ•°:List<Card> previous ä¸Šå®¶çš„ç‰Œ
+	 * åŠŸèƒ½ï¼šè·å¾—è¢«é€‰ä¸­çš„ç‰Œçš„indexçš„æ•°ç»„ï¼ˆæœªæ£€æŸ¥ï¼‰
+	 * è¿”å›å‚æ•° List<int> ç±»å‹çš„è¢«é€‰ä¸­çš„ç‰Œçš„æ•°ç»„
+	 * 	     
+	 */
+	public abstract int[] selectCards(List<Card> previous);
+	
+	public List<Card> getSelectedCards(int[] selectedCardsIndex){
+		List<Card> SelectedCardsList = new ArrayList<Card>();
+		int index = 0;
+		for(int i = 0;i < selectedCardsIndex.length;i++)
+		{
+			index = selectedCardsIndex[i];
+			SelectedCardsList.add(cards.get(index));//å°†é€‰ä¸­çš„ç‰Œä¸€ä¸€åŠ å…¥SelectedCardsList
+		}
+		return SelectedCardsList;
 		
 	}
-	//¶ÔÅÆ½øĞĞÅÅĞò
-	public void order() {//¿ÉÄÜ»áÓĞÉî¸´ÖÆ Ç³¸´ÖÆµÄÎÊÌâ
+	/*
+	 * åŠŸèƒ½ï¼šåˆ¤æ–­é€‰ä¸­çš„ç‰Œèƒ½ä¸èƒ½è¢«å‡º
+	 * å‚æ•° previousCards:ä¸Šå®¶çš„ç‰Œï¼ˆå°±ç®—æ²¡æœ‰ä¸Šå®¶ä¹Ÿå¿…é¡»ä¼ è¿™æ ·çš„ä¸€ä¸ªç©ºçš„å‚æ•°ï¼‰
+	 * å‚æ•° presentCards è‡ªå·±é€‰ä¸­çš„ç‰Œ
+	 * è¿”å›å€¼ true->å¯ä»¥å‡º false->ä¸å¯å‡º
+	 */
+	public boolean checkCards(List<Card> previousCards,
+			List<Card> presentCards){
+		//é¦–å…ˆè¦åˆ¤æ–­ç‰Œçš„ç±»å‹æ˜¯ä¸€æ ·çš„ å†æ¯”è¾ƒå¤§å°
+		if(presentCards == null || presentCards.size() == 0)return false;
+		CardsType type = CardsManager.jugdeType(presentCards);
+		if(type == CardsType.card0) return false;
+		if(previousCards == null || previousCards.size() == 0)//è¯´æ˜æ˜¯å…ˆæ‰‹
+		{
+			return true;//åªè¦æ˜¯æŸç§ç±»å‹çš„ç‰Œ å°±å¯ä»¥å‡º
+		}
+		if(type == CardsManager.jugdeType(previousCards))
+		{
+			
+			if(CardsManager.canDisplay(type, previousCards, presentCards))
+				{
+					System.out.println("æ»¡è¶³ç‰Œçš„è§„åˆ™ ç°åœ¨å¯ä»¥å‡ºç‰Œ");
+					return true;
+				}
+		}
+		System.out.println("ä¸æ»¡è¶³ç‰Œçš„è§„åˆ™ ç°åœ¨ä¸å¯ä»¥å‡ºç‰Œ");
+		return false;
+		
+	}
+	
+	/*å¯¹ç‰Œè¿›è¡Œæ’åº*/
+	public void order() {//å¯èƒ½ä¼šæœ‰æ·±å¤åˆ¶ æµ…å¤åˆ¶çš„é—®é¢˜
 		CardsManager.order(cards);
 	}
 	/*
-	 * ÖØĞÂ´´½¨Ò»¸öÊı×é ·µ»Ø±»ÒÆ×ßµÄÅÆ¸øÇ°¶Ë
-	 * ±ØĞëÔÚshowCardsÖ®Ç°Ö´ĞĞ ·ñÔò»á³öÎÊÌâ
+	 * é‡æ–°åˆ›å»ºä¸€ä¸ªæ•°ç»„ è¿”å›è¢«ç§»èµ°çš„ç‰Œç»™å‰ç«¯
+	 * å¿…é¡»åœ¨showCardsä¹‹å‰æ‰§è¡Œ å¦åˆ™ä¼šå‡ºé—®é¢˜
 	 */
 	public List<Card> showCards(int[] removeCardsIndex){
 		List<Card> showedcards = new ArrayList<Card>();
@@ -49,25 +93,27 @@ public abstract class RoleManager{
 		for(int i = 0; i < len; i++)
 		{
 			int index = removeCardsIndex[i];
-			showedcards.add(cards.get(index));//Í¨¹ıindexÕÒµ½cardsÖĞ±»Ñ¡ÖĞµÄÅÆ
+			showedcards.add(cards.get(index));//é€šè¿‡indexæ‰¾åˆ°cardsä¸­è¢«é€‰ä¸­çš„ç‰Œ
 		}
 		return showedcards;
 	}
-	//¸üĞÂÅÆ
+	
+
 	/*
-	 * ²ÎÊı£ºËùÓĞÑ¡ÖĞµÄÅÆµÄindex
-	 * ¹¦ÄÜ£ºÔÚÓÃ»§³öÅÆÖ®ºó,¸üĞÂÅÆ
-	 * ·µ»Ø²ÎÊı:¸üĞÂÖ®ºóµÄÅÆ
+	 * å‚æ•°ï¼šæ‰€æœ‰é€‰ä¸­çš„ç‰Œçš„index
+	 * åŠŸèƒ½ï¼šåœ¨ç”¨æˆ·å‡ºç‰Œä¹‹å,æ›´æ–°ç‰Œ
+	 * è¿”å›å‚æ•°:æ›´æ–°ä¹‹åçš„ç‰Œ
+	 *  
 	 */
 	public List<Card> refreshCards(int[] removeCardsIndex) {
 		int len = removeCardsIndex.length;
 		for(int i = 0; i < len; i++)
 		{
-			cards.remove(i);//´ÓÔ­Êı×éÖĞÒÆ×ßµÚiÕÅÅÆ
+			cards.remove(i);//ä»åŸæ•°ç»„ä¸­ç§»èµ°ç¬¬iå¼ ç‰Œ
 		}
 		return cards;
 	}
-	//ÅĞ¶ÏÊÇ·ñ³öÍêÁËÅÆ
+	//åˆ¤æ–­æ˜¯å¦å‡ºå®Œäº†ç‰Œ
 	public boolean isEnd() {
 		if(cards.size() == 0)
 			return true;
@@ -77,15 +123,28 @@ public abstract class RoleManager{
 	public List<Card> getCards() {
 		return cards;
 	}
-//Ò»¿ªÊ¼³öÅÆµÄÊ±ºò½øĞĞÕâ²¿·ÖµÄ¹¤×÷?
-	//ÕâÀïÊÇ²»ÊÇÇ³¸´ÖÆÁË....»áÓĞÎÊÌâ?
+//ä¸€å¼€å§‹å‡ºç‰Œçš„æ—¶å€™è¿›è¡Œè¿™éƒ¨åˆ†çš„å·¥ä½œ?
+	//è¿™é‡Œæ˜¯ä¸æ˜¯æµ…å¤åˆ¶äº†....ä¼šæœ‰é—®é¢˜?
 	public void setCards(List<Card> cs) {
 		this.cards = cs;
 	}
 	public int getCardsAmount()
 	{
-		return cards.size();//·µ»ØÅÆµÄÕÅÊı
+		return cards.size();//è¿”å›ç‰Œçš„å¼ æ•°
 	}
+	//æµ‹è¯•ç”¨ æ‰“å°æ‰€æœ‰çš„ç‰Œ
+	public void showAllCard() {
+    	int len = cards.size();
+    	System.out.println("\n--------ç°åœ¨å±•ç¤ºroleçš„ç‰Œ---------------");
+    	for(int i = 0; i < len; i++)
+    	{
+    		System.out.print("number " + i + " is :");
+    		cards.get(i).getPoints();
+    		System.out.print(" ");
+    		cards.get(i).getCardColor();
+    		System.out.print("\n");
+    	}
+    }
 	
 	
 }
