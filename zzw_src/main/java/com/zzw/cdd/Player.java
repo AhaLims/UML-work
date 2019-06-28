@@ -303,7 +303,7 @@ public class Player {
         for (int i = 0; i < cards.length; i++) {
             // 判断是那张牌被选中，设置标志
             if (i != cards.length - 1) {
-                if (CardsManager.inRect(x, y,
+                if (CardsManager.inRect(x, y,//这一大段话应该就是判断是不是在点这张牌了
                         (int) ((left + i * 20) * MainActivity.SCALE_HORIAONTAL),
                         (int) ((top - (cardsFlag[i] ? 10 : 0)) * MainActivity.SCALE_VERTICAL),
                         (int) (20 * MainActivity.SCALE_HORIAONTAL),
