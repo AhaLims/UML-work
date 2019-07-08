@@ -48,14 +48,12 @@ public class Game{
 	}
 	//出牌的函数
 	//传入当前的index
-	//这个函数又presentation来调用
-	
-	
-	
+	//这个函数由presentation来调用
+	//返回boolean值代表出的牌是不是合法的
 	public boolean RoleDeliverCard(int index,List<Integer> list) {
 		deliveredCardsGroup currentCardsGroup = roles[index].selectCards(list);
 		//将转换成deleiverCardsGroup类型的
-		if(IsFirstHand(index) == true)//s先手
+		if(IsFirstHand(index) == true)//先手
 		{
 			if(currentCardsGroup == null)//TODO 这里是说明先手不出牌 是不合法的
 			{
