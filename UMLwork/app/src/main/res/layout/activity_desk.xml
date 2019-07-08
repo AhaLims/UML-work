@@ -155,10 +155,10 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.12" />
 
-    <LinearLayout
+    <cdd.desk.view.ShowedCardsViewGroup
         android:id="@+id/player_showcards_field"
         android:layout_width="477dp"
-        android:layout_height="64dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
@@ -171,30 +171,12 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.53">
 
-    </LinearLayout>
+    </cdd.desk.view.ShowedCardsViewGroup>
 
-    <LinearLayout
-        android:id="@+id/player_cardset_field"
-        android:layout_width="567dp"
-        android:layout_height="89dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="6dp"
-        android:layout_weight="1"
-        android:gravity="bottom"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.79">
-
-    </LinearLayout>
-
-    <LinearLayout
+    <cdd.desk.view.ShowedCardsViewGroup
         android:id="@+id/robot3_cardset_field"
         android:layout_width="209dp"
-        android:layout_height="64dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
@@ -207,12 +189,12 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.312">
 
-    </LinearLayout>
+    </cdd.desk.view.ShowedCardsViewGroup>
 
-    <LinearLayout
+    <cdd.desk.view.ShowedCardsViewGroup
         android:id="@+id/robot2_cardset_field"
         android:layout_width="249dp"
-        android:layout_height="64dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
@@ -223,12 +205,12 @@
         app:layout_constraintHorizontal_bias="0.816"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.026"></LinearLayout>
+        app:layout_constraintVertical_bias="0.026"></cdd.desk.view.ShowedCardsViewGroup>
 
-    <LinearLayout
+    <cdd.desk.view.ShowedCardsViewGroup
         android:id="@+id/robot1_cardset_field"
         android:layout_width="209dp"
-        android:layout_height="64dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
@@ -241,7 +223,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.309">
 
-    </LinearLayout>
+    </cdd.desk.view.ShowedCardsViewGroup>
 
     <Button
         android:id="@+id/show_cards"
@@ -290,5 +272,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.975" />
+
+    <cdd.desk.view.PlayerHandCardsViewGroup
+        android:id="@+id/player_cardset_field"
+        android:layout_width="match_parent"
+        android:layout_height="85dp"
+        android:layout_gravity="bottom|right"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.802">
+
+    </cdd.desk.view.PlayerHandCardsViewGroup>
 
 </android.support.constraint.ConstraintLayout>

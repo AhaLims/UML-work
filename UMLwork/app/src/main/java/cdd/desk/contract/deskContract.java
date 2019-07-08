@@ -5,6 +5,7 @@ import android.widget.LinearLayout;
 import java.util.List;
 
 import cdd.desk.Card;
+import cdd.desk.view.CardsViewGroup;
 
 public interface deskContract {
     interface Model {
@@ -15,7 +16,6 @@ public interface deskContract {
         void displayPlayerHandCards(List<Card> playerCards);
         void displayPlayerCards(List<Card> playerCards);
         void displayRobotCards(List<Card> playerCards, int robot);
-        void displayCard(Card card,LinearLayout layout);
         void displayIrregularity();
         void showCards();
     }
