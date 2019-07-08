@@ -6,62 +6,86 @@ public class Card implements Comparable<Card>{//实现了Comparable的接口 这
 	private int weight;//代表牌的真实权重 其中 1->14 2->15
 	private CardColor cardColor;
 	
-	public Card(int p,CardColor color) {
-		this.setPoints(p);
-		this.setWeight(p);
-		this.setCardColor(color);
-	}
-	//重载compareTo函数 可以用这个函数进行比较
-	//-------------------从多态的角度出发 cards不应该在这里定义排序规则--------------------------//
-	//-------------------职责不对--------------------------------------------------------//
-	//信息专家原则:
-	//问题：谁比较卡片的大小？
-	//条件：card类拥有card的color,point等信息，
-	//方案就是 把比较卡片的大小的职责分配给 card
-	//缺点：不支持高内聚，也不支持多态
-	//方案：捏造出一个 比较的类来专门执行这一个职责
-	@Override
-	public int compareTo(Card arg0) {
-		if(this.getWeight() > arg0.getWeight()) return 1;
-		else if(this.getWeight() == arg0.getWeight())
-		{
-			return this.getCardColor().compareTo(arg0.getCardColor());//枚举类型变量的比较方式
+	/*
+	 * just for test
+	 */
+	public Card(int _weight) {
+		int c = _weight % 4;
+		weight = _weight;
+		int p = weight / 4;
+		if(p == 12) points = 1;
+		else if(p ==13) points = 2;
+		else points = p + 2;
+		switch(c) {
+		case 0:
+			cardColor = CardColor.Diamond;
+			break;
+		case 1:
+			cardColor = CardColor.Club;
+			break;
+		case 2:
+			cardColor = CardColor.Heart;
+			break;
+		case 3:
+			cardColor = CardColor.Spade;
+			break;
 		}
-		return -1;//不满足上面的情况 说明card 比传进来的小
 	}
 	
-	//一些无关紧要的set getxxx函数
-	public CardColor getCardColor() {
-		//测试相关的代码
-		if(cardColor == CardColor.Diamond)System.out.print("Diamond");
-		else if(cardColor == CardColor.Club)System.out.print("Club");
-		else if(cardColor == CardColor.Heart)System.out.print("Heart");
-		else if(cardColor == CardColor.Spade)System.out.print("Spade");
-		
-		return cardColor;
+	
+	public Card(int p,CardColor color) {
+		points = p;
+		this.setWeight(p,color);
+		this.cardColor = color;
 	}
-	public void setCardColor(CardColor cardColor) {
-		this.cardColor = cardColor;
-	}
+
 	public int getPoints() {
 		//测试相关的代码
 		System.out.println(points);
 		
 		return points;
 	}
-	public void setPoints(int points) {
-		this.points = points;
+	public CardColor getColor() {
+		return cardColor;
 	}
 	public int getWeight() {
 		return weight;
 	}
 	//通过points设置权重
-	public void setWeight(int points) {
+	public void setWeight(int points,CardColor color) {
+		
+		//点数的权值
 		if(points == 1 )
-			this.weight = 14;
+			this.weight = 12;
 		else if(points == 2)
-			this.weight = 15;
-		else this.weight = points;
+			this.weight = 13;
+		else this.weight = points - 2;
+		this.weight *= 4;
+		
+		//颜色的权值
+		switch(color) {
+		case Diamond:
+			break;
+		case Club:
+			this.weight += 1;
+			break;
+		case Heart:
+			this.weight += 2;
+			break;
+		case Spade:
+			this.weight += 3;
+			break;
+		default:
+			break;
+		}
+			
+	}
+	@Override
+	public int compareTo(Card arg0) {
+		if(this.getWeight() > arg0.getWeight()) return 1;
+		else if(this.getWeight() == arg0.getWeight())return 0;
+		
+		return -1;//不满足上面的情况 说明card 比传进来的小
 	}
 	
 }

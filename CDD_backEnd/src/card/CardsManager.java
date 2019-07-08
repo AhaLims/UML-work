@@ -3,13 +3,14 @@ package card;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-//问题：对cards type进行排序行不行 就是判断牌能不能出
+//问题：对cards type进行排序行不行 就是判断牌能不能出--------是不是合法的 以及判断类型
 /*  测试完成
  * CardsManager:对牌进行管理判断
  * 功能：
  * 1.jugdeType 判断出牌的类型 
  * 2.canDisplay 判断牌是否能被出
  * 3.order 对手牌进行排序  
+ * 4.将List类型的CardIndex 打包成为deliveredCardsGroup类型的东西
  */
 
 
@@ -17,15 +18,39 @@ import java.util.List;
 //应该都是静态的方法....??
 //---------------------“比较牌”的方法应该单独抽象成类----------------------------//
 //可以这样做  接口：比较牌的接口 然后有一个函数xxx(card1,card2) return true/false;
-//---------------------用 CardsManager 的接口--------------------------------//
-//---------------------不要写成静态方法 最好用单实例模式---------------------------//
+//用单实例模式---------------------------//
 public class CardsManager {
+	private static CardsManager cardsManager;
+	public static CardsManager getCardsManager() {
+		if(cardsManager == null)
+		{
+			cardsManager = new CardsManager();
+		}
+		return cardsManager;
+		
+	}
+	private CardsManager() {
+		
+	}
 	/*
 	 * 参数：牌数组
 	 * 功能：判断牌的类型 因为之前排序过所以比较好判断
 	 * 输出 CardsType
 	 */
-	public static CardsType jugdeType(List<Card> list) {
+	//根据收到的牌组 返回牌组的权值（现在只是所有值简单的相加
+	public int getCardsGroupValue(List<Card> list)
+	{
+		int len = list.size();
+		int totalWeight = 0;
+		for(int i = 0;i<len;i++)
+		{
+			totalWeight += list.get(i).getWeight();
+		}
+		return totalWeight;
+		
+	}
+	//判断牌的类型
+	public CardsType jugdeType(List<Card> list) {
 		int len = list.size();
 		
 		//只可能是：cardSingle,//单牌。
@@ -63,7 +88,7 @@ public class CardsManager {
 			ps当然我觉得这样做是不行的
 	 */
 	
-	public static boolean canDisplay(CardsType type,
+	/*public static boolean canDisplay(CardsType type,
 			List<Card> previousList,
 			List<Card> presentList){
 		switch(type) {
@@ -79,7 +104,8 @@ public class CardsManager {
 		default:
 			return false;
 		}
-	}
+	}*/
+	//6.28 按照新的逻辑 canDisplay暂时没用
 	
 
 	//能直接在Card类中重载某个参数 实现函数的重载吗......? 这里就直接调用 多好...
@@ -92,7 +118,7 @@ public class CardsManager {
 	 * 功能：对牌进行排序
 	 * 输出：无
 	 */
-	public static void order(List<Card> list){
+	public void orderCards(List<Card> list){
 		
 		Collections.sort(list,new Comparator<Card>() {//实现了接口中的compare函数
 			//这里是java某种扭曲的(划掉)语法糖
@@ -104,4 +130,5 @@ public class CardsManager {
 		}
 	);
 	}
+
 }
