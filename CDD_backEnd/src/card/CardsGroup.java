@@ -122,5 +122,15 @@ public class CardsGroup{
 		}
 	);
 	}
+	//将前端所传进来的 选中的牌的index数组转换为 deliveredCardsGroup的牌
+	public deliveredCardsGroup packCardsGroup(List<Integer> list) {
+		deliveredCardsGroup DeliveredCardsGroup = new deliveredCardsGroup();
+		for(int i = 0;i < list.size();i++) {
+			int index = list.get(i).intValue();
+			Card c = card.get(index);//根据下标获取牌
+			DeliveredCardsGroup.addCard(c);//将加牌
+		}
+		return DeliveredCardsGroup;
+	}
 	
 }

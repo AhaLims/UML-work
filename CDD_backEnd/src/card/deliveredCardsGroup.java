@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.ArrayList;
 import java.util.List;
 
+//可以提供牌的值以及牌的类型
 //每次牌一张一张的加进deliveredCardsGroup
 public class deliveredCardsGroup extends CardsGroup{
 	private CardsType type;
@@ -21,9 +22,11 @@ public class deliveredCardsGroup extends CardsGroup{
 		value = this.cardsManager.getCardsGroupValue(this.card);
 	}
 	public int getValue() {
+		calculateAttribute();
 		return value;
 	}
 	public CardsType getType(){
+		calculateAttribute();
 		return type;
 	}
 

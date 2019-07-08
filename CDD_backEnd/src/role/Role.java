@@ -1,4 +1,6 @@
 package role;
+import java.util.List;
+
 import card.Card;
 import card.CardsGroup;
 import card.CardsManager;
@@ -49,6 +51,22 @@ public class Role{
 	public boolean findCard(int weight) {
 		if(CurrentCards.canFindCard(weight) != -1) return true;//
 		return false;
+	}
+	//更新牌  就是删除牌的过程
+	public void refreshCardsGroup(CardsGroup deletedCardsGroup) {
+		CurrentCards.deleteCardsGroup(deletedCardsGroup);
+	}
+	
+	public deliveredCardsGroup selectCards(List<Integer> cardsIndex) {
+		//怎么把cardsIndex组装成 deliveredCardsGroup(List<Card> c) 
+		deliveredCardsGroup dc = new deliveredCardsGroup();
+		int len = cardsIndex.size();
+		Card card;
+		for(int i = 0; i < len; i++) {
+			card = CurrentCards.getCardByIndex(cardsIndex.get(i).intValue());
+			dc.addCard(card);
+		}
+		return dc;
 	}
 	
 }

@@ -10,6 +10,7 @@ import java.util.List;
  * 1.jugdeType 判断出牌的类型 
  * 2.canDisplay 判断牌是否能被出
  * 3.order 对手牌进行排序  
+ * 4.将List类型的CardIndex 打包成为deliveredCardsGroup类型的东西
  */
 
 
@@ -48,7 +49,7 @@ public class CardsManager {
 		return totalWeight;
 		
 	}
-	
+	//判断牌的类型
 	public CardsType jugdeType(List<Card> list) {
 		int len = list.size();
 		
@@ -129,4 +130,5 @@ public class CardsManager {
 		}
 	);
 	}
+
 }
