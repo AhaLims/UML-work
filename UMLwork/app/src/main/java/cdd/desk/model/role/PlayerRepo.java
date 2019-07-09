@@ -51,7 +51,7 @@ public class PlayerRepo {
 
         if (cursor.moveToFirst()) {
             do {
-                HashMap<String, String> player = new HashMap();
+                HashMap<String, String> player = new HashMap<String, String>();
                 player.put("name", cursor.getString(
                         cursor.getColumnIndex(Player.KEY_NAME)));
                 player.put("score", cursor.getString(
