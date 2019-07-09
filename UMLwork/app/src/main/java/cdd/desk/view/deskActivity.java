@@ -1,6 +1,5 @@
 package cdd.desk.view;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -8,25 +7,18 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.uml.umlwork.R;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import cdd.desk.model.card.Card;
-import cdd.desk.model.card.CardColor;
 import cdd.desk.contract.deskContract;
 import cdd.desk.presenter.deskPresenter;
 import cdd.menu.view.MainActivity;
-
-import static android.os.SystemClock.sleep;
 
 /**
  * Main UI for the add task screen. Users can enter a task title and description.
@@ -54,6 +46,7 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_desk);
         context = this;
+
 
         //绑定控件
         btnShowCards = findViewById(R.id.show_cards);
@@ -101,8 +94,15 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
         //设置presenter
         mPresenter = new deskPresenter(this);
 
+    }
 
-
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            popEscapeDialog();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override
@@ -216,9 +216,8 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
 
     public void popResultDialog(int winner,int score)
     {
-
         android.support.v7.app.AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        View view = View.inflate(context, R.layout.activity_dialog_view, null);   // 布局文件，自定义
+        View view = View.inflate(context, R.layout.game_end_dialog_view, null);   // 布局文件，自定义
         TextView winner_tv = view.findViewById(R.id.winner_tv);
         TextView player_score_tv = view.findViewById(R.id.player_score_tv);
 
@@ -240,7 +239,6 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
         }
         player_score_tv.setText("玩家得分:"+score);
 
-
         builder.setTitle("游戏结果");
         builder.setIcon(R.mipmap.ic_launcher);//设置对话框icon
 
@@ -255,15 +253,47 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
         });
         dialog.setButton(DialogInterface.BUTTON_NEUTRAL,"不了不了", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) { }
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(deskActivity.this , MainActivity.class);
+                startActivity(intent);
+                dialog.dismiss();//关闭对话框
+            }
         });
         dialog.setCancelable(false);
         dialog.show();
 
+    }
 
+    public void popEscapeDialog()
+    {
+        android.support.v7.app.AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        View view = View.inflate(context, R.layout.escape_dialog_view, null);   // 布局文件，自定义
 
+        builder.setTitle("逃跑");
+        builder.setIcon(R.mipmap.ic_launcher);//设置对话框icon
+
+        AlertDialog dialog = builder.create();
+        dialog.setView(view);
+        dialog.setButton(DialogInterface.BUTTON_POSITIVE,"继续游戏", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();//关闭对话框
+            }
+        });
+        dialog.setButton(DialogInterface.BUTTON_NEUTRAL,"逃跑", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+               mPresenter.escape();
+
+               Intent intent = new Intent(deskActivity.this , MainActivity.class);
+               startActivity(intent);
+               dialog.dismiss();//关闭对话框
+            }
+        });
+        dialog.show();
 
     }
+
     /*
     *函数名：removeShowedCards
     * 功能：清除玩家或机器人出牌区的牌

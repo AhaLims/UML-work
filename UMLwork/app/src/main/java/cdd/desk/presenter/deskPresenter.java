@@ -80,5 +80,11 @@ public class deskPresenter implements deskContract.Presenter,PlayGameCallBack {
         mDeskActivity.displayPass(role);
     }
 
+    @Override
+    public void escape()
+    {
+        //mGame.escape
+    }
+
 
 }
