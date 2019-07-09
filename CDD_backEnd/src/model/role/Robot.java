@@ -14,7 +14,7 @@ public class Robot extends Role{
 		// TODO Auto-generated constructor stub
 	}
 	//根据上家的牌决定出牌的策略
-	public deliveredCardsGroup deliver(deliveredCardsGroup previous) {
+	public deliveredCardsGroup selectCards(deliveredCardsGroup previous) {
 		List<Card> list =  CurrentCards.getCardsGroup();
 		deliveredCardsGroup dc = new deliveredCardsGroup();//暂时不出牌
 		if(previous.hasCards() == false) {

@@ -10,8 +10,6 @@ import model.card.deliveredCardsGroup;
 import model.role.Player;
 import model.role.Role;
 
-
-
 public class Game{
 	private Judger judger;
 	private PairCardsGroup AllCards;
