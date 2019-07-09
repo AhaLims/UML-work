@@ -55,4 +55,8 @@ public class deskPresenter implements deskContract.Presenter,PlayGameCallBack {
     public void onRobotPass(int robot) {
 
     }
+
+    public void playerPass(){
+        /////mGame.pass()
+    }
 }

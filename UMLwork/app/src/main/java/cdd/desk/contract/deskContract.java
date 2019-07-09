@@ -21,5 +21,6 @@ public interface deskContract {
     }
 
     interface Presenter extends BasePresenter{
+        void playerPass();
     }
 }
