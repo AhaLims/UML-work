@@ -33,6 +33,9 @@ public class Role {
 		game = g;
 	}
 
+	//默认构造函数
+	public Role() {}
+
 	//在游戏初始阶段 获得单张牌
 	public void getSingleCards(Card card) {
 		CurrentCards.addCard(card);
@@ -77,9 +80,8 @@ public class Role {
 	}
 
 	//TODO 空函数设置。。并不合理
-	public deliveredCardsGroup deliver(deliveredCardsGroup previous){
-		//空函数 由 Robot 和 Player来继承
-		return null;
+	public deliveredCardsGroup deliver(deliveredCardsGroup previous) {
+	return null;
 	}
 
 	public void setNumber(int n) {

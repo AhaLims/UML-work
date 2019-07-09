@@ -20,9 +20,15 @@ public class Player extends Role{
 	public static final String KEY_SCORE = "score";
 
 	public String player_name;
-	public String score;
+	public double score;
 	public Player(Game g) {
 		super(g);
+	}
+
+	public Player(){}
+
+	public void setGame(Game game) {
+		this.game = game;
 	}
 
 	//给对应的index 可以找到用户选的一组牌 并且可以组装成deliveredCardsGroup 类型的东西

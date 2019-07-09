@@ -9,6 +9,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.uml.umlwork.R;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import cdd.desk.model.card.Card;
 import cdd.desk.model.card.CardColor;
@@ -70,10 +73,24 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
             }
         });
 
+
         btnReSelect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 playerCardSetLayout.reSelect();
+            }
+        });
+
+        //TODO 要记得删除
+        /*仅做临时测试*/
+        btnReSelect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Card card1 = new Card(1,CardColor.Spade);
+                List<Card> cards = new ArrayList<Card>();
+                cards.add(card1);
+                displayPlayerCards(cards);
+                displayPlayerHandCards(cards);
             }
         });
 
@@ -103,6 +120,7 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
     @Override
     public void displayPlayerCards(List<Card> playerCards) {
         playerShowCardsLayout.displayCards(playerCards);
+        //System.out.print("这个时候应该显示 出的牌");
     }
 
     @Override
@@ -127,7 +145,7 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
     }
 
     @Override
-    public void displayIrregularity(CharSequence message) {
+    public void displayIrregularity(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
@@ -140,6 +158,8 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
             displayIrregularity("请选择要出的牌");
             return ;
         }
+        mPresenter.playerShowCards(arr);
+
         System.out.print("选中的牌的index：");
         for(Integer i:arr) {
             System.out.print( i );
@@ -153,15 +173,15 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
         switch (robot)
         {
             case 1:
-                leftRobotRemainTextView.setText("剩余:"+robotCards.size());
+                leftRobotRemainTextView.setText("剩余:"+ robotCards.size());
                 break;
 
             case 2:
-                middleRobotRemainTextView.setText("剩余:"+robotCards.size());
+                middleRobotRemainTextView.setText("剩余:"+ robotCards.size());
                 break;
 
             case 3:
-                rightRobotRemainTextView.setText("剩余:"+robotCards.size());
+                rightRobotRemainTextView.setText("剩余:"+ robotCards.size());
                 break;
 
             default:
