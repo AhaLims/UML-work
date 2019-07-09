@@ -164,12 +164,14 @@ public class CardsManager {
 
 		//当牌数量为1时，单牌
 		if(len == 1) {
+            System.out.println("是单牌");
 			return CardsType.danzhang;
 		}
 
 		//当牌数量为2是，一对
 		if(len == 2) {
 			if(cards.get(0).getPoints() == cards.get(1).getPoints()) {
+                System.out.println("是一对");
 				return CardsType.yidui;
 			}
 		}
@@ -177,28 +179,39 @@ public class CardsManager {
 		// 当牌数为3时,三个
 		if (len == 3) {
 			if (cards.get(0).getPoints() == cards.get(2).getPoints()) {
+                System.out.println("是三张");
 				return CardsType.sanzhang;
 			}
 		}
 
 		//当排数为5时，可能为顺、杂顺、同花顺、同花五、三带一对、四带一张、同花五
 		if(len == 5) {
-			if (isTongHuaShun(cards))
-				return CardsType.tonghuashun;
+			if (isTongHuaShun(cards)) {
+                System.out.println("是同花顺");
+                return CardsType.tonghuashun;
+            }
 
-			if (isZaShun(cards))
-				return CardsType.zashun;
+			if (isZaShun(cards)) {
+                System.out.println("是杂顺");
+                return CardsType.zashun;
+            }
 
 			if(isSanDaiEr(cards)) {
+                System.out.println("是三代二");
 				return CardsType.sandaier;
 			}
 
-			if(isTongHuaWu(cards))
+			if(isTongHuaWu(cards)) {
+				System.out.println("是五同花");
 				return CardsType.wutonghua;
+			}
 
-			if(isSiDaiYi(cards))
-				return CardsType.sidaiyi;
+			if(isSiDaiYi(cards)) {
+                System.out.println("是四带一");
+                return CardsType.sidaiyi;
+            }
 		}
+        System.out.println("什么牌型都不是");
 		return CardsType.card0;//不是上述任何一种牌型
 	}
 
