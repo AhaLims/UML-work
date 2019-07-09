@@ -1,5 +1,6 @@
 package cdd.desk.model.game;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cdd.desk.model.PlayGameCallBack;
@@ -56,6 +57,18 @@ public class Game{
 	}
 
 	public void InitGame(PlayGameCallBack playGameCallBack) {
+        //进行玩家牌的初始化
+        for(int i = 0;i<4;i++){
+            roles[i].getHandCards().getCardsGroup().clear();//清空牌
+        }
+        //进行牌桌的初始化
+		List<Card> noCard = new ArrayList<Card>();//这个是用来清理牌桌的
+		for(int i = 0;i<4;i++){
+        	if(i == 0)
+				playGameCallBack.displayPlayerCards(noCard);
+        	else
+				playGameCallBack.displayRobotCards(	noCard,i);
+		}
 		AllCards.shuffleCards();//洗牌
 		licensingCards();//发牌
 		turnTime = 1;
@@ -69,6 +82,8 @@ public class Game{
 			System.out.print(i);
 			System.out.println("个玩家的牌为:");
 			roles[i].getHandCards().showDetail();
+
+
 		}
 
 		if(firstTurn == 0) return;//第一个出牌的是玩家 则初始化工作完成
@@ -122,7 +137,7 @@ public class Game{
 		if (list == null) {//处理不出牌的事件
 			if (IsFirstHand(0)) {
 				playGameCallBack.onCardsNotValid("先手必须出牌哦");
-
+				return;
 			} else {
 				//合法的不出牌
 				IsLatestShow[0] = false;//记录一下没有出牌
