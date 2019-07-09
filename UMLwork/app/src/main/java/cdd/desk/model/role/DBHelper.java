@@ -33,7 +33,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     //更新数据库
     @Override
-    public void onUpgrade(SQLiteDAtabase db) {
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + Player.TABLE);
         onCreate(db);
         return;
