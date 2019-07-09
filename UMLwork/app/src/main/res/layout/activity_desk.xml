@@ -239,7 +239,8 @@
         app:layout_constraintHorizontal_bias="0.235"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.975" />
+        app:layout_constraintVertical_bias="0.975"
+        app:srcCompat="@mipmap/showcards"/>
 
     <Button
         android:id="@+id/skip"
@@ -271,7 +272,8 @@
         app:layout_constraintHorizontal_bias="0.803"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.975" />
+        app:layout_constraintVertical_bias="0.975"
+        app:srcCompat="@mipmap/reselect"/>
 
     <cdd.desk.view.PlayerHandCardsViewGroup
         android:id="@+id/player_cardset_field"

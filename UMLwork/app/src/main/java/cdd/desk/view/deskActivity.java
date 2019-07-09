@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.uml.umlwork.R;
-import java.util.ArrayList;
 import java.util.List;
 import cdd.desk.model.card.Card;
 import cdd.desk.model.card.CardColor;
@@ -22,6 +21,8 @@ import cdd.desk.presenter.deskPresenter;
 public class deskActivity extends AppCompatActivity implements deskContract.View{
 
     private Button btnShowCards;
+    private Button btnSkip;
+    private Button btnReSelect;
     private PlayerHandCardsViewGroup playerCardSetLayout;
     private ShowedCardsViewGroup playerShowCardsLayout;
     private ShowedCardsViewGroup leftRobotShowCardsLayout;
@@ -42,6 +43,8 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
 
         //绑定控件
         btnShowCards = findViewById(R.id.show_cards);
+        btnSkip = findViewById(R.id.skip);
+        btnReSelect = findViewById(R.id.reselect);
         playerCardSetLayout = findViewById(R.id.player_cardset_field);
         playerShowCardsLayout = findViewById(R.id.player_showcards_field);
         leftRobotShowCardsLayout = findViewById(R.id.robot1_cardset_field);
@@ -59,36 +62,24 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
             }
         });
 
+        btnSkip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.playerPass();
+                playerShowCardsLayout.displayPass();
+            }
+        });
+
+        btnReSelect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                playerCardSetLayout.reSelect();
+            }
+        });
+
         //设置presenter
         mPresenter = new deskPresenter(this);
 
-        //以下用于测试
-        /*
-        Card card = new Card(15,CardColor.Diamond);
-        Card card1 = new Card(14,CardColor.Diamond);
-        Card card2 = new Card(13,CardColor.Diamond);
-        Card card3 = new Card(12,CardColor.Diamond);
-        Card card4 = new Card(11,CardColor.Diamond);
-        Card card5 = new Card(10,CardColor.Diamond);
-        Card card6 = new Card(9,CardColor.Diamond);
-        Card card7 = new Card(8,CardColor.Diamond);
-
-        List<Card> cards = new ArrayList<>();
-        List<Card> empty_cards = new ArrayList<>();
-        cards.add(card);
-        cards.add(card1);
-        cards.add(card2);
-        cards.add(card3);
-        cards.add(card4);
-        cards.add(card5);
-        cards.add(card6);
-        cards.add(card7);
-
-        displayPlayerCards(cards);
-        displayPlayerHandCards(cards);
-        displayRobotCards(cards,1);
-        displayRobotCards(cards,2);
-        displayRobotCards(cards,3);*/
     }
 
     @Override
@@ -137,7 +128,7 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
 
     @Override
     public void displayIrregularity(CharSequence message) {
-        Toast.makeText(this, "不合法", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
 
@@ -175,6 +166,30 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
 
             default:
                 throw new IllegalArgumentException("收到了不存在的机器人");
+        }
+    }
+
+    /*
+    *函数名：removeShowedCards
+    * 功能：清除玩家或机器人出牌区的牌
+    * 参数：0.玩家 1.左边机器人 2.中间机器人 3.右边机器人
+    * */
+    public void removeShowedCards(int select)
+    {
+        switch (select)
+        {
+            case 0:
+                playerShowCardsLayout.removeAllViews();
+                break;
+            case 1:
+                leftRobotShowCardsLayout.removeAllViews();
+                break;
+            case 2:
+                middleRobotShowCardsLayout.removeAllViews();
+                break;
+            case 3:
+                rightRobotShowCardsLayout.removeAllViews();
+            default:
         }
     }
 

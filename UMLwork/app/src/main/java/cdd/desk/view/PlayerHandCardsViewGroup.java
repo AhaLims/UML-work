@@ -6,6 +6,8 @@ import android.view.View;
 import java.util.LinkedList;
 import java.util.List;
 
+import static cdd.desk.view.State.DOWN;
+
 public class PlayerHandCardsViewGroup extends CardsViewGroup {
 
     Context context;
@@ -44,12 +46,12 @@ public class PlayerHandCardsViewGroup extends CardsViewGroup {
         mCardView.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //改变牌的位置
-                if (mCardView.getPos() == State.DOWN) {
+                if (mCardView.getPos() == DOWN) {
                     v.setTranslationY(-30);
                     mCardView.setPos(State.UP);
                 } else {
                     v.setTranslationY(0);
-                    mCardView.setPos(State.DOWN);
+                    mCardView.setPos(DOWN);
                 }
             }
 
@@ -70,5 +72,16 @@ public class PlayerHandCardsViewGroup extends CardsViewGroup {
                 selected.add(i);
         }
         return selected;
+    }
+
+    public void reSelect()
+    {
+        for(int i = 0;i<getChildCount();i++)
+        {
+            CardView temp = (CardView)(getChildAt(i));
+            temp.setPos(DOWN);
+            temp.setTranslationY(0);
+
+        }
     }
 }
