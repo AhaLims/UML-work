@@ -2,11 +2,16 @@ package cdd.desk.view;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -90,8 +95,7 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
         tiaozhuan.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent intent = new Intent(deskActivity.this,resultActivity.class);
-                startActivity(intent);
+                popResultDialog(0,0);
             }
         });
 
@@ -99,19 +103,7 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
         mPresenter = new deskPresenter(this);
 
 
-        //弹窗测试
-        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(this);
-        builder.setIcon(R.mipmap.ic_launcher);
-        builder.setTitle("title");
-        builder.setMessage("message");
 
-        builder.setPositiveButton("positive", null);
-        builder.setNegativeButton("negative", null);
-        builder.setNeutralButton("neutral", null);
-
-        builder.setCancelable(true);
-        android.support.v7.app.AlertDialog dialog = builder.create();
-        dialog.show();
     }
 
     @Override
@@ -221,6 +213,56 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
         }
     }
 
+    public void popResultDialog(int winner,int score)
+    {
+
+        android.support.v7.app.AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        View view = View.inflate(context, R.layout.activity_dialog_view, null);   // 布局文件，自定义
+
+        TextView winner_tv = view.findViewById(R.id.winner_tv);
+        TextView player_score_tv = view.findViewById(R.id.player_score_tv);
+        switch (winner)
+        {
+            case 0:
+                winner_tv.setText("赢家:玩家");
+                break;
+            case 1:
+                winner_tv.setText("赢家:机器人1");
+                break;
+            case 2:
+                winner_tv.setText("赢家:机器人2");
+                break;
+            case 3:
+                winner_tv.setText("赢家:机器人3");
+                break;
+            default:
+        }
+        player_score_tv.setText("玩家得分:"+score);
+
+
+        builder.setTitle("游戏结果");
+        builder.setIcon(R.mipmap.ic_launcher);//设置对话框icon
+
+        AlertDialog dialog = builder.create();
+        dialog.setView(view);
+        dialog.setButton(DialogInterface.BUTTON_POSITIVE,"再来一把", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                onResume();
+                dialog.dismiss();//关闭对话框
+            }
+        });
+        dialog.setButton(DialogInterface.BUTTON_NEUTRAL,"不了不了", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) { }
+        });
+
+        dialog.show();
+
+
+
+
+    }
     /*
     *函数名：removeShowedCards
     * 功能：清除玩家或机器人出牌区的牌

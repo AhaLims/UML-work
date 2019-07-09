@@ -66,7 +66,7 @@ public class deskPresenter implements deskContract.Presenter,PlayGameCallBack {
 
     @Override
     public void onGameEnd(int winnerIndex,int score){
-
+        mDeskActivity.popResultDialog(winnerIndex,score);
     }
     //TODO 思考是不是需要分成两个 胜利和失败各一个函数
 /////游戏结束的时候的时候调用
