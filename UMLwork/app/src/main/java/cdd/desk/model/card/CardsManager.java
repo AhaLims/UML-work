@@ -285,7 +285,7 @@ public class CardsManager {
 	public void orderCards(List<Card> list){
 		
 		Collections.sort(list,new Comparator<Card>() {//实现了接口中的compare函数
-			//这里是java某种扭曲的(划掉)语法糖
+			//这里是java的(划掉)语法糖
 			//@Override
 			public int compare(Card card1, Card card2) {
 				return card1.compareTo(card2);

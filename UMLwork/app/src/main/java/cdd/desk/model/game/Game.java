@@ -26,7 +26,7 @@ public class Game{
 	private int turnTime;//轮数
 	private Role[] roles;
 	private boolean[] IsLatestShow;//用来判断最新是否出了牌
-	//private int[] nextTurn;
+	//TODO 也许应该传进玩家的名字....然后....
 	public Game() {
 		scorer = new Scorer();
 		//nextTurn = new int[4];
@@ -36,8 +36,8 @@ public class Game{
 		LatestCards = new deliveredCardsGroup();
 		for(int i = 0;i < 4; i++) {
 			if(i == 0)
-				roles[i] = new Player(this);
-			else roles[i] = new Robot(this);
+				roles[i] = new Player();
+			else roles[i] = new Robot();
 			IsLatestShow[i] = false;//一开始大家都没有出牌
 		}
 	}

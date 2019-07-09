@@ -1,14 +1,10 @@
 package cdd.desk.model.card;
 
 public class Card implements Comparable<Card>{//实现了Comparable的接口 这样就是可以比较的了
-	//包可见 所以不用写import?
 	private int points;//点数
 	private int weight;//代表牌的真实权重 其中 1->14 2->15
 	private CardColor cardColor;
-	
-	/*
-	 * just for test
-	 */
+
 	public Card(int _weight) {
 		int c = _weight % 4;
 		weight = _weight;
