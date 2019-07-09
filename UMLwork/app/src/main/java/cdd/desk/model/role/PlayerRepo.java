@@ -8,8 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import cdd.desk.model.game.Game;
-
 public class PlayerRepo {
     private DBHelper dbHelper;
 
