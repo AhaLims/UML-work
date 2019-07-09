@@ -2,8 +2,12 @@ package cdd.desk.model.card;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cdd.desk.model.card.Card;
+import cdd.desk.model.card.CardsGroup;
+
 //继承自CardsGroup的 是整个游戏有的一副牌
-public class PairCardsGroup extends CardsGroup{
+public class PairCardsGroup extends CardsGroup {
 	private static PairCardsGroup AllCards;
 	
 	public static PairCardsGroup getPairOfCards(){
@@ -30,9 +34,14 @@ public class PairCardsGroup extends CardsGroup{
 		for(int i = 0;i < time; i++)
 		{
 			//掉换牌的位置
-			//暂时不知道 list要怎么洗牌.....
+			final long l = System.currentTimeMillis();
+			final int randomNumber = (int)( l % 52);
+			Card temp = card.get(randomNumber);
+			card.remove(randomNumber);
+			card.add(temp);
 		}
 	}
+	//暂时默认洗....1000次牌
 	public void shuffleCards() {
 		shuffleCards(1000);
 	}

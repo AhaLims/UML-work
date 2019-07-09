@@ -107,7 +107,7 @@
     <TextView
         android:id="@+id/robot_remain1"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="15dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
@@ -122,7 +122,7 @@
         app:layout_constraintVertical_bias="0.206" />
 
     <TextView
-        android:id="@+id/robot_remain2"
+        android:id="@+id/robot_remain3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -139,7 +139,7 @@
         app:layout_constraintVertical_bias="0.214" />
 
     <TextView
-        android:id="@+id/robot_remain3"
+        android:id="@+id/robot_remain2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
