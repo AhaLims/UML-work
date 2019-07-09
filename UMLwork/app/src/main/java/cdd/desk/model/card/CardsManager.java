@@ -3,6 +3,8 @@ package cdd.desk.model.card;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
+import cdd.desk.model.PlayGameCallBack;
 //问题：对cards type进行排序行不行 就是判断牌能不能出--------是不是合法的 以及判断类型
 /*  测试完成
  * CardsManager:对牌进行管理判断
@@ -228,8 +230,48 @@ public class CardsManager {
 		}
 	}*/
 	//6.28 按照新的逻辑 canDisplay暂时没用
-	
 
+	public boolean isPermissible(deliveredCardsGroup previous,deliveredCardsGroup current,PlayGameCallBack playGameCallBack)
+	{
+		boolean validation = false;
+		CardsType currentType = current.getType();
+		CardsType previousType = previous.getType();
+		if(currentType != previousType){
+			playGameCallBack.onCardsNotValid("与商家的牌不匹配哦");
+		}
+		switch (currentType){
+			case card0:
+				validation = false;
+				playGameCallBack.onCardsNotValid("不可以这样出牌哦");
+				break;
+			//单牌 对子 三张一样的牌 判定规则一样，都是看
+			case danzhang://单牌
+			case yidui://两张相等的对子
+			case sanzhang://三张一样的
+				int size1 = current.getCardsGroup().size();
+				int size2 = previous.getCardsGroup().size();
+				//比较相同的牌中权值最大的牌
+				if(current.getCardsGroup().get(size1 - 1).getWeight() > previous.getCardsGroup().get(size2 - 1).getWeight()) {
+					validation = true;
+				}
+				else{
+					playGameCallBack.onCardsNotValid("牌太小啦 换一种出牌方式吧");
+				}
+				break;
+			case sandaier://三带一
+			case sidaiyi://四带一
+			case tonghuashun://同花顺
+         /*int size1 = current.getCardsGroup().size();
+         int size2 = previous.getCardsGroup().size();
+         //比较相同的牌中权值最大的牌
+         if(currentType == previousType && current.getCardsGroup().get(size1 - 1).getWeight() > previous.getCardsGroup().get(size2 - 1).getWeight())
+            validation = true;
+         break;*/
+				validation = false;
+				playGameCallBack.onCardsNotValid("暂时不支持的牌型 后面完善了规则再补充");
+		}
+		return validation;
+	}
 	//能直接在Card类中重载某个参数 实现函数的重载吗......? 这里就直接调用 多好...
 	//不要写在这里...太丑了
 	//使用Collections排序非常简单，\
