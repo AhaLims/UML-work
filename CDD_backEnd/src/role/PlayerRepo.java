@@ -15,15 +15,15 @@ public class PlayerRepo {
         dbHelper = new DBHelper(context);
     }
 
-    public String insert(Player player) {
+    public int insert(Player player) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(Player.KEY_SCORE, player.score);
 
 
-        long player_name = db.insert(Player.TABLE, null, values);
+        long raw_num = db.insert(Player.TABLE, null, values);//返回插入的行号
         db.close();
-        return String.valueOf(player_name);
+        return (int) raw_num ;
     }
 
     public void delete(String player_name) {
