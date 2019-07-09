@@ -51,6 +51,7 @@ public class Game{
 				if(IsLatestShow[i] == true)return false;
 			}
 		}
+		//也许应该设置 LatestCards = new deliveredCardsGroup();
 		return true;
 	}
 
@@ -166,8 +167,8 @@ public class Game{
 					hd[i] = roles[i].getHandCards();
 				}
 				int PlayerScore = scorer.getScore(0, hd);//传牌组进去....
-				//playGameCallBack.onGameEnd(0,PlayerScore);
-				playGameCallBack.onCardsNotValid("实际上是游戏结束了 并不是错误");
+				playGameCallBack.onGameEnd(0,PlayerScore);
+				//playGameCallBack.onCardsNotValid("实际上是游戏结束了 并不是错误");
 			}
 			//机器人出牌 并进行回调
 			ThreeRobotsTurn(playGameCallBack);
@@ -213,8 +214,8 @@ public class Game{
 				}
 				int PlayerScore = scorer.getScore(0, hd);//传牌组进去....
 				//TODO 要改回来 后面用下面的这行
-				//playGameCallBack.onGameEnd(i,PlayerScore);
-				playGameCallBack.onCardsNotValid("实际上是游戏结束了 并不是错误");
+				playGameCallBack.onGameEnd(i,PlayerScore);
+				//playGameCallBack.onCardsNotValid("实际上是游戏结束了 并不是错误");
 				return;
 			}
 
