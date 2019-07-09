@@ -194,7 +194,7 @@ public class Game{
 		deliveredCardsGroup currentCardsGroup;
 		for (int i = 1; i < 4; i++) {
 			if(i < 4){//三个机器人都不出牌
-				playGameCallBack.onRobotPass(i);
+				playGameCallBack.onRolePass(i);
 				IsLatestShow[i] = false;
 				continue;//默认让2号机器人不出牌。。。。测试用。。。
 
@@ -214,7 +214,7 @@ public class Game{
 				playGameCallBack.setRobotHandCard(roles[i].getHandCards().getCardsGroup(), i);
 			} else {
 				//机器人不出事件
-				playGameCallBack.onRobotPass(i);
+				playGameCallBack.onRolePass(i);
 			}
 
 			//游戏结束了
