@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context="cdd.menu.view.MainActivity"
     tools:layout_editor_absoluteY="25dp"
-    android:background="@mipmap/init_bg">
+    android:background="@mipmap/init_bg">   
 
     <Button
         android:id="@+id/start_game"
