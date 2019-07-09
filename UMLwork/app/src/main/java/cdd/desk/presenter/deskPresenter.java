@@ -69,7 +69,7 @@ public class deskPresenter implements deskContract.Presenter,PlayGameCallBack {
     }
 
     @Override
-    public void onGameWin(int winnerIndex) {
+    public void onGameWin(int winnerIndex,int PlayerScore) {
 
     }
 }

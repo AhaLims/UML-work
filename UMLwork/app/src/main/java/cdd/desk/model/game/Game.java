@@ -7,6 +7,7 @@ import cdd.desk.model.card.Card;
 import cdd.desk.model.card.CardColor;
 import cdd.desk.model.card.PairCardsGroup;
 import cdd.desk.model.card.deliveredCardsGroup;
+import cdd.desk.model.card.handCardsGroup;
 import cdd.desk.model.role.Player;
 import cdd.desk.model.role.Robot;
 import cdd.desk.model.role.Role;
@@ -16,6 +17,7 @@ import cdd.desk.model.role.Role;
 public class Game{
 	private Judger judger;
 	private PairCardsGroup AllCards;
+	private Scorer scorer;
 	//CardsManager cardsManager;
 	private deliveredCardsGroup LatestCards;//最新的 出在牌桌上面的牌
 	private int currentTurn;
@@ -26,6 +28,7 @@ public class Game{
 	//private int[] nextTurn;
 	public Game() {
 		judger = new Judger();
+		scorer = new Scorer();
 		//nextTurn = new int[4];
 		AllCards = PairCardsGroup.getPairOfCards();
 		roles = new Role[4];
@@ -128,6 +131,7 @@ public class Game{
 		turnTime = 0;
         playGameCallBack.displayPlayerHandCards(roles[0].getHandCards().getCardsGroup());//回调
 		for(int i = 1;i < 4; i++){
+
 			playGameCallBack.setRobotHandCard(roles[i].getHandCards().getCardsGroup(),i);//将机器人的牌传给前端
 		}
 		for(int i = 0;i < 4;i++){
@@ -146,6 +150,7 @@ public class Game{
 				deliveredCard = roles[i].deliver(LatestCards);
 				if(deliveredCard.hasCards() == true)
 				{
+					roles[i].refreshCardsGroup(deliveredCard);//更新牌
 					LatestCards = deliveredCard;//更新LatestCards
 				}
 				playGameCallBack.displayRobotCards(deliveredCard.getCardsGroup(),i);
@@ -194,24 +199,40 @@ public class Game{
 		}
 		validation = true;//TODO 这里先默认了所有的出牌都是合法的....后面再改
 		//玩家的牌传递给presenter
-		///////////////////////////////////////////////////////////////////////////////////////////////////
+
 		if(validation == true) {//合法的出牌
 			playGameCallBack.displayPlayerCards(currentCardsGroup.getCardsGroup());
+			roles[0].refreshCardsGroup(currentCardsGroup);//更新牌
+			playGameCallBack.displayPlayerHandCards(roles[0].getHandCards().getCardsGroup());//回调
             System.out.println("玩家的出牌局");
 			System.out.println("");
 			if(roles[0].win() == true){
-				//游戏结束了
-				playGameCallBack.onGameWin(0);
+				//游戏结束了  需要进行分数的计算
+				//TODO 需要测试分数
+				handCardsGroup [] hd = new handCardsGroup[4];
+				for(int i = 0;i<4;i++){
+					hd[i] = roles[i].getHandCards();
+				}
+				int PlayerScore = scorer.getScore(0,hd);//传牌组进去....
+				playGameCallBack.onGameWin(0,PlayerScore);
 			}
 			for(int i = 1; i < 4; i++){
 				currentCardsGroup = roles[i].deliver(LatestCards);
-				if(currentCardsGroup.hasCards() == true)
+				if(currentCardsGroup.hasCards() == true) {
 					LatestCards = currentCardsGroup;
+					roles[i].refreshCardsGroup(currentCardsGroup);//更新牌
+				}
 				playGameCallBack.displayRobotCards(currentCardsGroup.getCardsGroup(),i);
                 playGameCallBack.setRobotHandCard( roles[i].getHandCards().getCardsGroup(),i);//??????
 				if(roles[i].win() == true){
 					//游戏结束了
-					playGameCallBack.onGameWin(i);
+					//TODO 需要测试分数
+					handCardsGroup [] hd = new handCardsGroup[4];
+					for(int j = 0; j < 4; j++){
+						hd[j] = roles[j].getHandCards();
+					}
+					int PlayerScore = scorer.getScore(0,hd);//传牌组进去....
+					playGameCallBack.onGameWin(i,PlayerScore);
 				}
 				//机器人出牌 并进行回调
 			}
