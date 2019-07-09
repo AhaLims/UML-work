@@ -47,7 +47,7 @@ public class deskPresenter implements deskContract.Presenter,PlayGameCallBack {
     }
 
     @Override
-    public void onCardsNotValid(CharSequence message) {
+    public void onCardsNotValid(String message) {
         mDeskActivity.displayIrregularity(message);
     }
 
@@ -56,7 +56,14 @@ public class deskPresenter implements deskContract.Presenter,PlayGameCallBack {
 
     }
 
+    @Override
     public void playerPass(){
         /////mGame.pass()
+    }
+
+    @Override
+    public void onGameEnd(int winnerIndex){
+/////游戏结束的时候的时候调用
+     //TODO 改名为onGameEnd
     }
 }

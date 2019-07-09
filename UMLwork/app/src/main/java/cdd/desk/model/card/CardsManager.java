@@ -50,33 +50,106 @@ public class CardsManager {
 		
 	}
 	//判断牌的类型
+	//判断牌的类型
 	public CardsType jugdeType(List<Card> list) {
 		int len = list.size();
-		
-		//只可能是：cardSingle,//单牌。
-		//cardsCouple,//对子。
-		//cards3,//3不带。
-		if(len <= 4)
+
+		//单张牌
+		if(len==1)
+		{return CardsType.cardSingle;}
+
+		//对子
+		if(len==2 && (list.get(0).getPoints() == list.get(1).getPoints()))
+		{ return CardsType.cardsCouple;}
+
+
+		//三张相等
+		if(len==3)
 		{
-			//如果第一个和最后个相同，说明全部相同
-			if(len > 0 && list.get(0).getPoints() == list.get(len - 1).getPoints())
+			int count=0;//设定一个计数器用来判断几张牌之间相等的次数
+			for(int i=1;i<3;i++)
 			{
-				switch (len) {
-				case 1:
-					return CardsType.cardSingle;//单张牌
-				case 2:
-					return CardsType.cardsCouple;//对子
-				case 3:
-					return CardsType.cards3;//三张相同的牌
-				case 4:
-					return CardsType.cards4;//四张相同的牌
+				if (list.get(i).getPoints()==list.get(i-1).getPoints())
+				{
+					count++;
+				}//每当一个牌的数值等于它前一个牌的数值，就代表它们两张牌数值相等，计数器加一
+			}
+			if(count==2){return CardsType.cards3;}//当计数器达到2时，代表三张牌数值相等，所以时三张相等的牌
+			else { return CardsType.card0; }
+		}
+
+		//三带一模式
+		if(len == 4)
+		{
+			if(list.get(0).getPoints() == list.get(1).getPoints() && list.get(0).getPoints()!=list.get(3).getPoints())//第一张和第二张牌相等,第一张牌与最后一张牌不相等，3334模式
+			{
+				if (list.get(2).getPoints()==list.get(1).getPoints()) {return CardsType.cards31;}//当第三张牌也等于第二张牌时，代表三张牌数值相等，所以是三张相等的牌，表示三带一
+				else { return CardsType.card0; }
+			}
+
+			else
+			{
+				if (list.get(0).getPoints() != list.get(1).getPoints() && list.get(0).getPoints()!=list.get(3).getPoints())//第一张牌和第二张牌不相等，第一张牌与最后一张牌不相等，3444模式
+				{
+					int count=0;//设定一个计数器用来判断几张牌之间相等的次数
+					for (int i = 2; i < 4;i++)
+					{
+						if (list.get(i).getPoints() == list.get(i - 1).getPoints()) {
+							count++;
+						}//每当一个牌的数值等于它前一个牌的数值，就代表它们两张牌数值相等，计数器加一
+					}
+					if (count == 2) { return CardsType.cards31; }//当计数器达到2时，代表三张牌数值相等，所以是三张相等的牌，表示三带一
+					else { return CardsType.card0; }
+				}
+
+
+			}
+		}
+
+		//五张牌
+		if(len==5)
+		{
+			int count=0;//定义一个计数器用于判断花色相等的牌有多少张
+			for(int i = 1 ;i < 5;i++)
+			{
+				if (list.get(i).getPoints() == list.get(i - 1).getPoints())
+				{ count++; }//与上面判断三张相等牌思路相同
+			}
+			if(count==4)
+			{
+				return CardsType.cardsThs;
+			}//当计数器值为4时，表示5张牌的color都是相等的，因此是同花顺
+
+			else//如果经过上面的判断后确定不是同花，那么接下来就判断是否是四带一，分33334模式和34444模式
+			{
+				if(list.get(0).getPoints() == list.get(1).getPoints() && list.get(0).getPoints()!=list.get(4).getPoints())//如果第一张牌和第二张牌数值相等，并且第一张牌和最后一张牌不相等，则是33334模式
+				{
+					int count1=0;
+					for(int i = 1;i < 4; i++)
+					{
+						if(list.get(i).getPoints()==list.get(i-1).getPoints())
+						{count1++;}//与上面判断三张相等牌思路相同
+					}
+					if(count1 == 3){return CardsType.cards41;}
+				}
+
+				if(list.get(0).getPoints()!=list.get(1).getPoints()&& list.get(0).getPoints()!=list.get(4).getPoints())//如果第一张牌和第二张牌数值不相等，则是34444模式
+				{
+					int count2=0;
+					for(int i=2;i<5;i++)
+					{
+						if(list.get(i).getPoints()==list.get(i-1).getPoints())
+						{count2++;}//与上面判断三张相等牌思路相同
+					}
+					if(count2 == 3)
+					{
+						return CardsType.cards41;
+					}
 				}
 			}
-	}
-		//四张牌 但是最后一张牌与第一张牌不一样 所以是三带一
-		if(len == 4 && list.get(0).getPoints() != list.get(len - 1).getPoints())
-			return CardsType.cards31;
-		//后面可以再根据CardsType来增加 
+
+		}
+
 		return CardsType.card0;//不是上述的任何一种牌的类型
 	}
 	/*
