@@ -55,9 +55,6 @@ public class Game{
 		return true;
 	}
 
-
-
-
 	public void InitGame(PlayGameCallBack playGameCallBack) {
 		AllCards.shuffleCards();//洗牌
 		licensingCards();//发牌
