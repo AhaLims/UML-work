@@ -11,7 +11,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name="cdd.menu.view.MainActivity"
-            android:screenOrientation="landscape"><!--横屏显示-->
+            android:screenOrientation="landscape"> <!-- 横屏显示 -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,7 +21,12 @@
 
         <activity
             android:name="cdd.desk.view.deskActivity"
-            android:screenOrientation="landscape">  <!--横屏显示-->
+            android:screenOrientation="landscape"> <!-- 横屏显示 -->
+
+        </activity>
+
+        <activity android:name="cdd.desk.view.resultActivity"
+                  android:screenOrientation="landscape"><!-- 横屏显示 -->
 
         </activity>
     </application>

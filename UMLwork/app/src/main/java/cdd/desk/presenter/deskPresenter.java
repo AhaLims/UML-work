@@ -1,5 +1,4 @@
 package cdd.desk.presenter;
-
 import java.util.List;
 
 import cdd.desk.contract.deskContract;
@@ -36,13 +35,13 @@ public class deskPresenter implements deskContract.Presenter,PlayGameCallBack {
             System.out.println(playerCards.get(i).getWeight());
         }
         mDeskActivity.displayPlayerCards(playerCards);
-        mDeskActivity.removeShowedCards(1);
+       // mDeskActivity.removeShowedCards(1);
     }
 
     @Override
     public void displayRobotCards(List<Card> robotCards, int robot) {
         mDeskActivity.displayRobotCards(robotCards,robot);
-        mDeskActivity.removeShowedCards((robot+1)%4);
+       // mDeskActivity.removeShowedCards((robot+1)%4);
     }
 
     @Override
@@ -56,15 +55,12 @@ public class deskPresenter implements deskContract.Presenter,PlayGameCallBack {
     }
 
     // TODO robot不出牌
-    @Override
-    public void onRobotPass(int robot) {
 
-    }
 
     //TODO 不出牌
     @Override
     public void playerPass(){
-        /////mGame.pass()
+        mGame.turn(null,this);
     }
 
 
@@ -77,6 +73,11 @@ public class deskPresenter implements deskContract.Presenter,PlayGameCallBack {
 
     public void playerShowCards(List<Integer> cards){
        mGame.turn(cards,this);
+    }
+
+    @Override
+    public void onRobotPass(int robot) {
+        mDeskActivity.displayPass(robot);
     }
 
 

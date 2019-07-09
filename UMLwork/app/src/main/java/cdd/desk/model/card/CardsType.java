@@ -2,7 +2,7 @@ package cdd.desk.model.card;
 /**
  * @author AhaLims
  */
-
+//TODO 现在还是暂时用这个.....后面再改吧
 public enum CardsType {
 	cardSingle,//单牌
 	cardsCouple,//两张相等的对子
