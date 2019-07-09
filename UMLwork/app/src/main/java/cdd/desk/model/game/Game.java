@@ -55,7 +55,7 @@ public class Game{
 	//以及准备出的牌
 	//返回boolean值代表出的牌是不是合法的
 	//也许应该返回String 比较合适？ 如果是合法 则String为空     //不合法 String为相应的错误提示
-	//TODO 这里后面需要用  需要修改 因为需要根据是否先手 后手来判断出牌
+	//TODO 需要修改 因为需要根据是否先手 后手来判断出牌
 	public boolean RoleDeliverCard(int currentRole,deliveredCardsGroup currentCardsGroup) {
 		boolean validation = false;
 
@@ -86,7 +86,6 @@ public class Game{
 					roles[currentRole].refreshCardsGroup(currentCardsGroup);//更新牌
 					validation = true;
 				}
-				//TODO 合法的出牌 这个时候应该考虑怎么更新牌
 			}
 		}
 		else {//后手 需要参考上家的牌
@@ -176,6 +175,7 @@ public class Game{
 	}
 	//由presenter来调用这个函数
 	//两个参数分别为:前端传来的牌的数组 以及presenter自己
+	//TODO 处理前端的　"不出事件"
 	public void turn(List<Integer> list,PlayGameCallBack playGameCallBack) {
 		boolean validation = false;
 		turnTime++;

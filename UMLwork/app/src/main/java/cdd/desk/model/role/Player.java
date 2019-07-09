@@ -14,7 +14,6 @@ import cdd.desk.model.game.Game;
 public class Player extends Role{
 	public Player(Game g) {
 		super(g);
-		// TODO Auto-generated constructor stub
 	}
 
 	//给对应的index 可以找到用户选的一组牌 并且可以组装成deliveredCardsGroup 类型的东西
