@@ -24,6 +24,7 @@ public class Role {
 	}
 
 
+	//TODO 这里的构造函数应该要改 实际上不需要Game传进来
 	public Role(Game g) {
 		cardsManager = CardsManager.getCardsManager();
 		score = 0;
@@ -44,6 +45,7 @@ public class Role {
 		CurrentCards.deleteCardsGroup(deliveredCards);
 	}
 
+	//判断是否出完牌了
 	public boolean ifFinish() {
 		if (CurrentCards.cardsAmount() == 0) return true;
 		return false;
@@ -61,6 +63,7 @@ public class Role {
 		CurrentCards.deleteCardsGroup(deletedCardsGroup);
 	}
 
+	//TODO selectCards(List<Integer> cardsIndex) 这个方法放的有点奇怪
 	public deliveredCardsGroup selectCards(List<Integer> cardsIndex) {
 		//怎么把cardsIndex组装成 deliveredCardsGroup(List<Card> c) 
 		deliveredCardsGroup dc = new deliveredCardsGroup();
@@ -71,6 +74,12 @@ public class Role {
 			dc.addCard(card);
 		}
 		return dc;
+	}
+
+	//TODO 空函数设置。。并不合理
+	public deliveredCardsGroup deliver(deliveredCardsGroup previous){
+		//空函数 由 Robot 和 Player来继承
+		return null;
 	}
 
 	public void setNumber(int n) {

@@ -25,7 +25,12 @@ public class Robot extends Role {
             Card c = list.get(0);
             dc.addCard(c);
         }
-
+        else {
+            //TODO
+            //为了测试 这里不是先手也除牌了
+            Card c = list.get(0);
+            dc.addCard(c);
+        }
         return dc;
     }
 }
