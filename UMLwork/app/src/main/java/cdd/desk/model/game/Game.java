@@ -17,16 +17,19 @@ import cdd.desk.model.role.Role;
 //TODO 设置一个常量 玩家index = 0 可读性更强
 
 public class Game{
+
 	private PairCardsGroup AllCards;
 	private Scorer scorer;
-	//CardsManager cardsManager;
 	private deliveredCardsGroup LatestCards;//最新的 出在牌桌上面的牌
 	private int currentTurn;
 	public int firstTurn;//其实不应该public的....后面再改吧
 	private int turnTime;//轮数
 	private Role[] roles;
 	private boolean[] IsLatestShow;//用来判断最新是否出了牌
-	//private int[] nextTurn;
+
+    private static final int PlayID = 0;
+    //也许后面重构的时候会把所有的index=0的情况换成PlayerID 代码可读性更强
+	//TODO 也许应该传进玩家的名字....然后....
 	public Game() {
 		scorer = new Scorer();
 		//nextTurn = new int[4];
@@ -36,8 +39,8 @@ public class Game{
 		LatestCards = new deliveredCardsGroup();
 		for(int i = 0;i < 4; i++) {
 			if(i == 0)
-				roles[i] = new Player(this);
-			else roles[i] = new Robot(this);
+				roles[i] = new Player();
+			else roles[i] = new Robot();
 			IsLatestShow[i] = false;//一开始大家都没有出牌
 		}
 	}
@@ -77,6 +80,7 @@ public class Game{
 				{
 					roles[i].refreshCardsGroup(deliveredCard);//更新牌
 					LatestCards = deliveredCard;//更新LatestCards
+					IsLatestShow[i] = true;//机器人的状态为 出牌
 				}
 				playGameCallBack.displayRobotCards(deliveredCard.getCardsGroup(),i);
 				playGameCallBack.setRobotHandCard( roles[i].getHandCards().getCardsGroup(),i);
@@ -111,15 +115,11 @@ public class Game{
 
 	//由presenter来调用这个函数
 	//两个参数分别为:前端传来的牌的数组 以及presenter自己
-	// TODO  bug
 	public void turn(List<Integer> list,PlayGameCallBack playGameCallBack) {
 		//TODO bug......turnTime需要在合适的时候才增加
 		deliveredCardsGroup currentCardsGroup;
-		System.out.print("这个时候应该出牌了");
 		if (list == null) {//处理不出牌的事件
-			System.out.println("这个时候没有出牌");
 			if (IsFirstHand(0)) {
-				System.out.println("先手 必须出牌");
 				playGameCallBack.onCardsNotValid("先手必须出牌哦");
 
 			} else {
@@ -177,13 +177,16 @@ public class Game{
 		//三个机器人的牌局
 		deliveredCardsGroup currentCardsGroup;
 		for (int i = 1; i < 4; i++) {
-			if(i == 2){
+			if(i < 4){//三个机器人都不出牌
 				playGameCallBack.onRobotPass(i);
-				continue;//默认让一号机器人不出牌。。。。测试用。。。
+				IsLatestShow[i] = false;
+				continue;//默认让2号机器人不出牌。。。。测试用。。。
+
 			}
 
 
-			currentCardsGroup = roles[i].deliver(LatestCards);
+			currentCardsGroup = roles[i].deliver(LatestCards);//这是根据上家的牌获取的机器人应该出的牌
+
 			if (currentCardsGroup.hasCards() == true) {//机器人是有牌出的
 
 				LatestCards = currentCardsGroup;
@@ -201,7 +204,6 @@ public class Game{
 			//游戏结束了
 			if (roles[i].win() == true) {
 
-				//TODO 需要测试分数
 				handCardsGroup[] hd = new handCardsGroup[4];
 				for (int j = 0; j < 4; j++) {
 					hd[j] = roles[j].getHandCards();
@@ -212,7 +214,7 @@ public class Game{
 				playGameCallBack.onCardsNotValid("实际上是游戏结束了 并不是错误");
 				return;
 			}
-			return;
+
 		}
 	}
 

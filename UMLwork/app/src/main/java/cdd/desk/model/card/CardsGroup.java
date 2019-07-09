@@ -45,17 +45,15 @@ public class CardsGroup{
 	public CardsType getType() {
 		return cardsManager.jugdeType(card);
 	}
-	
-	//传什么参数进来初始化CardsGroup呢...?
+
 	public CardsGroup(List<Card> c) {
 		if(c != null)
-			this.card = c;//就....这么平凡的进来了??
+			this.card = c;
 		else
 			this.card = new ArrayList<Card>();
 		cardsManager = CardsManager.getCardsManager();
 	}
 	public CardsGroup() {
-		//emmm空的?
 		this.card = new ArrayList<Card>();
 		cardsManager = CardsManager.getCardsManager();
 	}
@@ -117,7 +115,7 @@ public class CardsGroup{
 	}
 	public static void orderCards(List<Card> list){
 		Collections.sort(list,new Comparator<Card>() {//实现了接口中的compare函数
-			//这里是java某种扭曲的语法糖
+			//这里是java的语法糖
 			//@Override
 			public int compare(Card card1, Card card2) {
 
@@ -126,7 +124,7 @@ public class CardsGroup{
 		}
 	);
 	}
-	//将前端所传进来的 选中的牌的index数组转换为 deliveredCardsGroup的牌
+	//将presenter所传进来的 选中的牌的index数组转换为 deliveredCardsGroup的牌
 	public deliveredCardsGroup packCardsGroup(List<Integer> list) {
 		deliveredCardsGroup DeliveredCardsGroup = new deliveredCardsGroup();
 		for(int i = 0;i < list.size();i++) {

@@ -9,9 +9,7 @@ import cdd.desk.model.game.Game;
 
 
 public class Robot extends Role {
-    public Robot(Game g) {
-        super(g);
-    }
+
 
     //根据上家的牌决定出牌的策略
     public deliveredCardsGroup deliver(deliveredCardsGroup previous) {
