@@ -114,7 +114,6 @@ public class Game{
 
 	//由presenter来调用这个函数
 	//两个参数分别为:前端传来的牌的数组 以及presenter自己
-	// TODO  bug
 	public void turn(List<Integer> list,PlayGameCallBack playGameCallBack) {
 		//TODO bug......turnTime需要在合适的时候才增加
 		deliveredCardsGroup currentCardsGroup;
@@ -182,11 +181,13 @@ public class Game{
 		for (int i = 1; i < 4; i++) {
 			if(i == 2){
 				playGameCallBack.onRobotPass(i);
-				continue;//默认让一号机器人不出牌。。。。测试用。。。
+				IsLatestShow[i] = false;
+				continue;//默认让2号机器人不出牌。。。。测试用。。。
 			}
 
 
-			currentCardsGroup = roles[i].deliver(LatestCards);
+			currentCardsGroup = roles[i].deliver(LatestCards);//这是根据上家的牌获取的机器人应该出的牌
+
 			if (currentCardsGroup.hasCards() == true) {//机器人是有牌出的
 
 				LatestCards = currentCardsGroup;
@@ -204,7 +205,6 @@ public class Game{
 			//游戏结束了
 			if (roles[i].win() == true) {
 
-				//TODO 需要测试分数
 				handCardsGroup[] hd = new handCardsGroup[4];
 				for (int j = 0; j < 4; j++) {
 					hd[j] = roles[j].getHandCards();
@@ -215,7 +215,7 @@ public class Game{
 				playGameCallBack.onCardsNotValid("实际上是游戏结束了 并不是错误");
 				return;
 			}
-			return;
+
 		}
 	}
 
