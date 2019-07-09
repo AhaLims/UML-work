@@ -11,7 +11,6 @@ import cdd.desk.model.game.Game;
 public class Robot extends Role {
     public Robot(Game g) {
         super(g);
-        // TODO Auto-generated constructor stub
     }
 
     //根据上家的牌决定出牌的策略
@@ -25,7 +24,12 @@ public class Robot extends Role {
             Card c = list.get(0);
             dc.addCard(c);
         }
-
+        else {
+            //TODO 需要在这里补充机器人的策略
+            //为了测试 这里不是先手也除牌了
+            Card c = list.get(0);
+            dc.addCard(c);
+        }
         return dc;
     }
 }

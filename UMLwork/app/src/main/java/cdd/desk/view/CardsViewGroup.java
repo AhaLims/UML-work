@@ -4,17 +4,22 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+
+import com.example.uml.umlwork.R;
+
 import java.util.List;
 import cdd.desk.model.card.Card;
 
 
 public abstract  class CardsViewGroup extends FrameLayout {
-
+    Context context;
     public CardsViewGroup.LayoutParams params;//牌的布局属性参数
 
     public CardsViewGroup(Context context) {
         super(context);
+        this.context = context;
         //初始化Layout属性
         params = new CardsViewGroup.LayoutParams(100,100);
         params.height = LinearLayout.LayoutParams.WRAP_CONTENT;
@@ -24,6 +29,7 @@ public abstract  class CardsViewGroup extends FrameLayout {
 
     public CardsViewGroup(Context context, AttributeSet attrs) {
         super(context, attrs);
+        this.context = context;
         //初始化Layout属性
         params = new CardsViewGroup.LayoutParams(100,100);
         params.height = LinearLayout.LayoutParams.WRAP_CONTENT;
@@ -33,6 +39,7 @@ public abstract  class CardsViewGroup extends FrameLayout {
 
     public CardsViewGroup(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        this.context = context;
         //初始化Layout属性
         params = new CardsViewGroup.LayoutParams(100,100);
         params.height = LinearLayout.LayoutParams.WRAP_CONTENT;
@@ -52,6 +59,16 @@ public abstract  class CardsViewGroup extends FrameLayout {
         //显示每一张牌
         for(int i = 0;i < length;i++)
             addCardView(playerCards.get(i));
+    }
+
+    public void displayPass(){
+        CardsViewGroup.LayoutParams tempparams;
+        tempparams = new CardsViewGroup.LayoutParams(250,250);
+        removeAllViews();
+        ImageView pass = new ImageView(context);
+        pass.setLayoutParams(tempparams);
+        pass.setImageResource(R.drawable.buchu);
+        addView(pass);
     }
     /**
      *函数名：onLayout
