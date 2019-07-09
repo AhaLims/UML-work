@@ -17,15 +17,18 @@ import cdd.desk.model.role.Role;
 //TODO 设置一个常量 玩家index = 0 可读性更强
 
 public class Game{
+
 	private PairCardsGroup AllCards;
 	private Scorer scorer;
-	//CardsManager cardsManager;
 	private deliveredCardsGroup LatestCards;//最新的 出在牌桌上面的牌
 	private int currentTurn;
 	public int firstTurn;//其实不应该public的....后面再改吧
 	private int turnTime;//轮数
 	private Role[] roles;
 	private boolean[] IsLatestShow;//用来判断最新是否出了牌
+
+    private static final int PlayID = 0;
+    //也许后面重构的时候会把所有的index=0的情况换成PlayerID 代码可读性更强
 	//TODO 也许应该传进玩家的名字....然后....
 	public Game() {
 		scorer = new Scorer();
@@ -80,6 +83,7 @@ public class Game{
 				{
 					roles[i].refreshCardsGroup(deliveredCard);//更新牌
 					LatestCards = deliveredCard;//更新LatestCards
+					IsLatestShow[i] = true;//机器人的状态为 出牌
 				}
 				playGameCallBack.displayRobotCards(deliveredCard.getCardsGroup(),i);
 				playGameCallBack.setRobotHandCard( roles[i].getHandCards().getCardsGroup(),i);
@@ -117,11 +121,8 @@ public class Game{
 	public void turn(List<Integer> list,PlayGameCallBack playGameCallBack) {
 		//TODO bug......turnTime需要在合适的时候才增加
 		deliveredCardsGroup currentCardsGroup;
-		System.out.print("这个时候应该出牌了");
 		if (list == null) {//处理不出牌的事件
-			System.out.println("这个时候没有出牌");
 			if (IsFirstHand(0)) {
-				System.out.println("先手 必须出牌");
 				playGameCallBack.onCardsNotValid("先手必须出牌哦");
 
 			} else {
@@ -179,10 +180,11 @@ public class Game{
 		//三个机器人的牌局
 		deliveredCardsGroup currentCardsGroup;
 		for (int i = 1; i < 4; i++) {
-			if(i == 2){
+			if(i < 4){//三个机器人都不出牌
 				playGameCallBack.onRobotPass(i);
 				IsLatestShow[i] = false;
 				continue;//默认让2号机器人不出牌。。。。测试用。。。
+
 			}
 
 

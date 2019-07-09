@@ -34,8 +34,6 @@ public class PairCardsGroup extends CardsGroup {
 		for(int i = 0;i < time; i++)
 		{
 			//掉换牌的位置
-			//final long l = System.currentTimeMillis();
-			//int randomNumber = (int)( l % 52);
 			int randomNumber = (int) (Math.random() * 52);//随机数的产生
 			Card temp = card.get(randomNumber);
 			card.remove(randomNumber);

@@ -211,25 +211,7 @@ public class CardsManager {
 	 * 		现在默认目前所有的牌的类型都按照这样的规则来比较
 			ps当然我觉得这样做是不行的
 	 */
-	
-	/*public static boolean canDisplay(CardsType type,
-			List<Card> previousList,
-			List<Card> presentList){
-		switch(type) {
-		case cardSingle:
-		case cardsCouple:
-		case cards3:
-		case cards4:
-		case cardsSequence:
-		case cards31:
-			if(presentList.get(0).compareTo(previousList.get(0)) > 0)
-				return true;
-			else return false;
-		default:
-			return false;
-		}
-	}*/
-	//6.28 按照新的逻辑 canDisplay暂时没用
+
 
 	public boolean isPermissible(deliveredCardsGroup previous,deliveredCardsGroup current,PlayGameCallBack playGameCallBack)
 	{
