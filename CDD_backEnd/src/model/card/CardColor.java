@@ -1,4 +1,4 @@
-package card;
+package model.card;
 
 public enum CardColor{
 	 Diamond,//方块

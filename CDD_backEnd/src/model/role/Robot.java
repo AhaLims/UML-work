@@ -1,11 +1,12 @@
-package role;
+package model.role;
 
 import java.util.List;
 
-import card.Card;
-import card.CardsGroup;
-import card.deliveredCardsGroup;
-import game.Game;
+import model.card.Card;
+import model.card.deliveredCardsGroup;
+import model.game.Game;
+
+
 
 public class Robot extends Role{
 	public Robot(Game g) {

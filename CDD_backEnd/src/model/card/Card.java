@@ -1,4 +1,4 @@
-package card;
+package model.card;
 
 public class Card implements Comparable<Card>{//实现了Comparable的接口 这样就是可以比较的了
 	//包可见 所以不用写import?

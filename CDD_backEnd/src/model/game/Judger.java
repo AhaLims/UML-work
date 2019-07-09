@@ -1,8 +1,9 @@
 /*
  * judge 判断两个牌组的大小关系（两个牌组的类型以及value已经给出来了)*/
-package game;
-import card.deliveredCardsGroup;
-import card.CardsType;
+package model.game;
+
+import model.card.deliveredCardsGroup;
+
 public class Judger{
 
 	//判断在有上家的情况下牌是不是合法的

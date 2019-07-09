@@ -1,4 +1,4 @@
-package card;
+package model.card;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,9 +30,14 @@ public class PairCardsGroup extends CardsGroup{
 		for(int i = 0;i < time; i++)
 		{
 			//掉换牌的位置
-			//暂时不知道 list要怎么洗牌.....
+			final long l = System.currentTimeMillis();
+			final int randomNumber = (int)( l % 52);
+			Card temp = card.get(randomNumber);
+			card.remove(randomNumber);
+			card.add(temp);
 		}
 	}
+	//暂时默认洗....1000次牌
 	public void shuffleCards() {
 		shuffleCards(1000);
 	}

@@ -2,9 +2,12 @@ package test;
 import java.util.ArrayList;
 import java.util.List;
 
-import card.*;
-import game.Game;
-import role.Role;
+import model.card.Card;
+import model.card.CardColor;
+import model.card.CardsGroup;
+import model.game.Game;
+import model.role.Role;
+
 
 
 public class testFunction{

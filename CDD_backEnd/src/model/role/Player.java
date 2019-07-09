@@ -1,12 +1,13 @@
-package role;
+package model.role;
 
-import card.Card;
-import card.CardsGroup;
-import card.deliveredCardsGroup;
-import game.Game;
+
 
 import java.util.ArrayList;
 import java.util.List;
+
+import model.card.Card;
+import model.card.deliveredCardsGroup;
+import model.game.Game;
 
 //public class Player{
 //	public CardsGroup selectCards( List<int> cardIndex) {

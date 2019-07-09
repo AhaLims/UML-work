@@ -1,13 +1,16 @@
-package game;
+package model.game;
 
 import java.util.List;
 
-import card.Card;
-import card.CardColor;
-import card.CardsGroup;
-import card.PairCardsGroup;
-import card.deliveredCardsGroup;
-import role.*;
+
+import model.card.Card;
+import model.card.CardColor;
+import model.card.PairCardsGroup;
+import model.card.deliveredCardsGroup;
+import model.role.Player;
+import model.role.Role;
+
+
 
 public class Game{
 	private Judger judger;

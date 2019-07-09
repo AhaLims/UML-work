@@ -2,7 +2,7 @@
 //每次出牌之后都需要调用
 
 //貌似这个部分放到 Rolemanager去了
-package card;
+package model.card;
 
 import java.util.Collections;
 import java.util.Comparator;

@@ -1,12 +1,13 @@
-package role;
+package model.role;
 import java.util.List;
 
-import card.Card;
-import card.CardsGroup;
-import card.CardsManager;
-import card.deliveredCardsGroup;
-import card.handCardsGroup;
-import game.Game;
+import model.card.Card;
+import model.card.CardsGroup;
+import model.card.CardsManager;
+import model.card.deliveredCardsGroup;
+import model.card.handCardsGroup;
+import model.game.Game;
+
 
 public class Role{
 	CardsManager cardsManager;
