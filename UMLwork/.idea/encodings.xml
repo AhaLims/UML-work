@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+<<<<<<< HEAD
   <component name="Encoding" addBOMForNewFiles="with NO BOM" />
+=======
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/app/src/main/java/cdd/desk/model/Card.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/cdd/desk/view/deskActivity.java" charset="UTF-8" />
+  </component>
+>>>>>>> 67527eee81c400b3005e0fcde1b1287a6743a84e
 </project>

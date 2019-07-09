@@ -23,4 +23,5 @@ public class CardView extends android.support.v7.widget.AppCompatImageView{
     {
         pos = s;
     }
+
 }
