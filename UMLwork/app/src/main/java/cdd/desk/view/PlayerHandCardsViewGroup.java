@@ -6,6 +6,7 @@ import android.view.View;
 import java.util.LinkedList;
 import java.util.List;
 
+import static android.os.SystemClock.sleep;
 import static cdd.desk.view.State.DOWN;
 
 public class PlayerHandCardsViewGroup extends CardsViewGroup {

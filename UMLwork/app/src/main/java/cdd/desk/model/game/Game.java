@@ -12,8 +12,6 @@ import cdd.desk.model.role.Player;
 import cdd.desk.model.role.Robot;
 import cdd.desk.model.role.Role;
 
-
-
 public class Game{
 	private Judger judger;
 	private PairCardsGroup AllCards;
@@ -131,7 +129,6 @@ public class Game{
 		turnTime = 0;
         playGameCallBack.displayPlayerHandCards(roles[0].getHandCards().getCardsGroup());//回调
 		for(int i = 1;i < 4; i++){
-
 			playGameCallBack.setRobotHandCard(roles[i].getHandCards().getCardsGroup(),i);//将机器人的牌传给前端
 		}
 		for(int i = 0;i < 4;i++){

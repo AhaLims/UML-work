@@ -1,6 +1,8 @@
 package cdd.desk.view;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +19,9 @@ import cdd.desk.model.card.Card;
 import cdd.desk.model.card.CardColor;
 import cdd.desk.contract.deskContract;
 import cdd.desk.presenter.deskPresenter;
+import cdd.menu.view.MainActivity;
+
+import static android.os.SystemClock.sleep;
 
 /**
  * Main UI for the add task screen. Users can enter a task title and description.
@@ -26,6 +31,7 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
     private Button btnShowCards;
     private Button btnSkip;
     private Button btnReSelect;
+    private Button tiaozhuan;
     private PlayerHandCardsViewGroup playerCardSetLayout;
     private ShowedCardsViewGroup playerShowCardsLayout;
     private ShowedCardsViewGroup leftRobotShowCardsLayout;
@@ -48,6 +54,7 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
         btnShowCards = findViewById(R.id.show_cards);
         btnSkip = findViewById(R.id.skip);
         btnReSelect = findViewById(R.id.reselect);
+        tiaozhuan = findViewById(R.id.tiaozhuan);
         playerCardSetLayout = findViewById(R.id.player_cardset_field);
         playerShowCardsLayout = findViewById(R.id.player_showcards_field);
         leftRobotShowCardsLayout = findViewById(R.id.robot1_cardset_field);
@@ -73,7 +80,6 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
             }
         });
 
-
         btnReSelect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,16 +87,11 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
             }
         });
 
-        //TODO 要记得删除
-        /*仅做临时测试*/
-        btnReSelect.setOnClickListener(new View.OnClickListener() {
+        tiaozhuan.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v) {
-                Card card1 = new Card(1,CardColor.Spade);
-                List<Card> cards = new ArrayList<Card>();
-                cards.add(card1);
-                displayPlayerCards(cards);
-                displayPlayerHandCards(cards);
+            public void onClick(View v){
+                Intent intent = new Intent(deskActivity.this,resultActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -186,6 +187,23 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
 
             default:
                 throw new IllegalArgumentException("收到了不存在的机器人");
+        }
+    }
+
+    public void displayPass(int robot)
+    {
+        switch (robot)
+        {
+            case 1:
+                leftRobotShowCardsLayout.displayPass();
+                break;
+            case 2:
+                middleRobotShowCardsLayout.displayPass();
+                break;
+            case 3:
+                rightRobotShowCardsLayout.displayPass();
+                break;
+            default:
         }
     }
 
