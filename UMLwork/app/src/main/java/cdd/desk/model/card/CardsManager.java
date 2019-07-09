@@ -49,36 +49,158 @@ public class CardsManager {
 		return totalWeight;
 		
 	}
-	//判断牌的类型
-	public CardsType jugdeType(List<Card> list) {
-		int len = list.size();
-		
-		//只可能是：cardSingle,//单牌。
-		//cardsCouple,//对子。
-		//cards3,//3不带。
-		if(len <= 4)
-		{
-			//如果第一个和最后个相同，说明全部相同
-			if(len > 0 && list.get(0).getPoints() == list.get(len - 1).getPoints())
-			{
-				switch (len) {
-				case 1:
-					return CardsType.cardSingle;//单张牌
-				case 2:
-					return CardsType.cardsCouple;//对子
-				case 3:
-					return CardsType.cards3;//三张相同的牌
-				case 4:
-					return CardsType.cards4;//四张相同的牌
-				}
+
+	/*
+	 * 参数：牌
+	 * 功能：不考虑花色，返回牌的权重，3返回3，A返回14,2返回15
+	 * 输出：牌的权重
+	 */
+    private static int getCardWeight(Card card)
+	{
+		return card.getRow()+3;
+	}
+
+	/*
+	 * 参数：牌数组
+	 * 功能：判断是否是顺子
+	 * 输出：若牌组是顺子 返回true
+	 */
+	private static boolean isShun(List<Card> cards) {
+		for(int i = 0; i < cards.size()-1; i++) {
+			if ((getCardWeight(cards.get(i+1))-getCardWeight(cards.get(i)))%13!=1) {
+				return false;
 			}
+		}
+		return true;
 	}
-		//四张牌 但是最后一张牌与第一张牌不一样 所以是三带一
-		if(len == 4 && list.get(0).getPoints() != list.get(len - 1).getPoints())
-			return CardsType.cards31;
-		//后面可以再根据CardsType来增加 
-		return CardsType.card0;//不是上述的任何一种牌的类型
+
+	/*
+	 * 参数：牌数组
+	 * 功能：判断是否是同花顺
+	 * 输出：若牌组是同花顺 返回true
+	 */
+	private static boolean isTongHuaShun(List<Card> cards) {
+		//不是顺子返回flase
+		if(!isShun(cards))
+			return false;
+
+		//要求所有牌的花色鄙俗相同，否则返回flase
+		for(int i = 0; i < cards.size() - 1; i++) {
+			if(cards.get(i).getColor() != cards.get(i+2).getColor());
+			return false;
+		}
+
+		return true;
 	}
+
+	/*
+	 * 参数：牌数组
+	 * 功能：判断是否是杂顺
+	 * 输出：若牌组是杂顺 返回true
+	 */
+	private static boolean isZaShun(List<Card> cards) {
+		if (!isShun(cards))
+			return false;
+
+		return !isTongHuaShun(cards);
+	}
+
+	/*
+	 * 参数：牌数组
+	 * 功能：判断是否是同花五
+	 * 输出：若牌组是同花五 返回true
+	 */
+	private static boolean isTongHuaWu(List<Card> cards) {
+
+		//要求任意两张牌花色相同，否则返回false
+		for(int i = 0; i < cards.size() - 1; i++) {
+			if(cards.get(i).getColor() != cards.get(i+1).getColor())
+				return false;
+		}
+		return true;
+	}
+
+	/*
+	 * 参数：牌数组
+	 * 功能：判断是否是三带一对
+	 * 输出：若牌组是三带一对 返回true
+	 */
+	private static boolean isSanDaiEr(List<Card> cards) {
+
+		if(cards.get(0).getPoints() == cards.get(2).getPoints()
+				&& cards.get(3).getPoints() == cards.get(4).getPoints()) {
+			return true;
+		}
+
+		if(cards.get(0).getPoints() == cards.get(1).getPoints()
+				&& cards.get(2).getPoints() == cards.get(4).getPoints()) {
+			return true;
+		}
+
+		return false;
+
+	}
+
+	/*
+	 * 参数：牌数组
+	 * 功能：判断是否是四带一张
+	 * 输出：若牌组是四带一张 返回true
+	 */
+	private static boolean isSiDaiYi(List<Card> cards) {
+
+		if(cards.get(0).getPoints() == cards.get(3).getPoints()
+				|| cards.get(1).getPoints() == cards.get(4).getPoints())
+			return true;
+
+		return false;
+	}
+
+
+	//判断牌的类型
+	public CardsType jugdeType(List<Card> cards) {
+		int len = cards.size();
+
+		//当牌数量为1时，单牌
+		if(len == 1) {
+			return CardsType.danzhang;
+		}
+
+		//当牌数量为2是，一对
+		if(len == 2) {
+			if(cards.get(0).getPoints() == cards.get(1).getPoints()) {
+				return CardsType.yidui;
+			}
+		}
+
+		// 当牌数为3时,三个
+		if (len == 3) {
+			if (cards.get(0).getPoints() == cards.get(2).getPoints()) {
+				return CardsType.sanzhang;
+			}
+		}
+
+		//当排数为5时，可能为顺、杂顺、同花顺、同花五、三带一对、四带一张、同花五
+		if(len == 5) {
+			if (isTongHuaShun(cards))
+				return CardsType.tonghuashun;
+
+			if (isZaShun(cards))
+				return CardsType.zashun;
+
+			if(isSanDaiEr(cards)) {
+				return CardsType.sandaier;
+			}
+
+			if(isTongHuaWu(cards))
+				return CardsType.wutonghua;
+
+			if(isSiDaiYi(cards))
+				return CardsType.sidaiyi;
+		}
+		return CardsType.card0;//不是上述任何一种牌型
+	}
+
+
 	/*
 	 * 描述：在上家的牌与出牌者想要选择的牌的类型一致的情况下，比较牌组的大小以确定出牌者是否能出牌
 	 * 参数：牌的类型 上家的牌组 目前的牌组

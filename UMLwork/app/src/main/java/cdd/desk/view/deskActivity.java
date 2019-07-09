@@ -98,6 +98,20 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
         //设置presenter
         mPresenter = new deskPresenter(this);
 
+
+        //弹窗测试
+        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(this);
+        builder.setIcon(R.mipmap.ic_launcher);
+        builder.setTitle("title");
+        builder.setMessage("message");
+
+        builder.setPositiveButton("positive", null);
+        builder.setNegativeButton("negative", null);
+        builder.setNeutralButton("neutral", null);
+
+        builder.setCancelable(true);
+        android.support.v7.app.AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     @Override
