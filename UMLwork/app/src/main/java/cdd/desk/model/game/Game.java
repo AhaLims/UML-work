@@ -56,6 +56,10 @@ public class Game{
 	}
 
 	public void InitGame(PlayGameCallBack playGameCallBack) {
+        //进行玩家牌的初始化
+        for(int i = 0;i<4;i++){
+            roles[i].getHandCards().getCardsGroup().clear();//清空牌
+        }
 		AllCards.shuffleCards();//洗牌
 		licensingCards();//发牌
 		turnTime = 1;
@@ -69,6 +73,8 @@ public class Game{
 			System.out.print(i);
 			System.out.println("个玩家的牌为:");
 			roles[i].getHandCards().showDetail();
+
+
 		}
 
 		if(firstTurn == 0) return;//第一个出牌的是玩家 则初始化工作完成
