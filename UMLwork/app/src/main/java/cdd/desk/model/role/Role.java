@@ -81,5 +81,10 @@ public class Role {
 		if (CurrentCards.cardsAmount() == 0) return true;
 		return false;
 	}
+
+	public handCardsGroup getHandCards(){
+	    return CurrentCards;
+    }
+
 }
 	

@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.example.uml.umlwork.R;
 import java.util.ArrayList;
@@ -26,6 +27,9 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
     private ShowedCardsViewGroup leftRobotShowCardsLayout;
     private ShowedCardsViewGroup middleRobotShowCardsLayout;
     private ShowedCardsViewGroup rightRobotShowCardsLayout;
+    private TextView leftRobotRemainTextView;
+    private TextView middleRobotRemainTextView;
+    private TextView rightRobotRemainTextView;
     private Context context;
 
     private deskContract.Presenter mPresenter;
@@ -43,6 +47,9 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
         leftRobotShowCardsLayout = findViewById(R.id.robot1_cardset_field);
         middleRobotShowCardsLayout = findViewById(R.id.robot2_cardset_field);
         rightRobotShowCardsLayout = findViewById(R.id.robot3_cardset_field);
+        leftRobotRemainTextView = findViewById(R.id.robot_remain1);
+        middleRobotRemainTextView = findViewById(R.id.robot_remain2);
+        rightRobotRemainTextView = findViewById(R.id.robot_remain3);
 
         //设置button监听事件
         btnShowCards.setOnClickListener(new View.OnClickListener() {
@@ -56,6 +63,7 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
         mPresenter = new deskPresenter(this);
 
         //以下用于测试
+        /*
         Card card = new Card(15,CardColor.Diamond);
         Card card1 = new Card(14,CardColor.Diamond);
         Card card2 = new Card(13,CardColor.Diamond);
@@ -80,7 +88,7 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
         displayPlayerHandCards(cards);
         displayRobotCards(cards,1);
         displayRobotCards(cards,2);
-        displayRobotCards(cards,3);
+        displayRobotCards(cards,3);*/
     }
 
     @Override
@@ -97,13 +105,13 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
     //打印玩家的手牌
     @Override
     public void displayPlayerHandCards(List<Card> playerCards) {
-        playerShowCardsLayout.displayCards(playerCards);
+        playerCardSetLayout.displayCards(playerCards);
     }
 
     //打印玩家出的牌
     @Override
     public void displayPlayerCards(List<Card> playerCards) {
-        playerCardSetLayout.displayCards(playerCards);
+        playerShowCardsLayout.displayCards(playerCards);
     }
 
     @Override
@@ -128,7 +136,7 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
     }
 
     @Override
-    public void displayIrregularity() {
+    public void displayIrregularity(CharSequence message) {
         Toast.makeText(this, "不合法", Toast.LENGTH_SHORT).show();
     }
 
@@ -137,6 +145,10 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
     public void showCards() {
         List<Integer> arr;
         arr = playerCardSetLayout.getSelected();
+        if(arr.isEmpty()) {
+            displayIrregularity("请选择要出的牌");
+            return ;
+        }
         System.out.print("选中的牌的index：");
         for(Integer i:arr) {
             System.out.print( i );
@@ -144,5 +156,50 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
         System.out.println();
     }
 
+    public void setRobotHandCard(List<Card> robotCards,int robot)
+    {
+        //注意：setText如果参数是int类型会被当成resourcesID使用
+        switch (robot)
+        {
+            case 1:
+                leftRobotRemainTextView.setText("剩余:"+robotCards.size());
+                break;
+
+            case 2:
+                middleRobotRemainTextView.setText("剩余:"+robotCards.size());
+                break;
+
+            case 3:
+                rightRobotRemainTextView.setText("剩余:"+robotCards.size());
+                break;
+
+            default:
+                throw new IllegalArgumentException("收到了不存在的机器人");
+        }
+    }
+
+    /*
+    *函数名：removeShowedCards
+    * 功能：清除玩家或机器人出牌区的牌
+    * 参数：0.玩家 1.左边机器人 2.中间机器人 3.右边机器人
+    * */
+    public void removeShowedCards(int select)
+    {
+        switch (select)
+        {
+            case 0:
+                playerShowCardsLayout.removeAllViews();
+                break;
+            case 1:
+                leftRobotShowCardsLayout.removeAllViews();
+                break;
+            case 2:
+                middleRobotShowCardsLayout.removeAllViews();
+                break;
+            case 3:
+                rightRobotShowCardsLayout.removeAllViews();
+            default:
+        }
+    }
 
 }
