@@ -2,7 +2,7 @@
 //每次出牌之后都需要调用
 
 //貌似这个部分放到 Rolemanager去了
-package card;
+package cdd.desk.model.card;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -96,7 +96,7 @@ public class CardsGroup{
 		for(int i = 0;i < totalDeleteAmount;i++)//遍历 删除牌
 		{
 			Card tempCard = cg.getCardByIndex(i);
-			System.out.println(i);
+			//System.out.println(i);
 			deleteSingleCard(tempCard.getPoints(), tempCard.getColor());
 		}
 	}
@@ -115,7 +115,7 @@ public class CardsGroup{
 		Collections.sort(list,new Comparator<Card>() {//实现了接口中的compare函数
 			//这里是java某种扭曲的语法糖
 			//@Override
-			public int compare(card.Card card1, card.Card card2) {
+			public int compare(Card card1, Card card2) {
 				// TODO Auto-generated method stub
 				return card1.compareTo(card2);
 			}	
@@ -133,4 +133,5 @@ public class CardsGroup{
 		return DeliveredCardsGroup;
 	}
 	
+
 }

@@ -1,4 +1,4 @@
-package card;
+package cdd.desk.model.card;
 
 public class Card implements Comparable<Card>{//实现了Comparable的接口 这样就是可以比较的了
 	//包可见 所以不用写import?
@@ -41,7 +41,7 @@ public class Card implements Comparable<Card>{//实现了Comparable的接口 这
 
 	public int getPoints() {
 		//测试相关的代码
-		System.out.println(points);
+		//System.out.println(points);
 		
 		return points;
 	}
@@ -87,5 +87,26 @@ public class Card implements Comparable<Card>{//实现了Comparable的接口 这
 		
 		return -1;//不满足上面的情况 说明card 比传进来的小
 	}
-	
+
+    public int getRow() {
+		int point = getPoints();
+		int row ;
+        switch(point)
+		{
+			case 1:
+				row = 11;
+				break;
+			case 2:
+				row = 12;
+				break;
+			default:
+				row = point - 3;
+		}
+        return row;
+    }
+
+    public int getCol() {
+        int col = getColor().ordinal();
+        return  col;
+    }
 }

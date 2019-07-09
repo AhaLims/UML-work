@@ -1,4 +1,4 @@
-package card;
+package cdd.desk.model.card;
 /**
  * @author AhaLims
  */

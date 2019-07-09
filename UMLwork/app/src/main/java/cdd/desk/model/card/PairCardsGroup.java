@@ -1,4 +1,4 @@
-package card;
+package cdd.desk.model.card;
 
 import java.util.ArrayList;
 import java.util.List;

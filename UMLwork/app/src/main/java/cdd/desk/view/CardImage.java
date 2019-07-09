@@ -1,6 +1,9 @@
 package cdd.desk.view;
-
 import com.example.uml.umlwork.R;
+
+/*
+* Image resources fo the cards
+* */
 public interface CardImage {
 
     int[][] cardImages = {

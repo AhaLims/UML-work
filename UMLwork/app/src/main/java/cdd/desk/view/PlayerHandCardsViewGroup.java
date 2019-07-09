@@ -3,11 +3,8 @@ package cdd.desk.view;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
-
 import java.util.LinkedList;
 import java.util.List;
-
-import cdd.desk.Card;
 
 public class PlayerHandCardsViewGroup extends CardsViewGroup {
 
@@ -29,13 +26,13 @@ public class PlayerHandCardsViewGroup extends CardsViewGroup {
     }
 
     @Override
-    protected void addCardView(Card card) {
+    protected void addCardView(cdd.desk.model.card.Card card) {
         int row,col;
         final CardView mCardView = new CardView(context);
 
         //根据牌的点数和花色找到行和列
-        row = card.getRow(card);
-        col = card.getCol(card);
+        row = card.getRow();
+        col = card.getCol();
 
         //设置图片资源
         mCardView.setImageResource(CardImage.cardImages[row][col]);

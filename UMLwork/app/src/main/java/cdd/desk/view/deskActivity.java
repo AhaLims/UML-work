@@ -2,20 +2,22 @@ package cdd.desk.view;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-
 import com.example.uml.umlwork.R;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import cdd.desk.Card;
-import cdd.desk.CardColor;
+import cdd.desk.model.card.Card;
+import cdd.desk.model.card.CardColor;
 import cdd.desk.contract.deskContract;
+import cdd.desk.presenter.deskPresenter;
 
+/**
+ * Main UI for the add task screen. Users can enter a task title and description.
+ */
 public class deskActivity extends AppCompatActivity implements deskContract.View{
 
     private Button btnShowCards;
@@ -24,7 +26,6 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
     private ShowedCardsViewGroup leftRobotShowCardsLayout;
     private ShowedCardsViewGroup middleRobotShowCardsLayout;
     private ShowedCardsViewGroup rightRobotShowCardsLayout;
-    private CardViewSet mCardViewSet;
     private Context context;
 
     private deskContract.Presenter mPresenter;
@@ -34,7 +35,6 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_desk);
         context = this;
-        mCardViewSet = new CardViewSet();
 
         //绑定控件
         btnShowCards = findViewById(R.id.show_cards);
@@ -51,6 +51,9 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
                 showCards();
             }
         });
+
+        //设置presenter
+        mPresenter = new deskPresenter(this);
 
         //以下用于测试
         Card card = new Card(15,CardColor.Diamond);
@@ -78,6 +81,17 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
         displayRobotCards(cards,1);
         displayRobotCards(cards,2);
         displayRobotCards(cards,3);
+    }
+
+    @Override
+    public void setPresenter(@NonNull deskContract.Presenter presenter) {
+            mPresenter = presenter;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mPresenter.start();
     }
 
     //打印玩家的手牌

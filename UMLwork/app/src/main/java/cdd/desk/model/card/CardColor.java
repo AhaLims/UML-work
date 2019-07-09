@@ -1,4 +1,4 @@
-package card;
+package cdd.desk.model.card;
 
 public enum CardColor{
 	 Diamond,//方块
