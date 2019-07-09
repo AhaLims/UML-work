@@ -91,6 +91,7 @@ public class CardsManager {
                 && getCardNumber(cards[3]) == 4
                 && getCardNumber(cards[4]) == 3)
             return true;
+
         //单顺最大一张不能大于A
         if(start > 14) {
             return false;
@@ -136,7 +137,6 @@ public class CardsManager {
         }
         return true;
     }
-
 
     //判断基本牌型，判断时已从大到小排序
     public static int getType(int[] cards) {
@@ -228,7 +228,6 @@ public class CardsManager {
         }
         return 0;
     }
-
     /**
      * 是不是一个有效的牌型
      *

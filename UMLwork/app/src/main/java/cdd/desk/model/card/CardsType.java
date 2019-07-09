@@ -2,13 +2,15 @@ package cdd.desk.model.card;
 /**
  * @author AhaLims
  */
-//TODO 现在还是暂时用这个.....后面再改吧
+
 public enum CardsType {
-	cardSingle,//单牌
-	cardsCouple,//两张相等的对子
-	cards3,//3张一样的
-	cards31,//三带一
-	cards41,//四带一
-	cardsThs,//同花顺
+	danzhang,//单牌
+	yidui,//两张相等的一对牌
+	sanzhang,//3张一样的牌
+	zashun,//杂顺
+	wutonghua,//五同花 注意必须是五张牌 必须是同花色的
+	sandaier,//三带二
+	sidaiyi,//四带一
+	tonghuashun,//同花顺
 	card0//不能出牌
 }

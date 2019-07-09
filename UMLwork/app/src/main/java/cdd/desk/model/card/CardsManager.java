@@ -3,10 +3,6 @@ package cdd.desk.model.card;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
-import cdd.desk.model.PlayGameCallBack;
-
-import static cdd.desk.model.card.CardsType.card0;
 //问题：对cards type进行排序行不行 就是判断牌能不能出--------是不是合法的 以及判断类型
 /*  测试完成
  * CardsManager:对牌进行管理判断
@@ -19,7 +15,10 @@ import static cdd.desk.model.card.CardsType.card0;
 
 
 
-
+//应该都是静态的方法....??
+//---------------------“比较牌”的方法应该单独抽象成类----------------------------//
+//可以这样做  接口：比较牌的接口 然后有一个函数xxx(card1,card2) return true/false;
+//用单实例模式---------------------------//
 public class CardsManager {
 	private static CardsManager cardsManager;
 	public static CardsManager getCardsManager() {
@@ -51,159 +50,189 @@ public class CardsManager {
 		
 	}
 
-	//判断牌的类型
-	public CardsType jugdeType(List<Card> list) {
-		int len = list.size();
-
-		//单张牌
-		if(len==1)
-		{return CardsType.cardSingle;}
-
-		//对子
-		if(len==2 && (list.get(0).getPoints() == list.get(1).getPoints()))
-		{ return CardsType.cardsCouple;}
-
-
-		//三张相等
-		if(len==3)
-		{
-			int count=0;//设定一个计数器用来判断几张牌之间相等的次数
-			for(int i=1;i<3;i++)
-			{
-				if (list.get(i).getPoints()==list.get(i-1).getPoints())
-				{
-					count++;
-				}//每当一个牌的数值等于它前一个牌的数值，就代表它们两张牌数值相等，计数器加一
-			}
-			if(count==2){return CardsType.cards3;}//当计数器达到2时，代表三张牌数值相等，所以时三张相等的牌
-			else { return card0; }
-		}
-
-		//三带一模式
-		if(len == 4)
-		{
-			if(list.get(0).getPoints() == list.get(1).getPoints() && list.get(0).getPoints()!=list.get(3).getPoints())//第一张和第二张牌相等,第一张牌与最后一张牌不相等，3334模式
-			{
-				if (list.get(2).getPoints()==list.get(1).getPoints()) {return CardsType.cards31;}//当第三张牌也等于第二张牌时，代表三张牌数值相等，所以是三张相等的牌，表示三带一
-				else { return card0; }
-			}
-
-			else
-			{
-				if (list.get(0).getPoints() != list.get(1).getPoints() && list.get(0).getPoints()!=list.get(3).getPoints())//第一张牌和第二张牌不相等，第一张牌与最后一张牌不相等，3444模式
-				{
-					int count=0;//设定一个计数器用来判断几张牌之间相等的次数
-					for (int i = 2; i < 4;i++)
-					{
-						if (list.get(i).getPoints() == list.get(i - 1).getPoints()) {
-							count++;
-						}//每当一个牌的数值等于它前一个牌的数值，就代表它们两张牌数值相等，计数器加一
-					}
-					if (count == 2) { return CardsType.cards31; }//当计数器达到2时，代表三张牌数值相等，所以是三张相等的牌，表示三带一
-					else { return card0; }
-				}
-
-
-			}
-		}
-
-		//五张牌
-		if(len==5)
-		{
-			int count=0;//定义一个计数器用于判断花色相等的牌有多少张
-			//同花顺 同花的五张牌
-			for(int i = 1 ;i < 5;i++)
-			{
-				if (list.get(i).getColor() == list.get(i - 1).getColor())
-				{ count++; }//与上面判断三张相等牌思路相同
-			}
-			if(count==4)
-			{
-				return CardsType.cardsThs;
-			}//当计数器值为4时，表示5张牌的color都是相等的，因此是同花顺
-
-			else//如果经过上面的判断后确定不是同花，那么接下来就判断是否是四带一，分33334模式和34444模式
-			{
-				if(list.get(0).getPoints() == list.get(1).getPoints() && list.get(0).getPoints()!=list.get(4).getPoints())//如果第一张牌和第二张牌数值相等，并且第一张牌和最后一张牌不相等，则是33334模式
-				{
-					int count1=0;
-					for(int i = 1;i < 4; i++)
-					{
-						if(list.get(i).getPoints()==list.get(i-1).getPoints())
-						{count1++;}//与上面判断三张相等牌思路相同
-					}
-					if(count1 == 3){return CardsType.cards41;}
-				}
-
-				if(list.get(0).getPoints()!=list.get(1).getPoints()&& list.get(0).getPoints()!=list.get(4).getPoints())//如果第一张牌和第二张牌数值不相等，则是34444模式
-				{
-					int count2=0;
-					for(int i=2;i<5;i++)
-					{
-						if(list.get(i).getPoints()==list.get(i-1).getPoints())
-						{count2++;}//与上面判断三张相等牌思路相同
-					}
-					if(count2 == 3)
-					{
-						return CardsType.cards41;
-					}
-				}
-			}
-		}
-		return card0;//不是上述的任何一种牌的类型
+	/*
+	 * 参数：牌
+	 * 功能：不考虑花色，返回牌的权重，3返回3，A返回14,2返回15
+	 * 输出：牌的权重
+	 */
+    private static int getCardWeight(Card card)
+	{
+		return card.getRow()+3;
 	}
 
-	//比较牌组的大小
-	//要牌型相同并且 value比较大才行
-	//TODO 根据网站的规则完善这里的牌比较规则  以及判断牌
-	public boolean isPermissible(deliveredCardsGroup previous,deliveredCardsGroup current,PlayGameCallBack playGameCallBack)
-	{
-		boolean validation = false;
-		CardsType currentType = current.getType();
-		CardsType previousType = previous.getType();
-		if(currentType == card0)
-		{
-			playGameCallBack.onCardsNotValid("不可以这样出牌哦");
-			return false;
+	/*
+	 * 参数：牌数组
+	 * 功能：判断是否是顺子
+	 * 输出：若牌组是顺子 返回true
+	 */
+	private static boolean isShun(List<Card> cards) {
+		for(int i = 0; i < cards.size()-1; i++) {
+			if ((getCardWeight(cards.get(i+1))-getCardWeight(cards.get(i)))%13!=1) {
+				return false;
+			}
 		}
-		if(currentType != previousType){
-			playGameCallBack.onCardsNotValid("与上家的牌不匹配哦");
-			return false;
-		}
-		switch (currentType){
-			//单牌 对子 三张一样的牌 判定规则一样，都是看
-			case cardSingle://单牌
-			case cardsCouple://两张相等的对子
-			case cards3://三张一样的
-				int size1 = current.getCardsGroup().size();
-				int size2 = previous.getCardsGroup().size();
-				//比较相同的牌中权值最大的牌
-				if(current.getCardsGroup().get(size1 - 1).getWeight() > previous.getCardsGroup().get(size2 - 1).getWeight()) {
-					validation = true;
-				}
-				else{
-					playGameCallBack.onCardsNotValid("牌太小啦 换一种出牌方式吧");
-					return false;
-				}
-				break;
-			case cards31://三带一
-			case cards41://四带一
-			case cardsThs://同花顺
-				/*int size1 = current.getCardsGroup().size();
-				int size2 = previous.getCardsGroup().size();
-				//比较相同的牌中权值最大的牌
-				if(currentType == previousType && current.getCardsGroup().get(size1 - 1).getWeight() > previous.getCardsGroup().get(size2 - 1).getWeight())
-					validation = true;
-				break;*/
+		return true;
+	}
 
-				playGameCallBack.onCardsNotValid("暂时不支持的牌型 后面完善了规则再补充");
+	/*
+	 * 参数：牌数组
+	 * 功能：判断是否是同花顺
+	 * 输出：若牌组是同花顺 返回true
+	 */
+	private static boolean isTongHuaShun(List<Card> cards) {
+		//不是顺子返回flase
+		if(!isShun(cards))
+			return false;
+
+		//要求所有牌的花色鄙俗相同，否则返回flase
+		for(int i = 0; i < cards.size() - 1; i++) {
+			if(cards.get(i).getColor() != cards.get(i+2).getColor());
+			return false;
+		}
+
+		return true;
+	}
+
+	/*
+	 * 参数：牌数组
+	 * 功能：判断是否是杂顺
+	 * 输出：若牌组是杂顺 返回true
+	 */
+	private static boolean isZaShun(List<Card> cards) {
+		if (!isShun(cards))
+			return false;
+
+		return !isTongHuaShun(cards);
+	}
+
+	/*
+	 * 参数：牌数组
+	 * 功能：判断是否是同花五
+	 * 输出：若牌组是同花五 返回true
+	 */
+	private static boolean isTongHuaWu(List<Card> cards) {
+
+		//要求任意两张牌花色相同，否则返回false
+		for(int i = 0; i < cards.size() - 1; i++) {
+			if(cards.get(i).getColor() != cards.get(i+1).getColor())
 				return false;
 		}
 		return true;
 	}
 
+	/*
+	 * 参数：牌数组
+	 * 功能：判断是否是三带一对
+	 * 输出：若牌组是三带一对 返回true
+	 */
+	private static boolean isSanDaiEr(List<Card> cards) {
 
-	//使用Collections排序非常简单，
+		if(cards.get(0).getPoints() == cards.get(2).getPoints()
+				&& cards.get(3).getPoints() == cards.get(4).getPoints()) {
+			return true;
+		}
+
+		if(cards.get(0).getPoints() == cards.get(1).getPoints()
+				&& cards.get(2).getPoints() == cards.get(4).getPoints()) {
+			return true;
+		}
+
+		return false;
+
+	}
+
+	/*
+	 * 参数：牌数组
+	 * 功能：判断是否是四带一张
+	 * 输出：若牌组是四带一张 返回true
+	 */
+	private static boolean isSiDaiYi(List<Card> cards) {
+
+		if(cards.get(0).getPoints() == cards.get(3).getPoints()
+				|| cards.get(1).getPoints() == cards.get(4).getPoints())
+			return true;
+
+		return false;
+	}
+
+
+	//判断牌的类型
+	public CardsType jugdeType(List<Card> cards) {
+		int len = cards.size();
+
+		//当牌数量为1时，单牌
+		if(len == 1) {
+			return CardsType.danzhang;
+		}
+
+		//当牌数量为2是，一对
+		if(len == 2) {
+			if(cards.get(0).getPoints() == cards.get(1).getPoints()) {
+				return CardsType.yidui;
+			}
+		}
+
+		// 当牌数为3时,三个
+		if (len == 3) {
+			if (cards.get(0).getPoints() == cards.get(2).getPoints()) {
+				return CardsType.sanzhang;
+			}
+		}
+
+		//当排数为5时，可能为顺、杂顺、同花顺、同花五、三带一对、四带一张、同花五
+		if(len == 5) {
+			if (isTongHuaShun(cards))
+				return CardsType.tonghuashun;
+
+			if (isZaShun(cards))
+				return CardsType.zashun;
+
+			if(isSanDaiEr(cards)) {
+				return CardsType.sandaier;
+			}
+
+			if(isTongHuaWu(cards))
+				return CardsType.wutonghua;
+
+			if(isSiDaiYi(cards))
+				return CardsType.sidaiyi;
+		}
+		return CardsType.card0;//不是上述任何一种牌型
+	}
+
+
+	/*
+	 * 描述：在上家的牌与出牌者想要选择的牌的类型一致的情况下，比较牌组的大小以确定出牌者是否能出牌
+	 * 参数：牌的类型 上家的牌组 目前的牌组
+	 * 功能：判断是否能出牌
+	 * 备注：目前只支持在CardsType相同的情况下出牌
+	 * 		现在默认目前所有的牌的类型都按照这样的规则来比较
+			ps当然我觉得这样做是不行的
+	 */
+	
+	/*public static boolean canDisplay(CardsType type,
+			List<Card> previousList,
+			List<Card> presentList){
+		switch(type) {
+		case cardSingle:
+		case cardsCouple:
+		case cards3:
+		case cards4:
+		case cardsSequence:
+		case cards31:
+			if(presentList.get(0).compareTo(previousList.get(0)) > 0)
+				return true;
+			else return false;
+		default:
+			return false;
+		}
+	}*/
+	//6.28 按照新的逻辑 canDisplay暂时没用
+	
+
+	//能直接在Card类中重载某个参数 实现函数的重载吗......? 这里就直接调用 多好...
+	//不要写在这里...太丑了
+	//使用Collections排序非常简单，\
 	//我们只需要把实现了Comparable接口的类传入里面调用一下Collections.sort() 
 	//方法就可以对其进行排序了。
 	/*
