@@ -12,6 +12,15 @@ import cdd.desk.model.game.Game;
 //	}
 //}
 public class Player extends Role{
+	//表名
+	public static final String TABLE = "Player";
+
+	//表的属性
+	public static final String KEY_NAME = "name";
+	public static final String KEY_SCORE = "score";
+
+	public String player_name;
+	public String score;
 	public Player(Game g) {
 		super(g);
 		// TODO Auto-generated constructor stub

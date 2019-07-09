@@ -178,4 +178,28 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
         }
     }
 
+    /*
+    *函数名：removeShowedCards
+    * 功能：清除玩家或机器人出牌区的牌
+    * 参数：0.玩家 1.左边机器人 2.中间机器人 3.右边机器人
+    * */
+    public void removeShowedCards(int select)
+    {
+        switch (select)
+        {
+            case 0:
+                playerShowCardsLayout.removeAllViews();
+                break;
+            case 1:
+                leftRobotShowCardsLayout.removeAllViews();
+                break;
+            case 2:
+                middleRobotShowCardsLayout.removeAllViews();
+                break;
+            case 3:
+                rightRobotShowCardsLayout.removeAllViews();
+            default:
+        }
+    }
+
 }

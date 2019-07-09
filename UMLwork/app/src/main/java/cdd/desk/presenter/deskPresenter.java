@@ -31,12 +31,14 @@ public class deskPresenter implements deskContract.Presenter,PlayGameCallBack {
 
     @Override
     public void displayPlayerCards(List<Card> playerCards) {
-
+        mDeskActivity.displayPlayerCards(playerCards);
+        mDeskActivity.removeShowedCards(3);
     }
 
     @Override
-    public void displayRobotCards(List<Card> playerCards, int robot) {
-
+    public void displayRobotCards(List<Card> robotCards, int robot) {
+        mDeskActivity.displayRobotCards(robotCards,robot);
+        mDeskActivity.removeShowedCards((robot-1)%4);
     }
 
     @Override
@@ -46,6 +48,11 @@ public class deskPresenter implements deskContract.Presenter,PlayGameCallBack {
 
     @Override
     public void onCardsNotValid(CharSequence message) {
+        mDeskActivity.displayIrregularity(message);
+    }
+
+    @Override
+    public void onRobotPass(int robot) {
 
     }
 }

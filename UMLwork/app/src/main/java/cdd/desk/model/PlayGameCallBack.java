@@ -15,4 +15,6 @@ public interface PlayGameCallBack {
      void setRobotHandCard(List<Card> robotCards,int robot);
 
      void onCardsNotValid(CharSequence message);
+
+     void onRobotPass(int robot);
 }
