@@ -2,11 +2,10 @@ package cdd.desk.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.View;
-
-import cdd.desk.Card;
+import cdd.desk.model.card.Card;
 
 public class ShowedCardsViewGroup extends CardsViewGroup {
+    Context context;
     public ShowedCardsViewGroup(Context context) {
         super(context);
         this.context = context;
@@ -22,7 +21,7 @@ public class ShowedCardsViewGroup extends CardsViewGroup {
         this.context = context;
     }
 
-    Context context;
+
 
     @Override
     protected void addCardView(Card card) {
@@ -30,8 +29,8 @@ public class ShowedCardsViewGroup extends CardsViewGroup {
         final CardView mCardView = new CardView(context);
 
         //根据牌的点数和花色找到行和列
-        row = card.getRow(card);
-        col = card.getCol(card);
+        row = card.getRow();
+        col = card.getCol();
 
         //设置图片资源
         mCardView.setImageResource(CardImage.cardImages[row][col]);

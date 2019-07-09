@@ -5,10 +5,9 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-
 import java.util.List;
+import cdd.desk.model.card.Card;
 
-import cdd.desk.Card;
 
 public abstract  class CardsViewGroup extends FrameLayout {
 
