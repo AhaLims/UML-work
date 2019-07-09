@@ -21,7 +21,7 @@ public class Player extends Role{
 
 	//给对应的index 可以找到用户选的一组牌 并且可以组装成deliveredCardsGroup 类型的东西
 	public deliveredCardsGroup selectCards(List<Integer> cardsIndex) {
-		//怎么把cardsIndex组装成 deliveredCardsGroup(List<Card> c) 
+		
 		deliveredCardsGroup dc = new deliveredCardsGroup();
 		int len = cardsIndex.size();
 		Card card;

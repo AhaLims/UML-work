@@ -3,6 +3,7 @@ package game;
 import java.util.List;
 
 import card.Card;
+import card.CardColor;
 import card.CardsGroup;
 import card.PairCardsGroup;
 import card.deliveredCardsGroup;
@@ -14,8 +15,10 @@ public class Game{
 	//CardsManager cardsManager;
 	private deliveredCardsGroup LatestCards;//最新的 出在牌桌上面的牌
 	private int currentTurn;
+	public int firstTurn;//其实不应该public的....后面再改吧
+	private int turnTime;//轮数
 	private Role[] roles;
-	private boolean[] IsLatestShow;//用来判断最新一轮是否出了牌
+	private boolean[] IsLatestShow;//用来判断最新是否出了牌
 	//private int[] nextTurn;
 	public Game() {
 		judger = new Judger();
@@ -47,41 +50,79 @@ public class Game{
 		
 	}
 	//出牌的函数
-	//传入当前的index
+	//传入当前的index.....
 	//这个函数由presentation来调用
 	//返回boolean值代表出的牌是不是合法的
+	//也许应该返回String 比较合适？ 如果是合法 则String为空
+	//不合法 String为相应的错误提示
 	public boolean RoleDeliverCard(int index,List<Integer> list) {
+		boolean validation = false;
+		currentTurn = index;
+		if(currentTurn == firstTurn)
+		{
+			turnTime++;
+		}//进行轮的更新
+
 		deliveredCardsGroup currentCardsGroup = roles[index].selectCards(list);
 		//将转换成deleiverCardsGroup类型的
-		if(IsFirstHand(index) == true)//先手
+		if(firstTurn == index && turnTime == 1)//第一轮的先手 
 		{
-			if(currentCardsGroup == null)//TODO 这里是说明先手不出牌 是不合法的
+			//必须有方块三
+			if(currentCardsGroup.canFindCard(3, CardColor.Diamond) != -1)
 			{
-				return false;
+				roles[index].refreshCardsGroup(currentCardsGroup);//更新牌
+				validation = true;
+			}
+		}
+		if(IsFirstHand(index) == true)//非第一轮的先手
+		{
+			if(currentCardsGroup.hasCards() == false)//TODO 这里是说明先手不出牌 是不合法的
+			{
+				validation = false;
 				//应该返回给前端提示 说明这是不合法的行为
 			}
-			//出牌
+			//有选中的牌了
 			else {
 				if(judger.isPermissible(null,currentCardsGroup) == true)
-					return true;
+					{
+						roles[index].refreshCardsGroup(currentCardsGroup);//更新牌
+						validation = true;
+					}
 				//TODO 合法的出牌 这个时候应该考虑怎么更新牌
 			}
 		}
 		else {//后手 需要参考上家的牌
 			if( judger.isPermissible(LatestCards,currentCardsGroup) == true)
-			{//后手出牌合法
+			{	//后手出牌合法
 				//更新牌
-				return false;
+				roles[index].refreshCardsGroup(currentCardsGroup);//更新牌
+				validation = true;
 			}
 		}
-		return false;
 		
+		System.out.print("现在游戏进行到第 ");
+		System.out.print(turnTime);
+		System.out.println("轮");
+		System.out.print("当前出牌的Index为");
+		System.out.println(index);
+		System.out.print("他选择");
+		if(validation == true)
+			{
+				System.out.print("【出牌】，并且为\n");
+				currentCardsGroup.showDetail();//展示牌组细节的数组
+			}
+		
+		else
+			System.out.println("不出牌");
+		
+		return validation;
 	}
 
 	
 	public void InitGame() {
 		AllCards.shuffleCards();//洗牌
 		licensingCards();//发牌
+		turnTime = 0;
 	}
 	//更改这个就可以让游戏顺时针or逆时针
 	/*public void InitTurn(int start) {
@@ -110,14 +151,29 @@ public class Game{
 			if(roles[i].findCard(4) == true)
 			{
 				currentTurn = i;
+				firstTurn = i;
 				break;
 			}
 		}
+		//确定顺序
+		for(int i = 0;i < 4;i++) {
+			roles[ (currentTurn + i) % 4].setNumber(i);
+		}
 	}
-
-	public void inGame() {
-		//进行游戏的循环
-		InitGame();
+	public void turn() {
+		//TODO 这个turn应该是要一开始就调用的但是我不知道怎么以及什么时候调用比较好
+		
+	}
+	//虽然好像怪怪的....不应该调用...?
+	public int end() {//返回胜利者的编号 或者-1
+		for(int i = 0;i<4;i++)
+		{
+			if(roles[i].win()) {
+				System.out.println("游戏结束");
+				return i;
+			}
+		}
+		return -1;
 	}
 	public int getNextTurn() {
 		return (currentTurn + 1) % 4;

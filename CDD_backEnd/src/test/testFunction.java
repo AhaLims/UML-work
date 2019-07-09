@@ -10,9 +10,24 @@ import role.Role;
 public class testFunction{
 	public static void main(String[] args) {
 		Game game = new Game();
-		game.licensingCards();
-		Role test = new Role(game);
-		/* 牌的 增加 删除测试
+		game.InitGame();
+		//进行单元测试 模拟出牌的过程....
+		//RoleDeliverCard
+		List<Integer> list = new ArrayList<Integer>();
+		list.add(0);//每次都默认出单张牌
+		int i = 0;
+		while(game.end() == -1)//游戏没有结束
+		{
+			game.RoleDeliverCard( (game.firstTurn + i) % 4,list);
+			i++;
+		}
+		
+		
+	}
+	
+	/* 牌的 增加 删除测试
+	;*/
+	void testCard(Role test) {
 		CardsGroup deletedCards = new CardsGroup();
 		Card temp = new Card(1,CardColor.Club);
 		deletedCards.addCard(temp);
@@ -26,7 +41,6 @@ public class testFunction{
 		test.showDetail();
 		
 		test.updateCards(deletedCards);
-		test.showDetail();*/
-		
+		test.showDetail();
 	}
 }

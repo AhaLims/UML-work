@@ -5,14 +5,16 @@ import card.Card;
 import card.CardsGroup;
 import card.CardsManager;
 import card.deliveredCardsGroup;
+import card.handCardsGroup;
 import game.Game;
 
 public class Role{
 	CardsManager cardsManager;
-	CardsGroup CurrentCards;
+	handCardsGroup CurrentCards;
 	CardsGroup LasterCards;//暂时可能没啥用？
 	Game game;
 	int score;
+	int number;//该局游戏中的编号（也就是第几个出牌）
 	//String name;
 	//只是为了测试
 	public void showDetail() {
@@ -20,12 +22,11 @@ public class Role{
 	}
 	
 	
-	
 	public Role(Game g) {
 		cardsManager = CardsManager.getCardsManager();
 		score = 0;
 		//name = "testName";
-		CurrentCards = new CardsGroup();
+		CurrentCards = new handCardsGroup();
 		game = g;
 	}
 	//在游戏初始阶段 获得单张牌
@@ -45,9 +46,7 @@ public class Role{
 	}
 	//
 	//deliveredCardsGroup dc  是从交互中获得的 玩家出的牌（已经判断好了牌的value与牌的类型） 接下来交给游戏区检查牌的合法性
-	public void deliver(deliveredCardsGroup dc) {
-		//game.xxxxxx
-	}
+
 	public boolean findCard(int weight) {
 		if(CurrentCards.canFindCard(weight) != -1) return true;//
 		return false;
@@ -67,6 +66,13 @@ public class Role{
 			dc.addCard(card);
 		}
 		return dc;
+	}
+	public void setNumber(int n) {
+		number = n;
+	}
+	public boolean win() {//没有牌了
+		if(CurrentCards.cardsAmount() == 0)return true;
+		return false;
 	}
 	
 }

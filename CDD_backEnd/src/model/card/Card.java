@@ -41,7 +41,7 @@ public class Card implements Comparable<Card>{//实现了Comparable的接口 这
 
 	public int getPoints() {
 		//测试相关的代码
-		System.out.println(points);
+		//System.out.println(points);
 		
 		return points;
 	}

@@ -96,7 +96,7 @@ public class CardsGroup{
 		for(int i = 0;i < totalDeleteAmount;i++)//遍历 删除牌
 		{
 			Card tempCard = cg.getCardByIndex(i);
-			System.out.println(i);
+			//System.out.println(i);
 			deleteSingleCard(tempCard.getPoints(), tempCard.getColor());
 		}
 	}
