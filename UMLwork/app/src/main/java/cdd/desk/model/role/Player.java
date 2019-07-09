@@ -1,10 +1,7 @@
 package cdd.desk.model.role;
 
-
-
 import java.util.ArrayList;
 import java.util.List;
-
 import cdd.desk.model.card.Card;
 import cdd.desk.model.card.deliveredCardsGroup;
 import cdd.desk.model.game.Game;

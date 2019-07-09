@@ -8,34 +8,38 @@ import java.util.List;
 
 //可以提供牌的值以及牌的类型
 //每次牌一张一张的加进deliveredCardsGroup
-public class deliveredCardsGroup extends CardsGroup{
+public class deliveredCardsGroup extends CardsGroup {
 	private CardsType type;
+
 	//private int value;
 	public deliveredCardsGroup(List<Card> c) {
 		super(c);
 	}
+
 	public deliveredCardsGroup() {
 		super();
 	}
+
 	public void calculateAttribute() {
 		type = this.cardsManager.jugdeType(this.card);
 		//value = this.cardsManager.getCardsGroupValue(this.card);
 	}
+
 	//public int getValue() {
 	//	calculateAttribute();
 	//	return value;
 	//}
-	public CardsType getType(){
+	public CardsType getType() {
 		calculateAttribute();
 		return type;
 	}
+
 	public boolean hasCards() {
 		//判断是否出了牌 如果没有出牌 返回false
-		if(this.card.size() == 0)return false;
+		if (this.card.size() == 0) return false;
 		return true;
 	}
+}
 
 	
 	
-	
-}
