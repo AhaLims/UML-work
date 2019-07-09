@@ -81,7 +81,6 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
             @Override
             public void onClick(View v) {
                 mPresenter.playerPass();
-                playerShowCardsLayout.displayPass();
             }
         });
 
@@ -196,10 +195,12 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
         }
     }
 
-    public void displayPass(int robot)
+    public void displayPass(int role)
     {
-        switch (robot)
+        switch (role)
         {
+            case 0:
+                playerShowCardsLayout.displayPass();
             case 1:
                 leftRobotShowCardsLayout.displayPass();
                 break;
@@ -218,9 +219,9 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
 
         android.support.v7.app.AlertDialog.Builder builder = new AlertDialog.Builder(context);
         View view = View.inflate(context, R.layout.activity_dialog_view, null);   // 布局文件，自定义
-
         TextView winner_tv = view.findViewById(R.id.winner_tv);
         TextView player_score_tv = view.findViewById(R.id.player_score_tv);
+
         switch (winner)
         {
             case 0:
@@ -256,7 +257,7 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
             @Override
             public void onClick(DialogInterface dialog, int which) { }
         });
-
+        dialog.setCancelable(false);
         dialog.show();
 
 

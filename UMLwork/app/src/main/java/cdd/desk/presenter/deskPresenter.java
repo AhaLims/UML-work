@@ -76,8 +76,8 @@ public class deskPresenter implements deskContract.Presenter,PlayGameCallBack {
     }
 
     @Override
-    public void onRobotPass(int robot) {
-        mDeskActivity.displayPass(robot);
+    public void onRolePass(int role) {
+        mDeskActivity.displayPass(role);
     }
 
 

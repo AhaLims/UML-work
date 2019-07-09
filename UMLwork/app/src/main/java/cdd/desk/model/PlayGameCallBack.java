@@ -19,7 +19,7 @@ public interface PlayGameCallBack {
 
     void onGameEnd(int winnerIndex,int score);//游戏获得了胜利 返回获得胜利的role 的编号（玩家为0
 
-    void onRobotPass(int robot);
+    void onRolePass(int robot);
 
 
 }
