@@ -2,6 +2,7 @@ package cdd.desk.model.game;
 
 import java.util.List;
 
+import cdd.desk.model.PlayGameCallBack;
 import cdd.desk.model.card.Card;
 import cdd.desk.model.card.CardColor;
 import cdd.desk.model.card.PairCardsGroup;
@@ -122,10 +123,15 @@ public class Game{
 	}
 
 
-	public void InitGame() {
+	public void InitGame(PlayGameCallBack playGameCallBack) {
 		AllCards.shuffleCards();//洗牌
 		licensingCards();//发牌
 		turnTime = 0;
+        playGameCallBack.displayPlayerHandCards(roles[0].getHandCards().getCardsGroup());//回调
+		for(int i = 1;i<4;i++){
+			playGameCallBack.setRobotHandCard(roles[i].getHandCards().getCardsGroup(),i);
+		}
+
 	}
 	//更改这个就可以让游戏顺时针or逆时针
 	/*public void InitTurn(int start) {
@@ -158,10 +164,12 @@ public class Game{
 				break;
 			}
 		}
-		//确定顺序
+		//确定顺序 并对牌进行排序
 		for(int i = 0;i < 4;i++) {
 			roles[ (currentTurn + i) % 4].setNumber(i);
+			roles[i].getHandCards().sort();
 		}
+
 	}
 	//由presenter来调用这个函数
 	//两个参数分别为:前端传来的牌的数组 以及presenter自己
