@@ -23,7 +23,6 @@ public class Player extends Role{
 	public double score;
 	public Player(Game g) {
 		super(g);
-		// TODO Auto-generated constructor stub
 	}
 
 	public Player(){}
@@ -44,5 +43,6 @@ public class Player extends Role{
 		}
 		return dc;
 	}
+
 
 }

@@ -7,7 +7,9 @@ import cdd.desk.model.card.Card;
 import cdd.desk.model.card.CardColor;
 import cdd.desk.model.card.PairCardsGroup;
 import cdd.desk.model.card.deliveredCardsGroup;
+import cdd.desk.model.card.handCardsGroup;
 import cdd.desk.model.role.Player;
+import cdd.desk.model.role.Robot;
 import cdd.desk.model.role.Role;
 
 
@@ -15,6 +17,7 @@ import cdd.desk.model.role.Role;
 public class Game{
 	private Judger judger;
 	private PairCardsGroup AllCards;
+	private Scorer scorer;
 	//CardsManager cardsManager;
 	private deliveredCardsGroup LatestCards;//最新的 出在牌桌上面的牌
 	private int currentTurn;
@@ -25,12 +28,16 @@ public class Game{
 	//private int[] nextTurn;
 	public Game() {
 		judger = new Judger();
+		scorer = new Scorer();
 		//nextTurn = new int[4];
 		AllCards = PairCardsGroup.getPairOfCards();
 		roles = new Role[4];
 		IsLatestShow = new boolean[4];
+		LatestCards = new deliveredCardsGroup();
 		for(int i = 0;i < 4; i++) {
-			roles[i] = new Player(this);
+			if(i == 0)
+				roles[i] = new Player(this);
+			else roles[i] = new Robot(this);
 			IsLatestShow[i] = false;//一开始大家都没有出牌
 		}
 
@@ -43,7 +50,7 @@ public class Game{
 		for(int i = 0;i < 4;i++) {
 			if (i == index)continue;
 			else {
-				if(IsLatestShow[i] == false)return false;
+				if(IsLatestShow[i] == true)return false;
 			}
 		}
 		return true;
@@ -55,29 +62,24 @@ public class Game{
 	//以及准备出的牌
 	//返回boolean值代表出的牌是不是合法的
 	//也许应该返回String 比较合适？ 如果是合法 则String为空     //不合法 String为相应的错误提示
-
-	public boolean RoleDeliverCard(int index,List<Integer> list) {
+	//TODO 需要修改 因为需要根据是否先手 后手来判断出牌
+	public boolean RoleDeliverCard(int currentRole,deliveredCardsGroup currentCardsGroup) {
 		boolean validation = false;
-		currentTurn = index;
-		if(currentTurn == firstTurn)
-		{
-			turnTime++;
-		}//进行轮的更新
 
-		deliveredCardsGroup currentCardsGroup = roles[index].selectCards(list);
-		//将转换成deleiverCardsGroup类型的
-		if(firstTurn == index && turnTime == 1)//第一轮的先手
+		if(firstTurn == currentRole && turnTime == 1)//第一轮的先手
 		{
 			LatestCards = new deliveredCardsGroup();//先手 LatestCards 应该是新new的
 			//必须有方块三
 			if(currentCardsGroup.canFindCard(3, CardColor.Diamond) != -1)
 			{
-				roles[index].refreshCardsGroup(currentCardsGroup);//更新牌
+				roles[currentRole].refreshCardsGroup(currentCardsGroup);//更新牌
 				validation = true;
 			}
+			IsLatestShow[currentRole] = true;//出了牌
 		}
-		if(IsFirstHand(index) == true)//非第一轮的先手
+		if(IsFirstHand(currentRole) == true)//非第一轮的先手
 		{
+			IsLatestShow[currentRole] = true;//出了牌
 			LatestCards = new deliveredCardsGroup();//先手 LatestCards 应该是新new的
 			if(currentCardsGroup.hasCards() == false)//TODO 这里是说明先手不出牌 是不合法的
 			{
@@ -88,18 +90,18 @@ public class Game{
 			else {
 				if(judger.isPermissible(null,currentCardsGroup) == true)
 				{
-					roles[index].refreshCardsGroup(currentCardsGroup);//更新牌
+					roles[currentRole].refreshCardsGroup(currentCardsGroup);//更新牌
 					validation = true;
 				}
-				//TODO 合法的出牌 这个时候应该考虑怎么更新牌
 			}
 		}
 		else {//后手 需要参考上家的牌
 			if( judger.isPermissible(LatestCards,currentCardsGroup) == true)
 			{	//后手出牌合法
 				//更新牌
-				roles[index].refreshCardsGroup(currentCardsGroup);//更新牌
+				roles[currentRole].refreshCardsGroup(currentCardsGroup);//更新牌
 				validation = true;
+				IsLatestShow[currentRole] = true;//出了牌
 			}
 		}
 
@@ -107,7 +109,7 @@ public class Game{
 		System.out.print(turnTime);
 		System.out.println("轮");
 		System.out.print("当前出牌的Index为");
-		System.out.println(index);
+		System.out.println(currentRole);
 		System.out.print("他选择");
 		if(validation == true)
 		{
@@ -128,22 +130,35 @@ public class Game{
 		licensingCards();//发牌
 		turnTime = 0;
         playGameCallBack.displayPlayerHandCards(roles[0].getHandCards().getCardsGroup());//回调
-		for(int i = 1;i<4;i++){
-			playGameCallBack.setRobotHandCard(roles[i].getHandCards().getCardsGroup(),i);
+		for(int i = 1;i < 4; i++){
+
+			playGameCallBack.setRobotHandCard(roles[i].getHandCards().getCardsGroup(),i);//将机器人的牌传给前端
+		}
+		for(int i = 0;i < 4;i++){
+			//在控制台打印所有人的牌
+			System.out.print("当前第");
+			System.out.print(i);
+			System.out.println("个玩家的牌为:");
+			roles[i].getHandCards().showDetail();
 		}
 
-	}
-	//更改这个就可以让游戏顺时针or逆时针
-	/*public void InitTurn(int start) {
-		currentTurn = start;//实际上应该改成找到方块三的role
-		for(int i = 0;i < 4;i++) {
-			nextTurn[(start + i) % 4] = (1 + i)%4;
+		if(firstTurn == 0) return;//第一个出牌的是玩家 则初始化工作完成
+		else//如果第一个出牌的不是玩家 那么应该先模拟机器人的出牌
+		{
+			deliveredCardsGroup deliveredCard;
+			for(int i = firstTurn;i < 4;i++){//机器人出牌 并进行回调
+				deliveredCard = roles[i].deliver(LatestCards);
+				if(deliveredCard.hasCards() == true)
+				{
+					roles[i].refreshCardsGroup(deliveredCard);//更新牌
+					LatestCards = deliveredCard;//更新LatestCards
+				}
+				playGameCallBack.displayRobotCards(deliveredCard.getCardsGroup(),i);
+				playGameCallBack.setRobotHandCard( roles[i].getHandCards().getCardsGroup(),i);
+				System.out.println("初始化的时候机器人的出牌局");
+			}
 		}
-		nextTurn[start] = 1;
-		nextTurn[(start + 1)] = 2;
-		nextTurn[2] = 3;
-		nextTurn[3] = 0;
-	}*/
+	}
 	//发牌
 	private void licensingCards() {
 		for(int i = 0;i < 52;i++)
@@ -151,11 +166,8 @@ public class Game{
 			Card card = AllCards.getCardByIndex(i);
 			roles[i % 4].getSingleCards(card);
 		}
-		//for(int i = 0;i<4;i++) {
-		//	roles[i].showDetail();
-		//}
-		//AllCards.showDetail();
-		//找出拥有方块3role的ID   方块3的weight为4
+
+		//找出拥有方块3 role的ID   方块3的weight为4
 		for(int i = 0;i < 4;i++) {
 			if(roles[i].findCard(4) == true)
 			{
@@ -173,25 +185,64 @@ public class Game{
 	}
 	//由presenter来调用这个函数
 	//两个参数分别为:前端传来的牌的数组 以及presenter自己
-	public void turn(List<Integer> list) {
+	//TODO 处理前端的　"不出事件"
+	//TODO bug 没办法显示牌
+	public void turn(List<Integer> list,PlayGameCallBack playGameCallBack) {
+		boolean validation = false;
 		turnTime++;
 		deliveredCardsGroup currentCardsGroup = roles[0].selectCards(list);
-
-	}
-	//虽然好像怪怪的....不应该调用...?
-	public int end() {//返回胜利者的编号 或者-1
-		for(int i = 0;i<4;i++)
+		if(turnTime == 1)//第一轮游戏
 		{
-			if(roles[i].win()) {
-				System.out.println("游戏结束");
-				return i;
+			// TODO 必须有方块三 后面再补充这部分吧...
+			//修改validation
+
+		}
+		validation = true;//TODO 这里先默认了所有的出牌都是合法的....后面再改
+		//玩家的牌传递给presenter
+
+		if(validation == true) {//合法的出牌
+			playGameCallBack.displayPlayerCards(currentCardsGroup.getCardsGroup());
+			roles[0].refreshCardsGroup(currentCardsGroup);//更新牌
+			playGameCallBack.displayPlayerHandCards(roles[0].getHandCards().getCardsGroup());//回调
+            System.out.println("玩家的出牌局");
+			System.out.println("");
+			if(roles[0].win() == true){
+				//游戏结束了  需要进行分数的计算
+				//TODO 需要测试分数
+				handCardsGroup [] hd = new handCardsGroup[4];
+				for(int i = 0;i<4;i++){
+					hd[i] = roles[i].getHandCards();
+				}
+				int PlayerScore = scorer.getScore(0,hd);//传牌组进去....
+				playGameCallBack.onGameWin(0,PlayerScore);
+			}
+			for(int i = 1; i < 4; i++){
+				currentCardsGroup = roles[i].deliver(LatestCards);
+				if(currentCardsGroup.hasCards() == true) {
+					LatestCards = currentCardsGroup;
+					roles[i].refreshCardsGroup(currentCardsGroup);//更新牌
+				}
+				playGameCallBack.displayRobotCards(currentCardsGroup.getCardsGroup(),i);
+                playGameCallBack.setRobotHandCard( roles[i].getHandCards().getCardsGroup(),i);//??????
+				if(roles[i].win() == true){
+					//游戏结束了
+					//TODO 需要测试分数
+					handCardsGroup [] hd = new handCardsGroup[4];
+					for(int j = 0; j < 4; j++){
+						hd[j] = roles[j].getHandCards();
+					}
+					int PlayerScore = scorer.getScore(0,hd);//传牌组进去....
+					playGameCallBack.onGameWin(i,PlayerScore);
+				}
+				//机器人出牌 并进行回调
 			}
 		}
-		return -1;
+		else{//不合法的出牌 返回警告
+			playGameCallBack.onCardsNotValid("不合法蛤蛤蛤");
+		}
+
 	}
-	private int getNextTurn() {
-		return (currentTurn + 1) % 4;
-	}
+
 
 
 }

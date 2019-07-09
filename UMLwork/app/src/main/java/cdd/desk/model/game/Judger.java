@@ -8,7 +8,7 @@ public class Judger{
 
 	//判断在有上家的情况下牌是不是合法的
 	//如果没有上家 previous 传空指针
-	public boolean isPermissible(deliveredCardsGroup previous,deliveredCardsGroup current) 
+	public boolean isPermissible(deliveredCardsGroup previous,deliveredCardsGroup current)
 	{
 		
 		/*if(current.getType() == CardsType.card0)return false;//不合法的牌

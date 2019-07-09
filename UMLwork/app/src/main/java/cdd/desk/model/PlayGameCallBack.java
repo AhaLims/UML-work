@@ -12,9 +12,11 @@ public interface PlayGameCallBack {
 
     void displayRobotCards(List<Card> playerCards, int robot);
 
-     void setRobotHandCard(List<Card> robotCards,int robot);
+    void setRobotHandCard(List<Card> robotCards,int robot);
 
-     void onCardsNotValid(CharSequence message);
+    void onCardsNotValid(String message);//牌不合法时 调用的函数
 
-     void onRobotPass(int robot);
+    void onGameWin(int winnerIndex,int PlayerScore);//游戏获得了胜利 返回获得胜利的role 的编号（玩家为0
+
+    void onRobotPass(int robot);
 }

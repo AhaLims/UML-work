@@ -124,7 +124,6 @@ public class CardsManager {
 			//这里是java某种扭曲的(划掉)语法糖
 			//@Override
 			public int compare(Card card1, Card card2) {
-				// TODO Auto-generated method stub
 				return card1.compareTo(card2);
 			}	
 		}

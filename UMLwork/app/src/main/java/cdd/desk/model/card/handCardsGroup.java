@@ -10,7 +10,5 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class handCardsGroup extends CardsGroup{
-	public List<Card> getCardsGroup(){//返回目前所有的手牌 List类型的
-		return card;
-	}
+
 }

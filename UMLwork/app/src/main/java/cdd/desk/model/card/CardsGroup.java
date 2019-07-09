@@ -33,8 +33,12 @@ public class CardsGroup{
 	 * end
 	 * 
 	 */
-	
-	
+
+	public List<Card> getCardsGroup(){//返回目前所有的手牌 List类型的
+		return card;
+	}
+
+
 	public void sort() {
 		cardsManager.orderCards(card);
 	}
@@ -116,7 +120,7 @@ public class CardsGroup{
 			//这里是java某种扭曲的语法糖
 			//@Override
 			public int compare(Card card1, Card card2) {
-				// TODO Auto-generated method stub
+
 				return card1.compareTo(card2);
 			}	
 		}
