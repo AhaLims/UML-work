@@ -31,14 +31,18 @@ public class deskPresenter implements deskContract.Presenter,PlayGameCallBack {
 
     @Override
     public void displayPlayerCards(List<Card> playerCards) {
+        System.out.print("应该出的牌的权重为");
+        for(int i = 0;i < playerCards.size();i++){
+            System.out.println(playerCards.get(i).getWeight());
+        }
         mDeskActivity.displayPlayerCards(playerCards);
-        mDeskActivity.removeShowedCards(3);
+        mDeskActivity.removeShowedCards(1);
     }
 
     @Override
     public void displayRobotCards(List<Card> robotCards, int robot) {
         mDeskActivity.displayRobotCards(robotCards,robot);
-        mDeskActivity.removeShowedCards((robot-1)%4);
+        mDeskActivity.removeShowedCards((robot+1)%4);
     }
 
     @Override
@@ -47,7 +51,7 @@ public class deskPresenter implements deskContract.Presenter,PlayGameCallBack {
     }
 
     @Override
-    public void onCardsNotValid(CharSequence message) {
+    public void onCardsNotValid(String message) {
         mDeskActivity.displayIrregularity(message);
     }
 
@@ -58,5 +62,14 @@ public class deskPresenter implements deskContract.Presenter,PlayGameCallBack {
 
     public void playerPass(){
         /////mGame.pass()
+    }
+
+    public void playerShowCards(List<Integer> cards){
+       mGame.turn(cards,this);
+    }
+
+    @Override
+    public void onGameWin(int winnerIndex) {
+
     }
 }

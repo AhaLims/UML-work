@@ -77,9 +77,8 @@ public class Role {
 	}
 
 	//TODO 空函数设置。。并不合理
-	public deliveredCardsGroup deliver(deliveredCardsGroup previous){
-		//空函数 由 Robot 和 Player来继承
-		return null;
+	public deliveredCardsGroup deliver(deliveredCardsGroup previous) {
+	return null;
 	}
 
 	public void setNumber(int n) {

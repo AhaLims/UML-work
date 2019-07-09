@@ -8,6 +8,7 @@ import cdd.desk.model.card.CardColor;
 import cdd.desk.model.card.PairCardsGroup;
 import cdd.desk.model.card.deliveredCardsGroup;
 import cdd.desk.model.role.Player;
+import cdd.desk.model.role.Robot;
 import cdd.desk.model.role.Role;
 
 
@@ -29,8 +30,11 @@ public class Game{
 		AllCards = PairCardsGroup.getPairOfCards();
 		roles = new Role[4];
 		IsLatestShow = new boolean[4];
+		LatestCards = new deliveredCardsGroup();
 		for(int i = 0;i < 4; i++) {
-			roles[i] = new Player(this);
+			if(i == 0)
+				roles[i] = new Player(this);
+			else roles[i] = new Robot(this);
 			IsLatestShow[i] = false;//一开始大家都没有出牌
 		}
 
@@ -145,7 +149,8 @@ public class Game{
 					LatestCards = deliveredCard;//更新LatestCards
 				}
 				playGameCallBack.displayRobotCards(deliveredCard.getCardsGroup(),i);
-
+				playGameCallBack.setRobotHandCard( roles[i].getHandCards().getCardsGroup(),i);
+				System.out.println("初始化的时候机器人的出牌局");
 			}
 		}
 	}
@@ -176,6 +181,7 @@ public class Game{
 	//由presenter来调用这个函数
 	//两个参数分别为:前端传来的牌的数组 以及presenter自己
 	//TODO 处理前端的　"不出事件"
+	//TODO bug 没办法显示牌
 	public void turn(List<Integer> list,PlayGameCallBack playGameCallBack) {
 		boolean validation = false;
 		turnTime++;
@@ -188,8 +194,11 @@ public class Game{
 		}
 		validation = true;//TODO 这里先默认了所有的出牌都是合法的....后面再改
 		//玩家的牌传递给presenter
-		if(validation = true) {//合法的出牌
+		///////////////////////////////////////////////////////////////////////////////////////////////////
+		if(validation == true) {//合法的出牌
 			playGameCallBack.displayPlayerCards(currentCardsGroup.getCardsGroup());
+            System.out.println("玩家的出牌局");
+			System.out.println("");
 			if(roles[0].win() == true){
 				//游戏结束了
 				playGameCallBack.onGameWin(0);
@@ -199,6 +208,7 @@ public class Game{
 				if(currentCardsGroup.hasCards() == true)
 					LatestCards = currentCardsGroup;
 				playGameCallBack.displayRobotCards(currentCardsGroup.getCardsGroup(),i);
+                playGameCallBack.setRobotHandCard( roles[i].getHandCards().getCardsGroup(),i);//??????
 				if(roles[i].win() == true){
 					//游戏结束了
 					playGameCallBack.onGameWin(i);

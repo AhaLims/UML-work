@@ -35,9 +35,9 @@ public class deliveredCardsGroup extends CardsGroup {
 	}
 
 	public boolean hasCards() {
-		//判断是否出了牌 如果没有出牌 返回false
-		if (this.card.size() == 0) return false;
-		return true;
+			//判断是否出了牌 如果没有出牌 返回false
+			if (this.card.size() == 0) return false;
+			return true;
 	}
 }
 
