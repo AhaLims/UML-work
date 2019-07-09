@@ -43,7 +43,7 @@ public class Game{
 		for(int i = 0;i < 4;i++) {
 			if (i == index)continue;
 			else {
-				if(IsLatestShow[i] == false)return false;
+				if(IsLatestShow[i] == true)return false;
 			}
 		}
 		return true;
@@ -56,28 +56,23 @@ public class Game{
 	//返回boolean值代表出的牌是不是合法的
 	//也许应该返回String 比较合适？ 如果是合法 则String为空     //不合法 String为相应的错误提示
 	//TODO 这里后面需要用  需要修改 因为需要根据是否先手 后手来判断出牌
-	public boolean RoleDeliverCard(int index,List<Integer> list) {
+	public boolean RoleDeliverCard(int currentRole,deliveredCardsGroup currentCardsGroup) {
 		boolean validation = false;
-		currentTurn = index;
-		if(currentTurn == firstTurn)
-		{
-			turnTime++;
-		}//进行轮的更新
 
-		deliveredCardsGroup currentCardsGroup = roles[index].selectCards(list);
-		//将转换成deleiverCardsGroup类型的
-		if(firstTurn == index && turnTime == 1)//第一轮的先手
+		if(firstTurn == currentRole && turnTime == 1)//第一轮的先手
 		{
 			LatestCards = new deliveredCardsGroup();//先手 LatestCards 应该是新new的
 			//必须有方块三
 			if(currentCardsGroup.canFindCard(3, CardColor.Diamond) != -1)
 			{
-				roles[index].refreshCardsGroup(currentCardsGroup);//更新牌
+				roles[currentRole].refreshCardsGroup(currentCardsGroup);//更新牌
 				validation = true;
 			}
+			IsLatestShow[currentRole] = true;//出了牌
 		}
-		if(IsFirstHand(index) == true)//非第一轮的先手
+		if(IsFirstHand(currentRole) == true)//非第一轮的先手
 		{
+			IsLatestShow[currentRole] = true;//出了牌
 			LatestCards = new deliveredCardsGroup();//先手 LatestCards 应该是新new的
 			if(currentCardsGroup.hasCards() == false)//TODO 这里是说明先手不出牌 是不合法的
 			{
@@ -88,7 +83,7 @@ public class Game{
 			else {
 				if(judger.isPermissible(null,currentCardsGroup) == true)
 				{
-					roles[index].refreshCardsGroup(currentCardsGroup);//更新牌
+					roles[currentRole].refreshCardsGroup(currentCardsGroup);//更新牌
 					validation = true;
 				}
 				//TODO 合法的出牌 这个时候应该考虑怎么更新牌
@@ -98,8 +93,9 @@ public class Game{
 			if( judger.isPermissible(LatestCards,currentCardsGroup) == true)
 			{	//后手出牌合法
 				//更新牌
-				roles[index].refreshCardsGroup(currentCardsGroup);//更新牌
+				roles[currentRole].refreshCardsGroup(currentCardsGroup);//更新牌
 				validation = true;
+				IsLatestShow[currentRole] = true;//出了牌
 			}
 		}
 
@@ -107,7 +103,7 @@ public class Game{
 		System.out.print(turnTime);
 		System.out.println("轮");
 		System.out.print("当前出牌的Index为");
-		System.out.println(index);
+		System.out.println(currentRole);
 		System.out.print("他选择");
 		if(validation == true)
 		{
@@ -211,7 +207,7 @@ public class Game{
 			}
 		}
 		else{//不合法的出牌 返回警告
-			playGameCallBack.onCardsNotValid("不知道为什么不合法了蛤蛤蛤");
+			playGameCallBack.onCardsNotValid("不合法蛤蛤蛤");
 		}
 
 	}
