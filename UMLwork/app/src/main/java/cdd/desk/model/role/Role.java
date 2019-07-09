@@ -33,6 +33,9 @@ public class Role {
 		game = g;
 	}
 
+	//默认构造函数
+	public Role() {}
+
 	//在游戏初始阶段 获得单张牌
 	public void getSingleCards(Card card) {
 		CurrentCards.addCard(card);
