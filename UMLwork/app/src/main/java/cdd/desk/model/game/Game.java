@@ -187,7 +187,7 @@ public class Game{
 	//TODO 处理前端的　"不出事件"
 	public void turn(List<Integer> list,PlayGameCallBack playGameCallBack) {
 		boolean validation = false;
-		turnTime++;
+		//turnTime++;//TODO bug......turnTime需要在合适的时候才增加
 		deliveredCardsGroup currentCardsGroup = roles[0].selectCards(list);
 		if(list == null){//处理不出牌的事件
 			if(IsFirstHand(0)){
@@ -198,9 +198,13 @@ public class Game{
 			{
 				//合法的不出牌
 				IsLatestShow[0] = false;//记录一下没有出牌
+				turnTime++;
 			}
 		}
-		else IsLatestShow[0] = false;//记录一下出了出牌
+		else {
+			turnTime++;
+			IsLatestShow[0] = true;//记录一下出了出牌
+		}
 
 		if(turnTime == 1 && firstTurn == 0 && currentCardsGroup.canFindCard(3, CardColor.Diamond) == -1)
 		{
@@ -211,7 +215,6 @@ public class Game{
 
 
 		if(IsFirstHand(0) || CardsManager.getCardsManager().isPermissible(LatestCards,currentCardsGroup,playGameCallBack)) {//合法的出牌
-
 			//通知presenter 并更新玩家的牌
 			playGameCallBack.displayPlayerCards(currentCardsGroup.getCardsGroup());
 			roles[0].refreshCardsGroup(currentCardsGroup);//更新牌
@@ -227,7 +230,8 @@ public class Game{
 					hd[i] = roles[i].getHandCards();
 				}
 				int PlayerScore = scorer.getScore(0,hd);//传牌组进去....
-				playGameCallBack.onGameEnd(0,PlayerScore);
+				//playGameCallBack.onGameEnd(0,PlayerScore);
+				playGameCallBack.onCardsNotValid("实际上是游戏结束了 并不是错误");
 			}
 
 			//机器人出牌 并进行回调
