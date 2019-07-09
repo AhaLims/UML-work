@@ -11,7 +11,7 @@ import java.util.List;
 public class deliveredCardsGroup extends CardsGroup {
 	private CardsType type;
 
-	//private int value;
+	private int value;
 	public deliveredCardsGroup(List<Card> c) {
 		super(c);
 	}
@@ -25,10 +25,10 @@ public class deliveredCardsGroup extends CardsGroup {
 		//value = this.cardsManager.getCardsGroupValue(this.card);
 	}
 
-	//public int getValue() {
-	//	calculateAttribute();
-	//	return value;
-	//}
+	public int getValue() {
+		calculateAttribute();
+		return value;
+	}
 	public CardsType getType() {
 		calculateAttribute();
 		return type;

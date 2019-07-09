@@ -192,7 +192,7 @@ public class Game{
 			playGameCallBack.displayPlayerCards(currentCardsGroup.getCardsGroup());
 			if(roles[0].win() == true){
 				//游戏结束了
-				playGameCallBack.onGameWin(0);
+				playGameCallBack.onGameEnd(0);
 			}
 			for(int i = 1; i < 4; i++){
 				currentCardsGroup = roles[i].deliver(LatestCards);
@@ -201,7 +201,7 @@ public class Game{
 				playGameCallBack.displayRobotCards(currentCardsGroup.getCardsGroup(),i);
 				if(roles[i].win() == true){
 					//游戏结束了
-					playGameCallBack.onGameWin(i);
+					playGameCallBack.onGameEnd(i);
 				}
 				//机器人出牌 并进行回调
 			}

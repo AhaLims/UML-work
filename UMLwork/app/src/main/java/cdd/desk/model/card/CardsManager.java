@@ -15,10 +15,7 @@ import java.util.List;
 
 
 
-//应该都是静态的方法....??
-//---------------------“比较牌”的方法应该单独抽象成类----------------------------//
-//可以这样做  接口：比较牌的接口 然后有一个函数xxx(card1,card2) return true/false;
-//用单实例模式---------------------------//
+
 public class CardsManager {
 	private static CardsManager cardsManager;
 	public static CardsManager getCardsManager() {
@@ -49,7 +46,7 @@ public class CardsManager {
 		return totalWeight;
 		
 	}
-	//判断牌的类型
+
 	//判断牌的类型
 	public CardsType jugdeType(List<Card> list) {
 		int len = list.size();
@@ -110,9 +107,10 @@ public class CardsManager {
 		if(len==5)
 		{
 			int count=0;//定义一个计数器用于判断花色相等的牌有多少张
+			//同花顺 同花的五张牌
 			for(int i = 1 ;i < 5;i++)
 			{
-				if (list.get(i).getPoints() == list.get(i - 1).getPoints())
+				if (list.get(i).getColor() == list.get(i - 1).getColor())
 				{ count++; }//与上面判断三张相等牌思路相同
 			}
 			if(count==4)
@@ -152,33 +150,42 @@ public class CardsManager {
 
 		return CardsType.card0;//不是上述的任何一种牌的类型
 	}
-	/*
-	 * 描述：在上家的牌与出牌者想要选择的牌的类型一致的情况下，比较牌组的大小以确定出牌者是否能出牌
-	 * 参数：牌的类型 上家的牌组 目前的牌组
-	 * 功能：判断是否能出牌
-	 * 备注：目前只支持在CardsType相同的情况下出牌
-	 * 		现在默认目前所有的牌的类型都按照这样的规则来比较
-			ps当然我觉得这样做是不行的
-	 */
-	
-	/*public static boolean canDisplay(CardsType type,
-			List<Card> previousList,
-			List<Card> presentList){
-		switch(type) {
-		case cardSingle:
-		case cardsCouple:
-		case cards3:
-		case cards4:
-		case cardsSequence:
-		case cards31:
-			if(presentList.get(0).compareTo(previousList.get(0)) > 0)
-				return true;
-			else return false;
-		default:
-			return false;
+
+	//比较牌组的大小
+	public boolean isPermissible(deliveredCardsGroup previous,deliveredCardsGroup current)
+	{
+		boolean validation = false;
+		CardsType currentType = current.getType();
+		CardsType previousType = previous.getType();
+
+		switch (currentType){
+			case card0:
+				validation = false;
+				break;
+			//单牌 对子 三张一样的牌 判定规则一样，都是看
+			case cardSingle://单牌
+
+			case cardsCouple://两张相等的对子
+
+			case cards3://三张一样的
+				if(currentType == previousType && current.getValue() > previous.getValue())
+					validation = true;
+				break;
+			case cards31://三带一
+
+			case cards41://四带一
+
+			case cardsThs://同花顺
+
 		}
-	}*/
-	//6.28 按照新的逻辑 canDisplay暂时没用
+
+		//return validation;
+
+		//初步测试阶段忽略规则 默认为合法
+		return true;
+
+	}
+
 	
 
 	//能直接在Card类中重载某个参数 实现函数的重载吗......? 这里就直接调用 多好...
