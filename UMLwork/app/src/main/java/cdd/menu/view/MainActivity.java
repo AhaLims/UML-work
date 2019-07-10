@@ -5,21 +5,19 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import com.example.uml.umlwork.R;
 
 import cdd.desk.model.role.Player;
-import cdd.desk.model.role.PlayerRepo;
+import cdd.tool.DbCallBack;
+import cdd.tool.PlayerRepo;
 import cdd.bgm.view.bgmActivity;
 import cdd.desk.view.deskActivity;
-import cdd.desk.view.introduceActivity;
-import cdd.desk.view.rankActivity;
-import cdd.desk.view.mainActivityczf;
+import cdd.introduction.introduceActivity;
+import cdd.rank.view.rankActivity;
 import cdd.menu.contract.menuContract;
 
-;
+
 public class MainActivity extends AppCompatActivity implements menuContract.View{
     private Button btnStartGame;
     private Button btnShowRank;
@@ -36,7 +34,12 @@ public class MainActivity extends AppCompatActivity implements menuContract.View
         Intent intent =getIntent();
         Bundle bundle=intent.getExtras();
         String useName=bundle.getString("useName");
-        player=playerRepo.getPlayerByName(useName);
+        player=playerRepo.getPlayerByName(useName, new DbCallBack.RankCallBack() {
+            @Override
+            public void dispalyRank(String name, int score, int rank) {
+
+            }
+        });
         //绑定开始游戏按钮
         btnStartGame  =  findViewById(R.id.start_game);
         btnSetBgm=findViewById(R.id.set_bgm);

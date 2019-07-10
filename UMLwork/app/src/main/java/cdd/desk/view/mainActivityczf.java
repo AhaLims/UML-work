@@ -10,20 +10,9 @@ import android.widget.Toast;
 
 import com.example.uml.umlwork.R;
 
-import cdd.desk.model.role.PlayerRepo;
+import cdd.tool.PlayerRepo;
 import cdd.desk.model.role.Player;
-import cdd.desk.model.role.PlayerRepo;
-import android.content.Context;
-import cdd.desk.view.deskActivity;
-import cdd.menu.contract.menuContract;
 import cdd.menu.view.MainActivity;
-import android.content.ContentValues;
-import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public class mainActivityczf extends AppCompatActivity {
     private Button btnStartGame;

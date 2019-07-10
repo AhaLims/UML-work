@@ -1,4 +1,4 @@
-package cdd.desk.model.role;
+package cdd.tool;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -8,7 +8,9 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class PlayerRepo {
+import cdd.desk.model.role.Player;
+
+public final class PlayerRepo {
     private DBHelper dbHelper;
 
     public PlayerRepo (Context context) {
@@ -64,7 +66,7 @@ public class PlayerRepo {
         return playerList;
     }
 
-    public Player getPlayerByName(String name) {
+    public Player getPlayerByName(String name,DbCallBack.RankCallBack dbCallBack) {
         SQLiteDatabase db =  dbHelper.getReadableDatabase();
         String selectQuery = "SELECT " +
                 Player.KEY_NAME + "," +
@@ -84,8 +86,10 @@ public class PlayerRepo {
         }
         cursor.close();
         db.close();
+        dbCallBack.dispalyRank(player.player_name,(int)(player.score),1);//TODO 排名记得改
         return player;
     }
+
     public Boolean QueryByName(String name){
 
 
