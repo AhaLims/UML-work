@@ -20,6 +20,7 @@ public final class PlayerRepo {
     public int insert(Player player) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
+        values.put(Player.KEY_NAME, player.player_name);
         values.put(Player.KEY_SCORE, player.score);
 
 
@@ -91,8 +92,21 @@ public final class PlayerRepo {
     }
 
     public Boolean QueryByName(String name){
-
-
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery = "SELECT  " +
+                Player.KEY_NAME + " FROM " +
+                Player.TABLE + " WHERE " +
+                Player.KEY_NAME + " =?";
+        Cursor cursor = db.rawQuery(selectQuery, new String[] {name});
+        if (cursor.moveToFirst()) {
+            System.out.println("用户已存在");
+            cursor.close();
+            db.close();
+            return true;
+        }
+        System.out.println("用户未存在");
+        cursor.close();
+        db.close();
         return false;
     }
 }
