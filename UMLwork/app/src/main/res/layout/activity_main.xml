@@ -42,4 +42,12 @@
         app:layout_constraintStart_toStartOf="@+id/show_rank"
         app:layout_constraintTop_toBottomOf="@+id/show_rank" />
 
+    <Button
+        android:id="@+id/introduce"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="说明介绍"
+        app:layout_constraintStart_toStartOf="@+id/exit_game"
+        app:layout_constraintTop_toBottomOf="@+id/exit_game" />
+
 </android.support.constraint.ConstraintLayout>

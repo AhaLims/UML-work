@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout android:id="@+id/tableLayout1"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@mipmap/game_bg"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:stretchColumns="0,3"
+    >
+
+    <!-- 第一行 -->
+    <TableRow android:id="@+id/tableRow1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView/>
+        <TextView android:text="用户名："
+            style="@style/sizeOfWord"
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+        <EditText android:id="@+id/useName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="400px"/>
+        <TextView />
+    </TableRow>
+
+    <!-- 第二行 -->
+    <TableRow android:id="@+id/tableRow2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView/>
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/sizeOfWord"
+            android:text="登陆" />
+
+        <TextView/>
+    </TableRow>
+    <!-- 第3行 -->
+    <TableRow
+        android:id="@+id/tableRow4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView />
+
+    </TableRow>
+
+    <TextView
+        android:id="@+id/textView"
+        style="@style/sizeOfWordHint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="如果你的账号没有注册，将自动注册！" />
+
+    <TextView />
+</TableLayout>
+
