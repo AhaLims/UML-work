@@ -32,10 +32,12 @@ public class mainActivityczf extends AppCompatActivity {
         btnStartGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String useName=((EditText)findViewById(R.id.useName)).getText().toString();	//获取输入的用户
+                String useName=
+                        ((EditText)findViewById(R.id.useName)).getText().toString();	//获取输入的用户
                 if(android.text.TextUtils.isEmpty(useName)  )
                 {
-                    Toast.makeText(mainActivityczf.this, "请输入用户名！", Toast.LENGTH_LONG).show();
+                    Toast.makeText(mainActivityczf.this,
+                            "请输入用户名！", Toast.LENGTH_LONG).show();
 
                 }
                 else
@@ -53,11 +55,10 @@ public class mainActivityczf extends AppCompatActivity {
                     }
                     else
                     {
-                        Toast.makeText(mainActivityczf.this,
-                                "用户名未创建，将为你自动创建并进入主页面！",
-                                Toast.LENGTH_LONG).show();
-                        player.player_name=useName;
-                        player.score=0;
+
+                        Toast.makeText(mainActivityczf.this, "用户名未创建，将为你自动创建并进入主页面！", Toast.LENGTH_LONG).show();
+                        player.setPlayerName(useName);
+                        player.setScore(0);
                         playerRepo.insert(player);
                         Intent intent=new Intent(mainActivityczf.this, MainActivity.class);
                         Bundle bundle=new Bundle();	//创建并实例化一个Bundle对象

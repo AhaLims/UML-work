@@ -20,18 +20,18 @@ public final class PlayerRepo {
     public int insert(Player player) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(Player.KEY_NAME, player.player_name);
-        values.put(Player.KEY_SCORE, player.score);
+        values.put("name",player.getPlayerName());
+        values.put("score", player.getScore());
 
 
-        long raw_num = db.insert(Player.TABLE, null, values);//返回插入的行号
+        long raw_num = db.insert("Player", null, values);//返回插入的行号
         db.close();
         return (int) raw_num ;
     }
 
     public void delete(String player_name) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        db.delete(Player.TABLE, Player.KEY_NAME+"=?",
+        db.delete("Player", "name" + "=?",
                 new String[]{player_name});
         db.close();
     }
@@ -39,16 +39,16 @@ public final class PlayerRepo {
     public void update(Player player) {
         SQLiteDatabase db=dbHelper.getWritableDatabase();
         ContentValues values=new ContentValues();
-        values.put(Player.KEY_SCORE, player.score);
-        db.update(Player.TABLE, values, Player.KEY_NAME+"=?",
-                new String[] {player.player_name});
+        values.put("score", player.getScore());
+        db.update("Player", values, "name" + "=?",
+                new String[] {player.getPlayerName()});
         db.close();
     }
 
     public ArrayList<HashMap<String, String>> getPlayerScore() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String selectQuery = "SELECT " + Player.KEY_NAME + "," +
-                Player.KEY_SCORE + " FROM " + Player.TABLE;
+        String selectQuery = "SELECT " + "name" + "," +
+                "score" + " FROM " + "Player";
         ArrayList<HashMap<String,String>> playerList= new ArrayList<HashMap<String, String>>();
         Cursor cursor = db.rawQuery(selectQuery, null);
 
@@ -56,9 +56,9 @@ public final class PlayerRepo {
             do {
                 HashMap<String, String> player = new HashMap<String, String>();
                 player.put("name", cursor.getString(
-                        cursor.getColumnIndex(Player.KEY_NAME)));
+                        cursor.getColumnIndex("name")));
                 player.put("score", cursor.getString(
-                        cursor.getColumnIndex(Player.KEY_SCORE)));
+                        cursor.getColumnIndex("name")));
                 playerList.add(player);
             }while (cursor.moveToNext());
         }
@@ -70,33 +70,33 @@ public final class PlayerRepo {
     public Player getPlayerByName(String name,DbCallBack.RankCallBack dbCallBack) {
         SQLiteDatabase db =  dbHelper.getReadableDatabase();
         String selectQuery = "SELECT " +
-                Player.KEY_NAME + "," +
-                Player.KEY_SCORE +
-                " FROM " + Player.TABLE
+                "name" + "," +
+                "name" +
+                " FROM " + "Player"
                 + " WHERE " +
-                Player.KEY_NAME + "=?";
+                "score" + "=?";
 
         int iCount = 0;
         Player player = new Player();
         Cursor cursor = db.rawQuery(selectQuery, new String[] {name});
         if (cursor.moveToFirst()) {
             do {
-                player.player_name = cursor.getString(cursor.getColumnIndex(player.KEY_NAME));
-                player.score = cursor.getDouble(cursor.getColumnIndex(player.KEY_SCORE));
+                player.setPlayerName(cursor.getString(cursor.getColumnIndex("score")));
+                player.setScore((int)(cursor.getDouble(cursor.getColumnIndex("name"))));//这里做了类型转换
             }while (cursor.moveToNext());
         }
         cursor.close();
         db.close();
-        dbCallBack.dispalyRank(player.player_name,(int)(player.score),1);//TODO 排名记得改
+        dbCallBack.dispalyRank(player.getPlayerName(),(int)(player.getScore()),1);//TODO 排名记得改
         return player;
     }
 
     public Boolean QueryByName(String name){
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String selectQuery = "SELECT  " +
-                Player.KEY_NAME + " FROM " +
-                Player.TABLE + " WHERE " +
-                Player.KEY_NAME + " =?";
+        String selectQuery = "SELECT " +
+                " name " + " FROM " +
+                "Player" + " WHERE " +
+                "score" + " =?";
         Cursor cursor = db.rawQuery(selectQuery, new String[] {name});
         if (cursor.moveToFirst()) {
             System.out.println("用户已存在");
