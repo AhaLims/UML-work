@@ -9,4 +9,12 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="sizeOfWord" >
+        <item name="android:textSize">90px</item>
+        <item name="android:textColor">#ffffff</item>
+    </style>
+    <style name="sizeOfWordHint" >
+        <item name="android:textSize">34px</item>
+        <item name="android:textColor">#000000</item>
+    </style>
 </resources>

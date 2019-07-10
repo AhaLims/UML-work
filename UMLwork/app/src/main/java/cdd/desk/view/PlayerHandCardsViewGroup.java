@@ -8,6 +8,7 @@ import java.util.List;
 
 import static android.os.SystemClock.sleep;
 import static cdd.desk.view.State.DOWN;
+import static cdd.desk.view.State.UP;
 
 public class PlayerHandCardsViewGroup extends CardsViewGroup {
 
@@ -84,5 +85,12 @@ public class PlayerHandCardsViewGroup extends CardsViewGroup {
             temp.setTranslationY(0);
 
         }
+    }
+
+    public void selectFirstCard()
+    {
+        CardView temp = (CardView)(getChildAt(0));
+        temp.setPos(UP);
+        temp.setTranslationY(-30);
     }
 }

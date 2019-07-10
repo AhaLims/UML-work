@@ -25,7 +25,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String CREATE_TABLE_PLAYER = "CREATE TABLE " + Player.TABLE
                 + "("
-                + Player.KEY_NAME + " TEXT PRIMARY KEY AUTOINCREMENT ,"
+                + Player.KEY_NAME + " TEXT PRIMARY KEY ,"
                 + Player.KEY_SCORE + " REAL)";
         db.execSQL(CREATE_TABLE_PLAYER);
         return;

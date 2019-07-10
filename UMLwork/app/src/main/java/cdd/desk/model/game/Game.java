@@ -29,7 +29,6 @@ public class Game{
 	private boolean[] IsLatestShow;//用来判断最新是否出了牌
 
     private static final int PlayID = 0;
-    //也许后面重构的时候会把所有的index=0的情况换成PlayerID 代码可读性更强
 	//TODO 也许应该传进玩家的名字....然后....
 	public Game() {
 		scorer = new Scorer();
@@ -45,7 +44,7 @@ public class Game{
 			IsLatestShow[i] = false;//一开始大家都没有出牌
 		}
 	}
-	private boolean IsFirstHand(int index) {//用来判断是不是先手
+	public boolean IsFirstHand(int index) {//用来判断是不是先手
 		for(int i = 0;i < 4;i++) {
 			if (i == index)continue;
 			else {
@@ -53,6 +52,7 @@ public class Game{
 			}
 		}
 		//也许应该设置 LatestCards = new deliveredCardsGroup();
+		LatestCards = new deliveredCardsGroup();
 		return true;
 	}
 
@@ -82,11 +82,12 @@ public class Game{
 			System.out.print(i);
 			System.out.println("个玩家的牌为:");
 			roles[i].getHandCards().showDetail();
-
-
 		}
 
-		if(firstTurn == 0) return;//第一个出牌的是玩家 则初始化工作完成
+		if(firstTurn == 0) {
+			playGameCallBack.onNext(0);
+			return;//第一个出牌的是玩家 则初始化工作完成
+		}
 		else//如果第一个出牌的不是玩家 那么应该先模拟机器人的出牌
 		{
 			deliveredCardsGroup deliveredCard;
@@ -101,6 +102,7 @@ public class Game{
 				playGameCallBack.displayRobotCards(deliveredCard.getCardsGroup(),i);
 				playGameCallBack.setRobotHandCard( roles[i].getHandCards().getCardsGroup(),i);
 				System.out.println("初始化的时候机器人的出牌局");
+				playGameCallBack.onNext((i + 1) % 4);
 			}
 		}
 	}
@@ -132,9 +134,9 @@ public class Game{
 	//由presenter来调用这个函数
 	//两个参数分别为:前端传来的牌的数组 以及presenter自己
 	public void turn(List<Integer> list,PlayGameCallBack playGameCallBack) {
-		//TODO bug......turnTime需要在合适的时候才增加
 		deliveredCardsGroup currentCardsGroup;
 		if (list == null) {//处理不出牌的事件
+			System.out.println("不出牌事件");
 			if (IsFirstHand(0)) {
 				playGameCallBack.onCardsNotValid("先手必须出牌哦");
 				return;
@@ -158,9 +160,29 @@ public class Game{
 			playGameCallBack.onCardsNotValid("第一轮必须有方块三哦");
 			return;
 		}
-		//先手 且 牌组中有方块三 或者后手 需要与上家比较
+		else if (CardsManager.getCardsManager().isPermissible(LatestCards, currentCardsGroup, playGameCallBack)){//先手 且 牌组中有方块三
+
+			playGameCallBack.displayPlayerCards(currentCardsGroup.getCardsGroup());
+			roles[0].refreshCardsGroup(currentCardsGroup);//更新牌
+			playGameCallBack.displayPlayerHandCards(roles[0].getHandCards().getCardsGroup());//回调
+			IsLatestShow[0] = true;//记录一下出了牌
+			turnTime++;
+			if (roles[0].win() == true) {
+				//TODO 需要测试分数
+				handCardsGroup[] hd = new handCardsGroup[4];
+				for (int i = 0; i < 4; i++) {
+					hd[i] = roles[i].getHandCards();
+				}
+				int PlayerScore = scorer.getScore(0, hd);//传牌组进去....
+				playGameCallBack.onGameEnd(0,PlayerScore);
+				//playGameCallBack.onCardsNotValid("实际上是游戏结束了 并不是错误");
+			}
+			//机器人出牌 并进行回调
+			ThreeRobotsTurn(playGameCallBack);
+		}
+		//不是第一轮的先手或者后手
 		//合法的出牌
-		if (IsFirstHand(0) || CardsManager.getCardsManager().isPermissible(LatestCards, currentCardsGroup, playGameCallBack)) {
+		if (CardsManager.getCardsManager().isPermissible(LatestCards, currentCardsGroup, playGameCallBack)) {
 			//通知presenter 并更新玩家的牌
 			playGameCallBack.displayPlayerCards(currentCardsGroup.getCardsGroup());
 			roles[0].refreshCardsGroup(currentCardsGroup);//更新牌
@@ -180,26 +202,28 @@ public class Game{
 				}
 				int PlayerScore = scorer.getScore(0, hd);//传牌组进去....
 				playGameCallBack.onGameEnd(0,PlayerScore);
-				//playGameCallBack.onCardsNotValid("实际上是游戏结束了 并不是错误");
 			}
 			//机器人出牌 并进行回调
 			ThreeRobotsTurn(playGameCallBack);
 
-		} else {//不合法的出牌 已经在判断合法性的时候返回警告了
+		}
+
+		else {//不合法的出牌 已经在判断合法性的时候返回警告了
+			System.out.print("不合法的出牌");
 			return;
 		}
 	}
 	private void ThreeRobotsTurn(PlayGameCallBack playGameCallBack) {
+		playGameCallBack.onNext(1);
 		//三个机器人的牌局
 		deliveredCardsGroup currentCardsGroup;
 		for (int i = 1; i < 4; i++) {
+			playGameCallBack.onNext((i + 1) % 4);
 			if(i < 4){//三个机器人都不出牌
 				playGameCallBack.onRolePass(i);
 				IsLatestShow[i] = false;
-				continue;//默认让2号机器人不出牌。。。。测试用。。。
-
+				continue;
 			}
-
 
 			currentCardsGroup = roles[i].deliver(LatestCards);//这是根据上家的牌获取的机器人应该出的牌
 
@@ -225,9 +249,7 @@ public class Game{
 					hd[j] = roles[j].getHandCards();
 				}
 				int PlayerScore = scorer.getScore(0, hd);//传牌组进去....
-				//TODO 要改回来 后面用下面的这行
 				playGameCallBack.onGameEnd(i,PlayerScore);
-				//playGameCallBack.onCardsNotValid("实际上是游戏结束了 并不是错误");
 				return;
 			}
 
