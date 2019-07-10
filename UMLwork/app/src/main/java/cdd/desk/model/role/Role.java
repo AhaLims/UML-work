@@ -13,7 +13,6 @@ public class Role {
 	CardsManager cardsManager;
 	handCardsGroup CurrentCards;
 	CardsGroup LasterCards;//暂时可能没啥用？
-	Game game;
 	int score;
 	int number;//该局游戏中的编号（也就是第几个出牌）
 
@@ -24,17 +23,13 @@ public class Role {
 	}
 
 
-	//TODO 这里的构造函数应该要改 实际上不需要Game传进来
-	public Role(Game g) {
+	public Role() {
 		cardsManager = CardsManager.getCardsManager();
 		score = 0;
 		//name = "testName";
 		CurrentCards = new handCardsGroup();
-		game = g;
 	}
 
-	//默认构造函数
-	public Role() {}
 
 	//在游戏初始阶段 获得单张牌
 	public void getSingleCards(Card card) {

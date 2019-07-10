@@ -11,8 +11,13 @@
         android:theme="@style/AppTheme">
 
         <activity
+<<<<<<< HEAD
             android:name="cdd.desk.view.mainActivityczf"
             android:screenOrientation="landscape"><!--横屏显示-->
+=======
+            android:name="cdd.menu.view.MainActivity"
+            android:screenOrientation="landscape"> <!-- 横屏显示 -->
+>>>>>>> f26ce2f5f43cb05fc861523dab6bd23190a0176e
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,6 +26,7 @@
         </activity>
         <activity
             android:name="cdd.desk.view.deskActivity"
+<<<<<<< HEAD
             android:screenOrientation="landscape">  <!--横屏显示-->
         </activity>
         <activity
@@ -37,10 +43,22 @@
             android:screenOrientation="landscape">  <!--横屏显示-->
         </activity>
 
+=======
+            android:screenOrientation="landscape"> <!-- 横屏显示 -->
+>>>>>>> f26ce2f5f43cb05fc861523dab6bd23190a0176e
 
         <activity android:name="cdd.bgm.view.bgmActivity"
                   android:screenOrientation="landscape"> <!-- 横屏显示 -->
         </activity>
+
+        <activity android:name="cdd.desk.view.resultActivity"
+                  android:screenOrientation="landscape"><!-- 横屏显示 -->
+
+        </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

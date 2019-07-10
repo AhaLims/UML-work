@@ -12,6 +12,8 @@ import com.example.uml.umlwork.R;
 import java.util.List;
 import cdd.desk.model.card.Card;
 
+import static android.os.SystemClock.sleep;
+
 
 public abstract  class CardsViewGroup extends FrameLayout {
     Context context;

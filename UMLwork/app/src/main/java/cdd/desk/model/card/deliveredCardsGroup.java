@@ -11,7 +11,6 @@ import java.util.List;
 public class deliveredCardsGroup extends CardsGroup {
 	private CardsType type;
 
-	//private int value;
 	public deliveredCardsGroup(List<Card> c) {
 		super(c);
 	}
@@ -21,17 +20,28 @@ public class deliveredCardsGroup extends CardsGroup {
 	}
 
 	public void calculateAttribute() {
-		type = this.cardsManager.jugdeType(this.card);
-		//value = this.cardsManager.getCardsGroupValue(this.card);
+
 	}
 
-	//public int getValue() {
-	//	calculateAttribute();
-	//	return value;
-	//}
+	//总权值
+	public int getTotolValue() {
+		return  this.cardsManager.getCardsGroupValue(this.card);
+	}
+
+	//类型
 	public CardsType getType() {
-		calculateAttribute();
+		type = this.cardsManager.jugdeType(this.card);
 		return type;
+	}
+	public int getBiggestValue(){
+		//返回 其中权值最大的那张牌 的权值
+		int size = card.size();
+		int maxValue = card.get(0).getWeight();
+		for(int i = 1; i < size ;i++){
+			if(maxValue < card.get(i).getWeight())
+				maxValue = card.get(i).getWeight();//更新最大牌权值
+		}
+		return maxValue;
 	}
 
 	public boolean hasCards() {

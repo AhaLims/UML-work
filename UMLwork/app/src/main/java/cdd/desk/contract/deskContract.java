@@ -16,12 +16,14 @@ public interface deskContract {
         void displayPlayerHandCards(List<Card> playerCards);
         void displayPlayerCards(List<Card> playerCards);
         void displayRobotCards(List<Card> playerCards, int robot);
-        void displayIrregularity(CharSequence message);
+        void displayIrregularity(String message);
         void showCards();
     }
 
     interface Presenter extends BasePresenter{
         void playerPass();
         void playerShowCards(List<Integer> cards);
+        void escape();
+        boolean isFirstHand(int role);
     }
 }
