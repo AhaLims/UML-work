@@ -134,6 +134,9 @@ public class CardsGroup{
 		}
 		return DeliveredCardsGroup;
 	}
-	
+
+	public void clear() {
+		card.clear();
+	}
 
 }
