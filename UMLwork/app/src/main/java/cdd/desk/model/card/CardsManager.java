@@ -5,6 +5,8 @@ import java.util.Comparator;
 import java.util.List;
 
 import cdd.desk.model.PlayGameCallBack;
+
+import static cdd.desk.model.card.CardsType.danzhang;
 //问题：对cards type进行排序行不行 就是判断牌能不能出--------是不是合法的 以及判断类型
 /*  测试完成
  * CardsManager:对牌进行管理判断
@@ -165,7 +167,7 @@ public class CardsManager {
 		//当牌数量为1时，单牌
 		if(len == 1) {
             System.out.println("是单牌");
-			return CardsType.danzhang;
+			return danzhang;
 		}
 
 		//当牌数量为2是，一对
@@ -225,12 +227,34 @@ public class CardsManager {
 			ps当然我觉得这样做是不行的
 	 */
 
-
+//TODO 要补充牌型的判断part...
 	public boolean isPermissible(deliveredCardsGroup previous,deliveredCardsGroup current,PlayGameCallBack playGameCallBack)
 	{
+
 		System.out.println("现在应该判断牌的合法性了");
 		boolean validation = false;
 		CardsType currentType = current.getType();
+
+		//先看看有没有上家
+		if(previous.hasCards() == false) {//说明没有上家
+			switch (currentType){
+				case card0:
+					playGameCallBack.onCardsNotValid("不可以这样出牌哦");
+					return false;
+				case danzhang:
+				case yidui://两张相等的对子
+				case sanzhang://三张一样的
+					return true;
+				case sandaier://三带一
+				case sidaiyi://四带一
+				case tonghuashun://同花顺
+					playGameCallBack.onCardsNotValid("暂时不支持的牌型 但是后面会补充");
+					return false;
+				default:
+					return false;//要加一个default
+			}
+		}
+
 		CardsType previousType = previous.getType();
 		if(currentType != previousType){
 			playGameCallBack.onCardsNotValid("与商家的牌不匹配哦");

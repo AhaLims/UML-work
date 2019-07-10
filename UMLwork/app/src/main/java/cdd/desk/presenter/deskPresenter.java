@@ -84,6 +84,7 @@ public class deskPresenter implements deskContract.Presenter,PlayGameCallBack {
     public void escape()
     {
         //mGame.escape
+        //游戏需要处理分数事件....要扣分
     }
 
     @Override

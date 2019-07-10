@@ -86,4 +86,9 @@ public class PlayerRepo {
         db.close();
         return player;
     }
+    public Boolean QueryByName(String name){
+
+
+        return false;
+    }
 }
