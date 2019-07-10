@@ -88,8 +88,8 @@ public class CardsManager {
 
 		//要求所有牌的花色鄙俗相同，否则返回flase
 		for(int i = 0; i < cards.size() - 1; i++) {
-			if(cards.get(i).getColor() != cards.get(i+2).getColor());
-			return false;
+			if(cards.get(i).getColor() != cards.get(i+1).getColor())
+				return false;
 		}
 
 		return true;
