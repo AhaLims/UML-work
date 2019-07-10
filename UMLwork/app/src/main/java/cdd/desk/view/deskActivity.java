@@ -46,6 +46,7 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
     private TextView timer2TextView;
     private TextView timer3TextView;
     private Context context;
+    private String useName;
 
     //由于不知道怎么在ui层判断轮次 所以只能写4个timer了
     private CountDownTimer timer0 = new CountDownTimer(10000, 1000) {
@@ -108,7 +109,7 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
         setContentView(R.layout.activity_desk);
         Intent intent=getIntent();
         Bundle bundle=intent.getExtras();
-        String useName =bundle.getString("useName");
+        useName =bundle.getString("useName");
         context = this;
 
         //绑定控件
@@ -229,7 +230,7 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
         });
 
         //设置presenter
-        mPresenter = new deskPresenter(this);
+        mPresenter = new deskPresenter(this,useName);
 
     }
 
@@ -396,10 +397,14 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
                 dialog.dismiss();//关闭对话框
             }
         });
+
         dialog.setButton(DialogInterface.BUTTON_NEUTRAL,"不了不了", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(deskActivity.this , MainActivity.class);
+                Bundle bundle=new Bundle();	//创建并实例化一个Bundle对象
+                        bundle.putCharSequence("useName", useName);	//保存用户名
+                        intent.putExtras(bundle);	//将Bundle对象添加到Intent对象中
                 startActivity(intent);
                 dialog.dismiss();//关闭对话框
             }

@@ -22,7 +22,7 @@ public class loginActivity extends AppCompatActivity implements loginContract.Vi
 
     //TODO MODEL
     PlayerRepo playerRepo=new PlayerRepo (this);
-    Player player=new Player();
+    //Player player=new Player();
 
     @Override
     public void setPresenter(loginContract.Presenter presenter) {

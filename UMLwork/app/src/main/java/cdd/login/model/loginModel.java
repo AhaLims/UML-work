@@ -21,7 +21,7 @@ public class loginModel implements loginContract {
 
     public void insertPlayer(String name)
     {
-        Player player = new Player();
+        Player player = new Player(name);
         player.setPlayerName(name);
         player.setScore(0);
         mRepo.insert(player);

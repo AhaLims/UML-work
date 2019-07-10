@@ -22,7 +22,7 @@ public class rankActivity extends AppCompatActivity implements rankContract.View
     private rankContract.Presenter mPresenter;
 
     PlayerRepo playerRepo = new PlayerRepo(this);//TODO MODEL
-    Player player = new Player();//TODO MODEL
+   // Player player = new Player();//TODO MODEL
 
     @Override
     public void setPresenter(rankContract.Presenter presenter) {

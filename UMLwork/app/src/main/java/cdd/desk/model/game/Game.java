@@ -1,5 +1,8 @@
 package cdd.desk.model.game;
 
+import android.content.Context;
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,10 +32,12 @@ public class Game{
 	private int turnTime;//轮数
 	private Role[] roles;
 	private boolean[] IsLatestShow;//用来判断最新是否出了牌
+	Context context;
 
     private static final int PlayID = 0;
 	//TODO 也许应该传进玩家的名字....然后....
-	public Game() {
+	public Game(Context context) {
+		this.context = context;
 		scorer = new Scorer();
 		//nextTurn = new int[4];
 		AllCards = PairCardsGroup.getPairOfCards();
@@ -47,7 +52,8 @@ public class Game{
 		}
 	}
 
-	public Game(String name){
+	public Game(String name,Context context){
+		this.context = context;
 		scorer = new Scorer();
 		AllCards = PairCardsGroup.getPairOfCards();
 		roles = new Role[4];
@@ -288,7 +294,8 @@ public class Game{
 		for (int j = 0; j < 4; j++) {
 			hd[j] = roles[j].getHandCards();
 		}
-		PlayerRepo playerRepo=new PlayerRepo(null);
+		PlayerRepo playerRepo=new PlayerRepo(context);
+		Log.e("", "gameEnd: "+ roles[0].getPlayerName());
 		int temp = playerRepo.getPlayerByName(roles[0].getPlayerName(), new DbCallBack.RankCallBack() {
 			@Override
 			public void dispalyRank(String name, int score, int rank) { }
@@ -298,6 +305,9 @@ public class Game{
 		int PlayerScore = scorer.getScore(0, hd) + temp;//玩家的新分数
 
 		//TODO 更新数据库
+		Player player2=new Player(roles[0].getPlayerName());
+		player2.setScore(PlayerScore);
+		playerRepo.update(player2);
 
 
 		playGameCallBack.onGameEnd(winner,PlayerScore);

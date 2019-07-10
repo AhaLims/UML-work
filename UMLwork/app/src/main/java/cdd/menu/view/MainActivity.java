@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements menuContract.View
     private ImageButton btnExitGame;
 
     PlayerRepo playerRepo=new PlayerRepo (this);
-    Player player=new Player();
+    Player player=new Player("");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //显示界面
