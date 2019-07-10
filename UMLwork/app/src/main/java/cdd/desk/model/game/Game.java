@@ -13,6 +13,8 @@ import cdd.desk.model.card.handCardsGroup;
 import cdd.desk.model.role.Player;
 import cdd.desk.model.role.Robot;
 import cdd.desk.model.role.Role;
+import cdd.tool.DbCallBack;
+import cdd.tool.PlayerRepo;
 
 
 //TODO 设置一个常量 玩家index = 0 可读性更强
@@ -39,17 +41,17 @@ public class Game{
 		LatestCards = new deliveredCardsGroup();
 		for(int i = 0;i < 4; i++) {
 			if(i == 0)
-				roles[i] = new Player();
+				continue;
 			else roles[i] = new Robot();
 			IsLatestShow[i] = false;//一开始大家都没有出牌
 		}
 	}
 
-	public Game(Player player){
+	public Game(String name){
 		scorer = new Scorer();
-		//nextTurn = new int[4];
 		AllCards = PairCardsGroup.getPairOfCards();
 		roles = new Role[4];
+		Player player = new Player(name);
 		IsLatestShow = new boolean[4];
 		LatestCards = new deliveredCardsGroup();
 		for(int i = 0;i < 4; i++) {
@@ -235,6 +237,7 @@ public class Game{
 			//游戏结束了  需要进行分数的计算
 			if (roles[0].win() == true) {
 				gameEnd(0,playGameCallBack);
+
 				return;
 			}
 			//机器人出牌 并进行回调
@@ -285,9 +288,17 @@ public class Game{
 		for (int j = 0; j < 4; j++) {
 			hd[j] = roles[j].getHandCards();
 		}
-		int PlayerScore = scorer.getScore(0, hd) + roles[0].getScore();//玩家的新分数
+		PlayerRepo playerRepo=new PlayerRepo(null);
+		int temp = playerRepo.getPlayerByName(roles[0].getPlayerName(), new DbCallBack.RankCallBack() {
+			@Override
+			public void dispalyRank(String name, int score, int rank) { }
+		}).getScore();
+
+
+		int PlayerScore = scorer.getScore(0, hd) + temp;//玩家的新分数
 
 		//TODO 更新数据库
+
 
 		playGameCallBack.onGameEnd(winner,PlayerScore);
 	}

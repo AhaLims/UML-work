@@ -80,7 +80,7 @@ public final class PlayerRepo {
                 "name" + "=?";
 
         int iCount = 0;
-        Player player = new Player();
+        Player player = new Player(name);
         Cursor cursor = db.rawQuery(selectQuery, new String[] {name});
         if (cursor.moveToFirst()) {
             do {
