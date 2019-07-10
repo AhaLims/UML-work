@@ -236,7 +236,9 @@ public class CardsManager {
 		CardsType currentType = current.getType();
 
 		//先看看有没有上家
+
 		if(previous.hasCards() == false) {//说明没有上家
+		    System.out.println("调用了isPermissible 且判断出来了 传进来的不是上家的牌");
 			switch (currentType){
 				case card0:
 					playGameCallBack.onCardsNotValid("不可以这样出牌哦");
@@ -250,14 +252,14 @@ public class CardsManager {
 				case tonghuashun://同花顺
 					playGameCallBack.onCardsNotValid("暂时不支持的牌型 但是后面会补充");
 					return false;
-				default:
-					return false;//要加一个default
 			}
+			return false;
 		}
 
 		CardsType previousType = previous.getType();
 		if(currentType != previousType){
 			playGameCallBack.onCardsNotValid("与商家的牌不匹配哦");
+			return false;
 		}
 		switch (currentType){
 			case card0:

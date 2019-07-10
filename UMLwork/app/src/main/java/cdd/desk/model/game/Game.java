@@ -58,12 +58,15 @@ public class Game{
 
 	public void InitGame(PlayGameCallBack playGameCallBack) {
         //进行玩家牌的初始化
-        for(int i = 0;i<4;i++){
+		LatestCards = new deliveredCardsGroup();
+		turnTime = 1;
+        for(int i = 0;i < 4; i++){
             roles[i].getHandCards().getCardsGroup().clear();//清空牌
+			IsLatestShow[i] = false;//清空最近出牌标记
         }
         //进行牌桌的初始化
 		List<Card> noCard = new ArrayList<Card>();//这个是用来清理牌桌的
-		for(int i = 0;i<4;i++){
+		for(int i = 0;i < 4; i++){
         	if(i == 0)
 				playGameCallBack.displayPlayerCards(noCard);
         	else
@@ -71,12 +74,12 @@ public class Game{
 		}
 		AllCards.shuffleCards();//洗牌
 		licensingCards();//发牌
-		turnTime = 1;
+
         playGameCallBack.displayPlayerHandCards(roles[0].getHandCards().getCardsGroup());//回调
 		for(int i = 1;i < 4; i++){
 			playGameCallBack.setRobotHandCard(roles[i].getHandCards().getCardsGroup(),i);//将机器人的牌传给前端
 		}
-		for(int i = 0;i < 4;i++){
+		for(int i = 0;i < 4; i++){
 			//在控制台打印所有人的牌
 			System.out.print("当前第");
 			System.out.print(i);
