@@ -134,7 +134,15 @@ public class CardsGroup{
 			DeliveredCardsGroup.addCard(c);//将加牌
 		}
 		return DeliveredCardsGroup;
+<<<<<<< HEAD
 	}*/
 	
+=======
+	}
+
+	public void clear() {
+		card.clear();
+	}
+>>>>>>> a23d75564082e9e9474c76af1dbf2c9ebbb7fa23
 
 }

@@ -21,7 +21,7 @@ public class deskPresenter implements deskContract.Presenter,PlayGameCallBack {
 
     public void start() {
         mGame.InitGame(this);
-}
+    }
 
     @Override
     public void displayPlayerHandCards(List<Card> playerCards) {

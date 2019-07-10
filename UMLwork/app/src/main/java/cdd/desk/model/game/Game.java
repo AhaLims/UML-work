@@ -153,7 +153,6 @@ public class Game{
 			return;
 		}
 
-
 		//下面处理出牌的事件
 
 		currentCardsGroup = roles[0].selectCards(list);//获取player的牌组

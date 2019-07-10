@@ -1,8 +1,10 @@
-package cdd.desk.model.role;
+package cdd.tool;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import cdd.desk.model.role.Player;
 
 public class DBHelper extends SQLiteOpenHelper {
 //version number to upgrade database version
@@ -25,7 +27,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String CREATE_TABLE_PLAYER = "CREATE TABLE " + Player.TABLE
                 + "("
-                + Player.KEY_NAME + " TEXT PRIMARY KEY AUTOINCREMENT ,"
+                + Player.KEY_NAME + " TEXT PRIMARY KEY ,"
                 + Player.KEY_SCORE + " REAL)";
         db.execSQL(CREATE_TABLE_PLAYER);
         return;
