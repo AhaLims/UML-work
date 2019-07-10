@@ -3,9 +3,9 @@ package cdd.desk.model.role;
 import java.util.List;
 
 import cdd.desk.model.card.Card;
-import cdd.desk.model.card.CardsGroup;
+import cdd.desk.model.card.CardColor;
+import cdd.desk.model.card.CardsType;
 import cdd.desk.model.card.deliveredCardsGroup;
-import cdd.desk.model.game.Game;
 
 
 
@@ -31,13 +31,18 @@ public class Robot extends Role {
                 case danzhang: dc = DanPai(previous); break;
                 case yidui: dc = YiDui(previous); break;
                 case sanzhang:dc = SanZhang(previous); break;
-                default:
+                case zashun:dc = ZaShun(previous); break;
+                case wutonghua: dc = WuTongHua(previous); break;
+                case sandaier: dc = SanDaiEr(previous); break;
+                default:Card c = list.get(0);dc.addCard(c);
             }
-            //dc.addCard(c);
         }
         return dc;
     }
 
+
+
+    //单牌出牌策略
     private deliveredCardsGroup DanPai(deliveredCardsGroup previous) {
         deliveredCardsGroup dc = new deliveredCardsGroup();
         for (int i = 0; i < CurrentCards.cardsAmount(); i++) {
@@ -48,40 +53,89 @@ public class Robot extends Role {
         return dc;
     }
 
+    //一对出牌策略
     private deliveredCardsGroup YiDui(deliveredCardsGroup previous) {
         deliveredCardsGroup dc = new deliveredCardsGroup();
         for (int i = 0; i < CurrentCards.cardsAmount() - 1; i++) {
-            if (CurrentCards.getCardByIndex(i).getPoints() ==
-                    CurrentCards.getCardByIndex(i+1).getPoints()) {
-                deliveredCardsGroup temp = new deliveredCardsGroup();
-                temp.addCard(CurrentCards.getCardByIndex(i));
-                temp.addCard(CurrentCards.getCardByIndex(i+1));
-                if (temp.getWeight()>previous.getWeight) {
-                    dc = temp;
-                    return dc;
-                }
+            dc.addCard(CurrentCards.getCardByIndex(i));
+            dc.addCard(CurrentCards.getCardByIndex(i + 1));
+            if (cardsManager.jugdeType(dc.getCardsGroup()) == CardsType.yidui
+                    && dc.getBiggestValue() > previous.getBiggestValue()) {
+                return dc;
             }
         }
+        dc.clear();
         return dc;
     }
 
+    //三张出牌策略
     private deliveredCardsGroup SanZhang(deliveredCardsGroup previous) {
         deliveredCardsGroup dc = new deliveredCardsGroup();
         for (int i = 0; i < CurrentCards.cardsAmount() - 2; i++) {
-            if ((CurrentCards.getCardByIndex(i).getPoints() ==
-                    CurrentCards.getCardByIndex(i+1).getPoints()) &&
-                    (CurrentCards.getCardByIndex(i+1).getPoints() ==
-                            CurrentCards.getCardByIndex(i+2).getPoints())
-                    ) {
-                deliveredCardsGroup temp = new deliveredCardsGroup();
-                temp.addCard(CurrentCards.getCardByIndex(i));
-                temp.addCard(CurrentCards.getCardByIndex(i+1));
-                if (temp.getWeight()>previous.getWeight()) {
-                    dc = temp;
-                    return dc;
+            for (int j = 0; j < 3 ; j++) {
+                dc.addCard(CurrentCards.getCardByIndex(i+j));
+            }
+            if (cardsManager.jugdeType(dc.getCardsGroup())== CardsType.sanzhang
+                    && dc.getBiggestValue() > previous.getBiggestValue()) {
+                return dc;
+            }
+        }
+        dc.clear();
+        return dc;
+    }
+
+    //杂顺出牌策略
+    private deliveredCardsGroup ZaShun(deliveredCardsGroup previous) {
+        deliveredCardsGroup dc = new deliveredCardsGroup();
+        for (int i = 0; i < CurrentCards.cardsAmount() - 4 ; i++) {
+            for (int j = 0; j < 5 ; j++) {
+                dc.addCard(CurrentCards.getCardByIndex(i+j));
+            }
+            if (cardsManager.jugdeType(dc.getCardsGroup())== CardsType.zashun
+                    && dc.getBiggestValue() > previous.getBiggestValue()) {
+                return dc;
+            }
+        }
+        dc.clear();
+        return dc;
+    }
+
+    //五同花出牌策略
+    private deliveredCardsGroup WuTongHua(deliveredCardsGroup previous) {
+        deliveredCardsGroup dc = new deliveredCardsGroup();
+
+        for (int i = 0; i < CurrentCards.cardsAmount(); i++) {
+            dc.addCard(CurrentCards.getCardByIndex(i));
+
+            for (int j = i + 1; j < CurrentCards.cardsAmount(); j++) {
+                int count = 1;
+                if ( CurrentCards.getCardByIndex(i).getColor() ==
+                CurrentCards.getCardByIndex(j).getColor()) {
+                    dc.addCard(CurrentCards.getCardByIndex(j));
+                    count++;
+                    if (count == 5) {
+                        return dc;
+                    }
                 }
             }
         }
+        dc.clear();
+        return dc;
+    }
+
+    //三带二出牌策略
+    private deliveredCardsGroup SanDaiEr(deliveredCardsGroup previous) {
+        deliveredCardsGroup dc = new deliveredCardsGroup();
+        for (int i = 0; i < CurrentCards.cardsAmount() - 4 ; i++) {
+            for (int j = 0; j < 5 ; j++) {
+                dc.addCard(CurrentCards.getCardByIndex(i+j));
+            }
+            if (cardsManager.jugdeType(dc.getCardsGroup())== CardsType.sandaier
+            && dc.getBiggestValue() > previous.getBiggestValue()) {
+                return dc;
+            }
+        }
+        dc.clear();
         return dc;
     }
 }
