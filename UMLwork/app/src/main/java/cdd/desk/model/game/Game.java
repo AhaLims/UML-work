@@ -149,7 +149,6 @@ public class Game{
 				//让三个机器人来出牌
 				ThreeRobotsTurn(playGameCallBack);
 				turnTime++;
-
 			}
 			return;
 		}
@@ -162,6 +161,34 @@ public class Game{
 		if (turnTime == 1 && firstTurn == 0 && currentCardsGroup.canFindCard(3, CardColor.Diamond) == -1) {
 			playGameCallBack.onCardsNotValid("第一轮必须有方块三哦");
 			return;
+		}
+		else if(IsFirstHand(0)){
+			System.out.println("这里是 非第一局的先手");
+			if(LatestCards.hasCards() == false){
+				System.out.println("??为什么lastestCard不为空？\n");
+			}
+			//出牌合法
+			if(CardsManager.getCardsManager().isPermissible(LatestCards, currentCardsGroup, playGameCallBack))
+			{
+				playGameCallBack.displayPlayerCards(currentCardsGroup.getCardsGroup());
+				roles[0].refreshCardsGroup(currentCardsGroup);//更新牌
+				playGameCallBack.displayPlayerHandCards(roles[0].getHandCards().getCardsGroup());//回调
+				IsLatestShow[0] = true;//记录一下出了牌
+				turnTime++;
+				if (roles[0].win() == true) {
+					//TODO 需要测试分数
+					handCardsGroup[] hd = new handCardsGroup[4];
+					for (int i = 0; i < 4; i++) {
+						hd[i] = roles[i].getHandCards();
+					}
+					int PlayerScore = scorer.getScore(0, hd);//传牌组进去....
+					playGameCallBack.onGameEnd(0,PlayerScore);
+					//playGameCallBack.onCardsNotValid("实际上是游戏结束了 并不是错误");
+				}
+				//机器人出牌 并进行回调
+				ThreeRobotsTurn(playGameCallBack);
+				return;
+			}
 		}
 		else if (CardsManager.getCardsManager().isPermissible(LatestCards, currentCardsGroup, playGameCallBack)){//先手 且 牌组中有方块三
 
@@ -182,6 +209,7 @@ public class Game{
 			}
 			//机器人出牌 并进行回调
 			ThreeRobotsTurn(playGameCallBack);
+			return;
 		}
 		//不是第一轮的先手或者后手
 		//合法的出牌
@@ -207,7 +235,7 @@ public class Game{
 			}
 			//机器人出牌 并进行回调
 			ThreeRobotsTurn(playGameCallBack);
-
+			return;
 		}
 
 		else {//不合法的出牌 已经在判断合法性的时候返回警告了
