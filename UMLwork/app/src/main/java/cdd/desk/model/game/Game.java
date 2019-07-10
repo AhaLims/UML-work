@@ -101,6 +101,7 @@ public class Game{
 				playGameCallBack.displayRobotCards(deliveredCard.getCardsGroup(),i);
 				playGameCallBack.setRobotHandCard( roles[i].getHandCards().getCardsGroup(),i);
 				System.out.println("初始化的时候机器人的出牌局");
+				playGameCallBack.onNext((i + 1) % 4);
 			}
 		}
 	}
@@ -190,9 +191,11 @@ public class Game{
 		}
 	}
 	private void ThreeRobotsTurn(PlayGameCallBack playGameCallBack) {
+		playGameCallBack.onNext(1);
 		//三个机器人的牌局
 		deliveredCardsGroup currentCardsGroup;
 		for (int i = 1; i < 4; i++) {
+			playGameCallBack.onNext((i + 1) % 4);
 			if(i < 4){//三个机器人都不出牌
 				playGameCallBack.onRolePass(i);
 				IsLatestShow[i] = false;
