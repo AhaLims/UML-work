@@ -3,8 +3,11 @@ package cdd.menu.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.example.uml.umlwork.R;
 
@@ -19,10 +22,11 @@ import cdd.menu.contract.menuContract;
 
 
 public class MainActivity extends AppCompatActivity implements menuContract.View{
-    private Button btnStartGame;
-    private Button btnShowRank;
-    private Button btnIntroduce;
-    private Button btnSetBgm;
+    private ImageButton btnStartGame;
+    private ImageButton btnShowRank;
+    private ImageButton btnIntroduce;
+    private ImageButton btnSetBgm;
+    private ImageButton btnExitGame;
 
     PlayerRepo playerRepo=new PlayerRepo (this);
     Player player=new Player();
@@ -40,49 +44,130 @@ public class MainActivity extends AppCompatActivity implements menuContract.View
 
             }
         });
-        //绑定开始游戏按钮
+
+        //绑定按钮
         btnStartGame  =  findViewById(R.id.start_game);
-        btnSetBgm=findViewById(R.id.set_bgm);
+        btnSetBgm = findViewById(R.id.set_bgm);
+        btnShowRank  =  (ImageButton)findViewById(R.id.show_rank);
+        btnIntroduce  =  findViewById(R.id.introduce);
+        btnExitGame = findViewById(R.id.exit_game);
+
+        //image resource
+        btnStartGame.setImageDrawable(getDrawable(R.drawable.playgame));
+        btnSetBgm.setImageDrawable(getDrawable(R.drawable.bgmsetting));
+        btnShowRank.setImageDrawable(getDrawable(R.drawable.rank));
+        btnIntroduce.setImageDrawable(getDrawable(R.drawable.introduction));
+        btnExitGame.setImageDrawable(getDrawable(R.drawable.exit));
+
         //开始游戏按钮点击事件：跳转到deskActivity
-        btnStartGame.setOnClickListener(new View.OnClickListener(){
+        btnStartGame.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v){
-                Intent intent = new Intent(MainActivity.this , deskActivity.class);
-                startActivity(intent);
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+
+                    case MotionEvent.ACTION_DOWN:
+                        btnStartGame.setImageDrawable(getDrawable(R.drawable.playgamepush));
+                        btnStartGame.setScaleType(ImageView.ScaleType.CENTER_INSIDE);//ImageView.ScaleType.FIT_CENTER
+                        Intent intent = new Intent(MainActivity.this , deskActivity.class);
+                        startActivity(intent);
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        btnStartGame.setImageDrawable(getDrawable(R.drawable.playgame));
+                        btnStartGame.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                        break;
+                }
+                return true;
             }
         });
 
         //音效设置按钮事件，跳转到bgmactivity
-
-        btnSetBgm.setOnClickListener(new View.OnClickListener(){
+        btnSetBgm.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v){
-                Intent intent = new Intent(MainActivity.this , bgmActivity.class);
-                startActivity(intent);
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+
+                    case MotionEvent.ACTION_DOWN:
+                        btnSetBgm.setImageDrawable(getDrawable(R.drawable.bgmsettingpush));
+                        btnSetBgm.setScaleType(ImageView.ScaleType.CENTER_INSIDE);//ImageView.ScaleType.FIT_CENTER
+                        Intent intent = new Intent(MainActivity.this , bgmActivity.class);
+                        startActivity(intent);
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        btnSetBgm.setImageDrawable(getDrawable(R.drawable.bgmsetting));
+                        btnSetBgm.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                        break;
+                }
+                return true;
             }
         });
 
-        //绑定查看排名按钮
-        btnShowRank  =  (Button)findViewById(R.id.show_rank);
-        //开始游戏按钮点击事件：跳转到deskActivity
-        //开始游戏按钮点击事件：跳转到deskActivity
-        btnShowRank.setOnClickListener(new View.OnClickListener(){
+
+        btnShowRank.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v){
-                Intent intent=new Intent(MainActivity.this, rankActivity.class);
-                Bundle bundle=new Bundle();	//创建并实例化一个Bundle对象
-                bundle.putCharSequence("useName", player.player_name);	//保存用户名
-                intent.putExtras(bundle);	//将Bundle对象添加到Intent对象中
-                startActivity(intent);	//启动新的Activity
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+
+                    case MotionEvent.ACTION_DOWN:
+                        btnShowRank.setImageDrawable(getDrawable(R.drawable.rankpush));
+                        btnShowRank.setScaleType(ImageView.ScaleType.CENTER_INSIDE);//ImageView.ScaleType.FIT_CENTER
+                        Intent intent=new Intent(MainActivity.this, rankActivity.class);
+                        Bundle bundle=new Bundle();	//创建并实例化一个Bundle对象
+                        bundle.putCharSequence("useName", player.player_name);	//保存用户名
+                        intent.putExtras(bundle);	//将Bundle对象添加到Intent对象中
+                        startActivity(intent);	//启动新的Activity
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        btnShowRank.setImageDrawable(getDrawable(R.drawable.rank));
+                        btnShowRank.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                        break;
+                }
+                return true;
             }
         });
-        btnIntroduce  =  findViewById(R.id.introduce);
+
+
         //开始游戏按钮点击事件：跳转到deskActivity
-        btnIntroduce.setOnClickListener(new View.OnClickListener(){
+        btnIntroduce.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v){
-                Intent intent = new Intent(MainActivity.this , introduceActivity.class);
-                startActivity(intent);
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+
+                    case MotionEvent.ACTION_DOWN:
+                        btnIntroduce.setImageDrawable(getDrawable(R.drawable.introductionpush));
+                        btnIntroduce.setScaleType(ImageView.ScaleType.CENTER_INSIDE);//ImageView.ScaleType.FIT_CENTER
+                        Intent intent = new Intent(MainActivity.this , introduceActivity.class);
+                        startActivity(intent);
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        btnIntroduce.setImageDrawable(getDrawable(R.drawable.introduction));
+                        btnIntroduce.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                        break;
+                }
+                return true;
+            }
+        });
+
+        btnExitGame.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+
+                    case MotionEvent.ACTION_DOWN:
+                        btnExitGame.setImageDrawable(getDrawable(R.drawable.exitpush));
+                        btnExitGame.setScaleType(ImageView.ScaleType.CENTER_INSIDE);//ImageView.ScaleType.FIT_CENTER
+                        finish();
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        btnExitGame.setImageDrawable(getDrawable(R.drawable.exit));
+                        btnExitGame.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                        break;
+                }
+                return true;
             }
         });
     }

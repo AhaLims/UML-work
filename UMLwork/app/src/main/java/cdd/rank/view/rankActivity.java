@@ -7,11 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import android.widget.Toast;
 import com.example.uml.umlwork.R;
 import cdd.desk.model.role.Player;
-import cdd.desk.view.mainActivityczf;
-import cdd.menu.view.MainActivity;
 import cdd.rank.contract.rankContract;
 import cdd.rank.presenter.rankPresenter;
 import cdd.tool.PlayerRepo;

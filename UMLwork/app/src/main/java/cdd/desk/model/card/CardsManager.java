@@ -21,7 +21,7 @@ import static cdd.desk.model.card.CardsType.danzhang;
 
 //应该都是静态的方法....??
 //---------------------“比较牌”的方法应该单独抽象成类----------------------------//
-//可以这样做  接口：比较牌的接口 然后有一个函数xxx(card1,card2) return true/false;
+//可以这样做  接口：比较牌的接口 然后有一个函数xxx(card1,card2) fanhui true/false;
 //用单实例模式---------------------------//
 public class CardsManager {
 	private static CardsManager cardsManager;
