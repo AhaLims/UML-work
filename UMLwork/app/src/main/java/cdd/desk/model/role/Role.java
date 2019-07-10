@@ -61,8 +61,8 @@ public class Role {
 		CurrentCards.deleteCardsGroup(deletedCardsGroup);
 	}
 
-	//TODO selectCards(List<Integer> cardsIndex) 这个方法放的有点奇怪
-	public deliveredCardsGroup selectCards(List<Integer> cardsIndex) {
+	//TODO selectCards(List<Integer> cardsIndex) 这个方法放的有点奇怪 貌似没有使用过
+	/*public deliveredCardsGroup selectCards(List<Integer> cardsIndex) {
 		//怎么把cardsIndex组装成 deliveredCardsGroup(List<Card> c) 
 		deliveredCardsGroup dc = new deliveredCardsGroup();
 		int len = cardsIndex.size();
@@ -72,12 +72,12 @@ public class Role {
 			dc.addCard(card);
 		}
 		return dc;
-	}
+	}*/
 
-	//TODO 空函数设置。。并不合理
-	public deliveredCardsGroup deliver(deliveredCardsGroup previous) {
-	return null;
-	}
+	////TODO 空函数设置。。并不合理 也许并不合理
+	//public deliveredCardsGroup deliver(deliveredCardsGroup previous) {
+	//	return null;
+	//}
 
 	public void setNumber(int n) {
 		number = n;

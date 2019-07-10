@@ -54,9 +54,6 @@ public class deskPresenter implements deskContract.Presenter,PlayGameCallBack {
         mDeskActivity.displayIrregularity(message);
     }
 
-    // TODO robot不出牌
-
-
     //TODO 不出牌
     @Override
     public void playerPass(){

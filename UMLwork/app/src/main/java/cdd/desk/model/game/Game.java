@@ -195,7 +195,6 @@ public class Game{
 
 			//游戏结束了  需要进行分数的计算
 			if (roles[0].win() == true) {
-				//TODO 需要测试分数
 				handCardsGroup[] hd = new handCardsGroup[4];
 				for (int i = 0; i < 4; i++) {
 					hd[i] = roles[i].getHandCards();

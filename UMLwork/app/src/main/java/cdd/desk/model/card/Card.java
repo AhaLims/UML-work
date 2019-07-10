@@ -48,7 +48,7 @@ public class Card implements Comparable<Card>{//实现了Comparable的接口 这
 		return weight;
 	}
 	//通过points设置权重
-	public void setWeight(int points,CardColor color) {
+	private void setWeight(int points,CardColor color) {
 		
 		//点数的权值
 		if(points == 1 )
