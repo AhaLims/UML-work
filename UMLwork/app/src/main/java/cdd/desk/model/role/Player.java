@@ -13,19 +13,16 @@ import cdd.desk.model.game.Game;
 //}
 public class Player extends Role{
 	//TODO 记得把这个移走
-	/*//表名
-	public static final String TABLE = "Player";
 
-	//表的属性
-	public static final String KEY_NAME = "name";
-	public static final String KEY_SCORE = "score";*/
 
 	//TODO 记得这里要改 应该是私有属性 但是有getter和setter
 	//TODO 以及 score应该是整型的
-	private String player_name;
-	private int score;
 
-	public Player(){}
+
+
+	public Player(String name){
+		player_name = name;
+	}
 
 	//给对应的index 可以找到用户选的一组牌 并且可以组装成deliveredCardsGroup 类型的东西
 	public deliveredCardsGroup selectCards(List<Integer> cardsIndex) {
@@ -39,18 +36,7 @@ public class Player extends Role{
 		}
 		return dc;
 	}
-	public String getPlayerName(){
-		return player_name;
-	}
-	public void setPlayerName(String Name){
-		player_name = Name;
-	}
-	public int getScore(){
-		return  score;
-	}
-	public void setScore(int s){
-		score = s;
-	}
+
 
 
 }
