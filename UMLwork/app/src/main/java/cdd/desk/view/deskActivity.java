@@ -106,6 +106,9 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_desk);
+        Intent intent=getIntent();
+        Bundle bundle=intent.getExtras();
+        String useName =bundle.getString("useName");
         context = this;
 
         //绑定控件

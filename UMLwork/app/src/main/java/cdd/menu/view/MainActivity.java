@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements menuContract.View
         setContentView(R.layout.activity_main);
         Intent intent =getIntent();
         Bundle bundle=intent.getExtras();
-        String useName=bundle.getString("useName");
+        final String useName=bundle.getString("useName");
         player=playerRepo.getPlayerByName(useName, new DbCallBack.RankCallBack() {
             @Override
             public void dispalyRank(String name, int score, int rank) {
@@ -69,6 +69,9 @@ public class MainActivity extends AppCompatActivity implements menuContract.View
                         btnStartGame.setImageDrawable(getDrawable(R.drawable.playgamepush));
                         btnStartGame.setScaleType(ImageView.ScaleType.CENTER_INSIDE);//ImageView.ScaleType.FIT_CENTER
                         Intent intent = new Intent(MainActivity.this , deskActivity.class);
+                        Bundle bundle1=new Bundle();
+                        bundle1.putCharSequence("useName",useName);
+                        intent.putExtras(bundle1);
                         startActivity(intent);
                         break;
 
@@ -114,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements menuContract.View
                         btnShowRank.setScaleType(ImageView.ScaleType.CENTER_INSIDE);//ImageView.ScaleType.FIT_CENTER
                         Intent intent=new Intent(MainActivity.this, rankActivity.class);
                         Bundle bundle=new Bundle();	//创建并实例化一个Bundle对象
-                        bundle.putCharSequence("useName", player.player_name);	//保存用户名
+                        bundle.putCharSequence("useName", player.getPlayerName());	//保存用户名
                         intent.putExtras(bundle);	//将Bundle对象添加到Intent对象中
                         startActivity(intent);	//启动新的Activity
                         break;
