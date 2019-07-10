@@ -45,7 +45,7 @@ public class Game{
 			IsLatestShow[i] = false;//一开始大家都没有出牌
 		}
 	}
-	private boolean IsFirstHand(int index) {//用来判断是不是先手
+	public boolean IsFirstHand(int index) {//用来判断是不是先手
 		for(int i = 0;i < 4;i++) {
 			if (i == index)continue;
 			else {
@@ -201,9 +201,7 @@ public class Game{
 				playGameCallBack.onRolePass(i);
 				IsLatestShow[i] = false;
 				continue;//默认让2号机器人不出牌。。。。测试用。。。
-
 			}
-
 
 			currentCardsGroup = roles[i].deliver(LatestCards);//这是根据上家的牌获取的机器人应该出的牌
 
