@@ -27,19 +27,10 @@ public class Robot extends Role {
             //TODO 需要在这里补充机器人的策略
             //为了测试 这里不是先手也除牌了
             //Card c = list.get(0);
-            switch (previous.getType()) {
-                case danzhang: dc = DanPai(previous); break;
-                case yidui: dc = YiDui(previous); break;
-                case sanzhang:dc = SanZhang(previous); break;
-                case zashun:dc = ZaShun(previous); break;
-                case wutonghua: dc = WuTongHua(previous); break;
-                case sandaier: dc = SanDaiEr(previous); break;
-                default:Card c = list.get(0);dc.addCard(c);
-            }
+            
         }
         return dc;
     }
-
 
 
     //单牌出牌策略
@@ -126,12 +117,99 @@ public class Robot extends Role {
     //三带二出牌策略
     private deliveredCardsGroup SanDaiEr(deliveredCardsGroup previous) {
         deliveredCardsGroup dc = new deliveredCardsGroup();
+        int base = 0;
+        for (int k = 0; k < CurrentCards.cardsAmount()- 4; k++) {
+
+            //找三张牌
+            for (int i = k; i < CurrentCards.cardsAmount() - 2; i++) {
+                deliveredCardsGroup temp = new deliveredCardsGroup();
+                temp.addCard(CurrentCards.getCardByIndex(i));
+                for (int j = 0; j < 3; j++) {
+                    temp.addCard(CurrentCards.getCardByIndex(i + j));
+                }
+                if (cardsManager.jugdeType(temp.getCardsGroup()) == CardsType.sanzhang) {
+                    base = i;
+                    break;
+                }
+            }
+            //把首次符合条件的三张牌记下来
+            dc.addCard(CurrentCards.getCardByIndex(base));
+            dc.addCard(CurrentCards.getCardByIndex(base + 1));
+            dc.addCard(CurrentCards.getCardByIndex(base + 2));
+
+            //找两张牌
+            for (int i = k; (i < CurrentCards.cardsAmount() - 1); i++) {
+                if (i < base || i > base + 2) {
+                    deliveredCardsGroup temp = new deliveredCardsGroup();
+                    temp.addCard(CurrentCards.getCardByIndex(i));
+                    temp.addCard(CurrentCards.getCardByIndex(i + 1));
+                    if (cardsManager.jugdeType(temp.getCardsGroup()) == CardsType.yidui) {
+                        base = i;
+                        break;
+                    }
+                }
+            }
+            //首次符合两张牌取出来
+            dc.addCard(CurrentCards.getCardByIndex(base));
+            dc.addCard(CurrentCards.getCardByIndex(base + 1));
+
+            if (dc.getBiggestValue() > previous.getBiggestValue()) {
+                return dc;
+            }
+        }
+        dc.clear();
+        return dc;
+    }
+
+    private deliveredCardsGroup SiDaiYi(deliveredCardsGroup previous) {
+        deliveredCardsGroup dc = new deliveredCardsGroup();
+        int base = 0;
+        for (int k = 0; k < CurrentCards.cardsAmount()- 4; k++) {
+
+            //找三张牌
+            for (int i = k; i < CurrentCards.cardsAmount() - 3; i++) {
+                deliveredCardsGroup temp = new deliveredCardsGroup();
+                temp.addCard(CurrentCards.getCardByIndex(i));
+                for (int j = 0; j < 4; j++) {
+                    temp.addCard(CurrentCards.getCardByIndex(i + j));
+                }
+                if (cardsManager.jugdeType(temp.getCardsGroup()) == CardsType.sanzhang) {
+                    base = i;
+                    break;
+                }
+            }
+
+            //把首次符合条件的四张牌记下来
+            dc.addCard(CurrentCards.getCardByIndex(base));
+            dc.addCard(CurrentCards.getCardByIndex(base + 1));
+            dc.addCard(CurrentCards.getCardByIndex(base + 2));
+            dc.addCard(CurrentCards.getCardByIndex(base + 3));
+
+            //找一张牌
+            for (int i = k; (i < CurrentCards.cardsAmount()); i++) {
+                if (i < base || i > base + 3) {
+                    base = k;
+                }
+            }
+            //首次符合一张牌取出来
+            dc.addCard(CurrentCards.getCardByIndex(base));
+            if (dc.getBiggestValue() > previous.getBiggestValue()) {
+                return dc;
+            }
+        }
+        dc.clear();
+        return dc;
+    }
+
+    //同花顺出牌策略
+    private  deliveredCardsGroup TongHuaShun(deliveredCardsGroup previous) {
+        deliveredCardsGroup dc = new deliveredCardsGroup();
         for (int i = 0; i < CurrentCards.cardsAmount() - 4 ; i++) {
             for (int j = 0; j < 5 ; j++) {
                 dc.addCard(CurrentCards.getCardByIndex(i+j));
             }
-            if (cardsManager.jugdeType(dc.getCardsGroup())== CardsType.sandaier
-            && dc.getBiggestValue() > previous.getBiggestValue()) {
+            if (cardsManager.jugdeType(dc.getCardsGroup())== CardsType.tonghuashun
+                    && dc.getBiggestValue() > previous.getBiggestValue()) {
                 return dc;
             }
         }
