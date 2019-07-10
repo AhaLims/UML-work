@@ -90,4 +90,10 @@ public class deskPresenter implements deskContract.Presenter,PlayGameCallBack {
     public void onNext(int role) {
         mDeskActivity.startTimer(role);
     }
+
+    @Override
+    public boolean isFirstHand(int role) {
+        return mGame.IsFirstHand(role);
+    }
+
 }

@@ -228,6 +228,7 @@ public class CardsManager {
 
 	public boolean isPermissible(deliveredCardsGroup previous,deliveredCardsGroup current,PlayGameCallBack playGameCallBack)
 	{
+		System.out.println("现在应该判断牌的合法性了");
 		boolean validation = false;
 		CardsType currentType = current.getType();
 		CardsType previousType = previous.getType();
@@ -238,7 +239,8 @@ public class CardsManager {
 			case card0:
 				validation = false;
 				playGameCallBack.onCardsNotValid("不可以这样出牌哦");
-				break;
+				System.out.println("这个时候的牌是不合法的");
+				return false;
 			//单牌 对子 三张一样的牌 判定规则一样，都是看
 			case danzhang://单牌
 			case yidui://两张相等的对子
@@ -252,6 +254,7 @@ public class CardsManager {
 				else{
 					playGameCallBack.onCardsNotValid("牌太小啦 换一种出牌方式吧");
 				}
+				System.out.println("单张或者两张或者三张");
 				break;
 			case sandaier://三带一
 			case sidaiyi://四带一
@@ -262,6 +265,7 @@ public class CardsManager {
          if(currentType == previousType && current.getCardsGroup().get(size1 - 1).getWeight() > previous.getCardsGroup().get(size2 - 1).getWeight())
             validation = true;
          break;*/
+				System.out.println("三带一或者四带一或者同花顺");
 				validation = false;
 				playGameCallBack.onCardsNotValid("暂时不支持的牌型 后面完善了规则再补充");
 		}
