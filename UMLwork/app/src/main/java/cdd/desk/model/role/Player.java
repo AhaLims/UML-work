@@ -13,17 +13,17 @@ import cdd.desk.model.game.Game;
 //}
 public class Player extends Role{
 	//TODO 记得把这个移走
-	//表名
+	/*//表名
 	public static final String TABLE = "Player";
 
 	//表的属性
 	public static final String KEY_NAME = "name";
-	public static final String KEY_SCORE = "score";
+	public static final String KEY_SCORE = "score";*/
 
 	//TODO 记得这里要改 应该是私有属性 但是有getter和setter
 	//TODO 以及 score应该是整型的
-	public String player_name;
-	public int score;
+	private String player_name;
+	private int score;
 
 	public Player(){}
 

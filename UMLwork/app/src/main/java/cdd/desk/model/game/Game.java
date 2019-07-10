@@ -44,6 +44,22 @@ public class Game{
 			IsLatestShow[i] = false;//一开始大家都没有出牌
 		}
 	}
+
+	public Game(Player player){
+		scorer = new Scorer();
+		//nextTurn = new int[4];
+		AllCards = PairCardsGroup.getPairOfCards();
+		roles = new Role[4];
+		IsLatestShow = new boolean[4];
+		LatestCards = new deliveredCardsGroup();
+		for(int i = 0;i < 4; i++) {
+			if(i == 0)
+				roles[i] = player;
+			else roles[i] = new Robot();
+			IsLatestShow[i] = false;//一开始大家都没有出牌
+		}
+	}
+
 	public boolean IsFirstHand(int index) {//用来判断是不是先手
 		for(int i = 0;i < 4;i++) {
 			if (i == index)continue;
@@ -175,14 +191,8 @@ public class Game{
 				IsLatestShow[0] = true;//记录一下出了牌
 				turnTime++;
 				if (roles[0].win() == true) {
-					//TODO 需要测试分数
-					handCardsGroup[] hd = new handCardsGroup[4];
-					for (int i = 0; i < 4; i++) {
-						hd[i] = roles[i].getHandCards();
-					}
-					int PlayerScore = scorer.getScore(0, hd);//传牌组进去....
-					playGameCallBack.onGameEnd(0,PlayerScore);
-					//playGameCallBack.onCardsNotValid("实际上是游戏结束了 并不是错误");
+					gameEnd(0,playGameCallBack);
+					return;
 				}
 				//机器人出牌 并进行回调
 				ThreeRobotsTurn(playGameCallBack);
@@ -197,14 +207,8 @@ public class Game{
 			IsLatestShow[0] = true;//记录一下出了牌
 			turnTime++;
 			if (roles[0].win() == true) {
-				//TODO 需要测试分数
-				handCardsGroup[] hd = new handCardsGroup[4];
-				for (int i = 0; i < 4; i++) {
-					hd[i] = roles[i].getHandCards();
-				}
-				int PlayerScore = scorer.getScore(0, hd);//传牌组进去....
-				playGameCallBack.onGameEnd(0,PlayerScore);
-				//playGameCallBack.onCardsNotValid("实际上是游戏结束了 并不是错误");
+				gameEnd(0,playGameCallBack);
+				return;
 			}
 			//机器人出牌 并进行回调
 			ThreeRobotsTurn(playGameCallBack);
@@ -225,12 +229,8 @@ public class Game{
 
 			//游戏结束了  需要进行分数的计算
 			if (roles[0].win() == true) {
-				handCardsGroup[] hd = new handCardsGroup[4];
-				for (int i = 0; i < 4; i++) {
-					hd[i] = roles[i].getHandCards();
-				}
-				int PlayerScore = scorer.getScore(0, hd);//传牌组进去....
-				playGameCallBack.onGameEnd(0,PlayerScore);
+				gameEnd(0,playGameCallBack);
+				return;
 			}
 			//机器人出牌 并进行回调
 			ThreeRobotsTurn(playGameCallBack);
@@ -248,11 +248,11 @@ public class Game{
 		deliveredCardsGroup currentCardsGroup;
 		for (int i = 1; i < 4; i++) {
 			playGameCallBack.onNext((i + 1) % 4);
-			if(i < 4){//三个机器人都不出牌
-				playGameCallBack.onRolePass(i);
-				IsLatestShow[i] = false;
-				continue;
-			}
+			//if(i < 4){//三个机器人都不出牌
+			//	playGameCallBack.onRolePass(i);
+			//	IsLatestShow[i] = false;
+			//	continue;
+			//}
 
 			currentCardsGroup = roles[i].deliver(LatestCards);//这是根据上家的牌获取的机器人应该出的牌
 
@@ -267,22 +267,29 @@ public class Game{
 				playGameCallBack.setRobotHandCard(roles[i].getHandCards().getCardsGroup(), i);
 			} else {
 				//机器人不出事件
+				IsLatestShow[i] = false;
 				playGameCallBack.onRolePass(i);
 			}
 
 			//游戏结束了
 			if (roles[i].win() == true) {
-
-				handCardsGroup[] hd = new handCardsGroup[4];
-				for (int j = 0; j < 4; j++) {
-					hd[j] = roles[j].getHandCards();
-				}
-				int PlayerScore = scorer.getScore(0, hd);//传牌组进去....
-				playGameCallBack.onGameEnd(i,PlayerScore);
+				gameEnd(i,playGameCallBack);
 				return;
 			}
 
 		}
+	}
+
+	private void gameEnd(int winner,PlayGameCallBack playGameCallBack){
+		handCardsGroup[] hd = new handCardsGroup[4];
+		for (int j = 0; j < 4; j++) {
+			hd[j] = roles[j].getHandCards();
+		}
+		int PlayerScore = scorer.getScore(0, hd) + roles[0].getScore();//玩家的新分数
+
+		//TODO 更新数据库
+
+		playGameCallBack.onGameEnd(winner,PlayerScore);
 	}
 
 

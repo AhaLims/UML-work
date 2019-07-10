@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements menuContract.View
             public void onClick(View v){
                 Intent intent=new Intent(MainActivity.this, rankActivity.class);
                 Bundle bundle=new Bundle();	//创建并实例化一个Bundle对象
-                bundle.putCharSequence("useName", player.player_name);	//保存用户名
+                bundle.putCharSequence("useName", player.getPlayerName());	//保存用户名
                 intent.putExtras(bundle);	//将Bundle对象添加到Intent对象中
                 startActivity(intent);	//启动新的Activity
             }

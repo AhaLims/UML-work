@@ -31,12 +31,20 @@ public class Role {
 		CurrentCards = new handCardsGroup();
 	}
 
+	public void setScore(int s){
+		score = s;
+	}
+	public int getScore(){
+		return score;
+	}
+
 
 	//在游戏初始阶段 获得单张牌
 	public void getSingleCards(Card card) {
 		CurrentCards.addCard(card);
 	}
 
+	//没用到所以注释了
 	//减掉之前出出去的牌
 	//deliveredCards 是出出去的牌 要从集合中减去这部分的牌
 	/*public void updateCards(CardsGroup deliveredCards) {

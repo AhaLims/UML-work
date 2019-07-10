@@ -23,8 +23,25 @@ public class CardsGroup{
 		for(int i = 0;i < len ; i++)
 		{
 			Card temp = card.get(i);
-			int weight = temp.getWeight();
-			System.out.println(weight);
+			int point = temp.getPoints();
+			System.out.print(point);
+			CardColor color = temp.getColor();
+
+			switch(color){
+				case Diamond:
+					System.out.println(" 方块");
+					break;
+				case Club:
+					System.out.println(" 梅花");
+					break;
+				case Heart:
+					System.out.println(" 红桃");
+					break;
+				case Spade:
+					System.out.println(" 黑桃");
+					break;
+
+		}
 		}
 		System.out.println("-----------end----------------------------------------");
 	}
@@ -134,15 +151,12 @@ public class CardsGroup{
 			DeliveredCardsGroup.addCard(c);//将加牌
 		}
 		return DeliveredCardsGroup;
-<<<<<<< HEAD
+
 	}*/
-	
-=======
-	}
 
 	public void clear() {
 		card.clear();
 	}
->>>>>>> a23d75564082e9e9474c76af1dbf2c9ebbb7fa23
+
 
 }
