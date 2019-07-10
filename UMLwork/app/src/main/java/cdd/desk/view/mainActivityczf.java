@@ -51,8 +51,8 @@ public class mainActivityczf extends AppCompatActivity {
 
                     {
                         Toast.makeText(mainActivityczf.this, "用户名未创建，将为你自动创建并进入主页面！", Toast.LENGTH_LONG).show();
-                        player.player_name=useName;
-                        player.score=0;
+                        player.setPlayerName(useName);
+                        player.setScore(0);
                         playerRepo.insert(player);
                         Intent intent=new Intent(mainActivityczf.this, MainActivity.class);
                         Bundle bundle=new Bundle();	//创建并实例化一个Bundle对象

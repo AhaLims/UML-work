@@ -25,10 +25,10 @@ public class DBHelper extends SQLiteOpenHelper {
     //创建数据库
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_TABLE_PLAYER = "CREATE TABLE " + Player.TABLE
+        String CREATE_TABLE_PLAYER = "CREATE TABLE " + "Player"
                 + "("
-                + Player.KEY_NAME + " TEXT PRIMARY KEY ,"
-                + Player.KEY_SCORE + " REAL)";
+                + "name" + " TEXT PRIMARY KEY ,"
+                + "score" + " REAL)";
         db.execSQL(CREATE_TABLE_PLAYER);
         return;
     }
@@ -36,7 +36,7 @@ public class DBHelper extends SQLiteOpenHelper {
     //更新数据库
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + Player.TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + "Player");
         onCreate(db);
         return;
     }
