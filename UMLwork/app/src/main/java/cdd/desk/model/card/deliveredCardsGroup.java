@@ -19,10 +19,6 @@ public class deliveredCardsGroup extends CardsGroup {
 		super();
 	}
 
-	public void calculateAttribute() {
-
-	}
-
 	//总权值
 	public int getTotolValue() {
 		return  this.cardsManager.getCardsGroupValue(this.card);

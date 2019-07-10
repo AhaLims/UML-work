@@ -79,7 +79,7 @@ public class PlayerRepo {
         if (cursor.moveToFirst()) {
             do {
                 player.player_name = cursor.getString(cursor.getColumnIndex(player.KEY_NAME));
-                player.score = cursor.getDouble(cursor.getColumnIndex(player.KEY_SCORE));
+                player.score = (int)(cursor.getDouble(cursor.getColumnIndex(player.KEY_SCORE)));//这里做了类型转换
             }while (cursor.moveToNext());
         }
         cursor.close();

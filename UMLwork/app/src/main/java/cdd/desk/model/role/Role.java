@@ -12,7 +12,8 @@ import cdd.desk.model.game.Game;
 public class Role {
 	CardsManager cardsManager;
 	handCardsGroup CurrentCards;
-	CardsGroup LasterCards;//暂时可能没啥用？
+	//TODO 暂时可能没啥用？
+	//CardsGroup LasterCards;
 	int score;
 	int number;//该局游戏中的编号（也就是第几个出牌）
 
@@ -38,21 +39,20 @@ public class Role {
 
 	//减掉之前出出去的牌
 	//deliveredCards 是出出去的牌 要从集合中减去这部分的牌
-	public void updateCards(CardsGroup deliveredCards) {
+	/*public void updateCards(CardsGroup deliveredCards) {
 		//int len = deliverdCards;
 		CurrentCards.deleteCardsGroup(deliveredCards);
-	}
+	}*/
 
 	//判断是否出完牌了
-	public boolean ifFinish() {
+	/*public boolean ifFinish() {
 		if (CurrentCards.cardsAmount() == 0) return true;
 		return false;
-	}
-	//
-	//deliveredCardsGroup dc  是从交互中获得的 玩家出的牌（已经判断好了牌的value与牌的类型） 接下来交给游戏区检查牌的合法性
+	}*/
 
+	//deliveredCardsGroup dc  是从交互中获得的 玩家出的牌（已经判断好了牌的value与牌的类型） 接下来交给游戏区检查牌的合法性
 	public boolean findCard(int weight) {
-		if (CurrentCards.canFindCard(weight) != -1) return true;//
+		if (CurrentCards.canFindCard(weight) != -1) return true;
 		return false;
 	}
 
@@ -61,8 +61,8 @@ public class Role {
 		CurrentCards.deleteCardsGroup(deletedCardsGroup);
 	}
 
-	//TODO selectCards(List<Integer> cardsIndex) 这个方法放的有点奇怪 貌似没有使用过
-	/*public deliveredCardsGroup selectCards(List<Integer> cardsIndex) {
+	//将List类型打包
+	public deliveredCardsGroup selectCards(List<Integer> cardsIndex) {
 		//怎么把cardsIndex组装成 deliveredCardsGroup(List<Card> c) 
 		deliveredCardsGroup dc = new deliveredCardsGroup();
 		int len = cardsIndex.size();
@@ -72,12 +72,12 @@ public class Role {
 			dc.addCard(card);
 		}
 		return dc;
-	}*/
+	}
 
 	////TODO 空函数设置。。并不合理 也许并不合理
-	//public deliveredCardsGroup deliver(deliveredCardsGroup previous) {
-	//	return null;
-	//}
+	public deliveredCardsGroup deliver(deliveredCardsGroup previous) {
+		return null;
+	}
 
 	public void setNumber(int n) {
 		number = n;
