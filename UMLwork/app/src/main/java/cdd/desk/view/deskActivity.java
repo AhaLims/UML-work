@@ -53,12 +53,12 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
     private CountDownTimer timer0 = new CountDownTimer(10000, 1000) {
         @Override
         public void onTick(long millisUntilFinished) {
-            timer1TextView.setText((millisUntilFinished / 1000) + "秒");
+            timer0TextView.setText((millisUntilFinished / 1000) + "秒");
         }
 
         @Override
         public void onFinish() {
-            timer1TextView.setText("");
+            timer0TextView.setText("");
             mPresenter.playerPass();
         }
     };
@@ -264,14 +264,18 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
         switch (role)
         {
             case 0:
+                timer0.cancel();
                 playerShowCardsLayout.displayPass();
             case 1:
+                timer1.cancel();
                 leftRobotShowCardsLayout.displayPass();
                 break;
             case 2:
+                timer2.cancel();
                 middleRobotShowCardsLayout.displayPass();
                 break;
             case 3:
+                timer3.cancel();
                 rightRobotShowCardsLayout.displayPass();
                 break;
             default:

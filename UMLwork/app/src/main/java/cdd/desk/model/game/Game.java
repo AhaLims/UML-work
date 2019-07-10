@@ -82,11 +82,12 @@ public class Game{
 			System.out.print(i);
 			System.out.println("个玩家的牌为:");
 			roles[i].getHandCards().showDetail();
-
-
 		}
 
-		if(firstTurn == 0) return;//第一个出牌的是玩家 则初始化工作完成
+		if(firstTurn == 0) {
+			playGameCallBack.onNext(0);
+			return;//第一个出牌的是玩家 则初始化工作完成
+		}
 		else//如果第一个出牌的不是玩家 那么应该先模拟机器人的出牌
 		{
 			deliveredCardsGroup deliveredCard;
@@ -228,7 +229,6 @@ public class Game{
 					hd[j] = roles[j].getHandCards();
 				}
 				int PlayerScore = scorer.getScore(0, hd);//传牌组进去....
-				//TODO 要改回来 后面用下面的这行
 				playGameCallBack.onGameEnd(i,PlayerScore);
 				//playGameCallBack.onCardsNotValid("实际上是游戏结束了 并不是错误");
 				return;
