@@ -1,8 +1,10 @@
-package cdd.desk.model.role;
+package cdd.tool;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import cdd.desk.model.role.Player;
 
 public class DBHelper extends SQLiteOpenHelper {
 //version number to upgrade database version

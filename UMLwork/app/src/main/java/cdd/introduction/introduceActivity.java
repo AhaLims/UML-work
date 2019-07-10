@@ -1,23 +1,14 @@
-package cdd.desk.view;
+package cdd.introduction;
 
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.EditText;
 
 import com.example.uml.umlwork.R;
-import java.io.File;
 
-import cdd.desk.model.role.Player;
-import cdd.desk.model.role.PlayerRepo;
 import cdd.menu.view.MainActivity;
-
-import static android.os.SystemClock.sleep;
 
 public class introduceActivity extends AppCompatActivity {
 //    private MediaPlayer mediaPlayer;//MediaPlayer对象

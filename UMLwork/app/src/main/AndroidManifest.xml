@@ -26,7 +26,7 @@
             android:screenOrientation="landscape">  <!--横屏显示-->
         </activity>
         <activity
-            android:name="cdd.desk.view.rankActivity"
+            android:name="cdd.rank.view.rankActivity"
             android:screenOrientation="landscape">  <!--横屏显示-->
         </activity>
 
@@ -35,7 +35,7 @@
             android:screenOrientation="landscape">  <!--横屏显示-->
         </activity>
         <activity
-            android:name="cdd.desk.view.introduceActivity"
+            android:name="cdd.introduction.introduceActivity"
             android:screenOrientation="landscape">  <!--横屏显示-->
         </activity>
 
