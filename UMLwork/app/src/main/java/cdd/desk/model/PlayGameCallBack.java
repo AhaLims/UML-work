@@ -21,5 +21,6 @@ public interface PlayGameCallBack {
 
     void onRolePass(int robot);
 
+    void onNext(int role);
 
 }

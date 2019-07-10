@@ -86,5 +86,8 @@ public class deskPresenter implements deskContract.Presenter,PlayGameCallBack {
         //mGame.escape
     }
 
-
+    @Override
+    public void onNext(int role) {
+        mDeskActivity.startTimer(role);
+    }
 }
