@@ -5,22 +5,19 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.uml.umlwork.R;
-
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-
 import cdd.desk.model.card.Card;
 import cdd.desk.contract.deskContract;
 import cdd.desk.presenter.deskPresenter;
@@ -31,9 +28,10 @@ import cdd.menu.view.MainActivity;
  */
 public class deskActivity extends AppCompatActivity implements deskContract.View{
 
-    private Button btnShowCards;
-    private Button btnSkip;
-    private Button btnReSelect;
+    private ImageButton btnShowCards;
+    private ImageButton btnSkip;
+    private ImageButton btnReSelect;
+    private ImageButton btnExitGame;
     private Button tiaozhuan;
     private PlayerHandCardsViewGroup playerCardSetLayout;
     private ShowedCardsViewGroup playerShowCardsLayout;
@@ -113,6 +111,8 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
         btnShowCards = findViewById(R.id.show_cards);
         btnSkip = findViewById(R.id.skip);
         btnReSelect = findViewById(R.id.reselect);
+        btnExitGame = findViewById(R.id.exit_game_btn);
+        btnExitGame.setScaleType(ImageView.ScaleType.CENTER_INSIDE);//ImageView.ScaleType.FIT_CENTER
         tiaozhuan = findViewById(R.id.tiaozhuan);
         playerCardSetLayout = findViewById(R.id.player_cardset_field);
         playerShowCardsLayout = findViewById(R.id.player_showcards_field);
@@ -128,6 +128,34 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
         timer3TextView = findViewById(R.id.timer3);
 
         //设置button监听事件
+        btnExitGame.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                // TODO Auto-generated method stub
+                switch (event.getAction()) {
+
+                    case MotionEvent.ACTION_DOWN:
+                        btnExitGame.setImageDrawable(getDrawable(R.drawable.exit_game_foucused));
+                        btnExitGame.setScaleType(ImageView.ScaleType.CENTER_INSIDE);//ImageView.ScaleType.FIT_CENTER
+                        popEscapeDialog();
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        btnExitGame.setImageDrawable(getDrawable(R.drawable.exit_game));
+                        btnExitGame.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                        break;
+                }
+                return true;
+            }
+        });
+
+        btnExitGame.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                popEscapeDialog();
+            }
+        });
+
         btnShowCards.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
