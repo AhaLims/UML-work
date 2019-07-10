@@ -22,6 +22,4 @@ public interface PlayGameCallBack {
 
     void onNext(int role);
 
-    boolean isFirstHand(int role);
-
 }

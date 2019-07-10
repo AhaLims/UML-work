@@ -24,5 +24,6 @@ public interface deskContract {
         void playerPass();
         void playerShowCards(List<Integer> cards);
         void escape();
+        boolean isFirstHand(int role);
     }
 }

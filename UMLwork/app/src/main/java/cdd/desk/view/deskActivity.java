@@ -59,7 +59,12 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
         @Override
         public void onFinish() {
             timer0TextView.setText("");
-            mPresenter.playerPass();
+            if(mPresenter.isFirstHand(0)) {
+                playerCardSetLayout.selectFirstCard();
+                showCards();
+            }
+            else
+                mPresenter.playerPass();
         }
     };
     private CountDownTimer timer1 = new CountDownTimer(10000, 1000) {
