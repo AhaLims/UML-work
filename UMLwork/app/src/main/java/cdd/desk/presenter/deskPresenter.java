@@ -84,7 +84,17 @@ public class deskPresenter implements deskContract.Presenter,PlayGameCallBack {
     public void escape()
     {
         //mGame.escape
+        //游戏需要处理分数事件....要扣分
     }
 
+    @Override
+    public void onNext(int role) {
+        mDeskActivity.startTimer(role);
+    }
+
+    @Override
+    public boolean isFirstHand(int role) {
+        return mGame.IsFirstHand(role);
+    }
 
 }

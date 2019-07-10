@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout android:id="@+id/tableLayout1"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@mipmap/game_bg"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:stretchColumns="0,3"
+    >
+
+    <!-- 第一行 -->
+    <TableRow android:id="@+id/tableRow1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView/>
+        <TextView android:text="用户名："
+            style="@style/sizeOfWord"
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+        <EditText android:id="@+id/editText1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="200px"/>
+        <TextView />
+    </TableRow>
+
+    <!-- 第二行 -->
+    <TableRow android:id="@+id/tableRow2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView/>
+        <TextView
+            style="@style/sizeOfWord"
+            android:text="分     数："
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <EditText android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:id="@+id/editText2"/>
+        <TextView />
+    </TableRow>
+    <!-- 第3行 -->
+    <TableRow android:id="@+id/tableRow3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView/>
+        <TextView
+            android:text="排     名："
+            android:id="@+id/textView3"
+            style="@style/sizeOfWord"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <EditText android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:id="@+id/editText3"/>
+        <TextView />
+        <!--上面这个也是组件，，，，，,,,,,,,,,,,,,,,,,,,，，一共4个组件-->
+    </TableRow>
+
+    <!-- 第4行 -->
+    <TableRow android:id="@+id/tableRow4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView/>
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/sizeOfWord"
+            android:text="返回" />
+        <TextView/>
+        <TextView/>
+    </TableRow>
+
+</TableLayout>
+

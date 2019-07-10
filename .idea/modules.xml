@@ -2,7 +2,13 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/UML实训.iml" filepath="$PROJECT_DIR$/.idea/UML实训.iml" />
+      <module fileurl="file://$PROJECT_DIR$/UML-work.iml" filepath="$PROJECT_DIR$/UML-work.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zzw_src/androidTest/androidTest.iml" filepath="$PROJECT_DIR$/zzw_src/androidTest/androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/UMLwork/app/src/androidTest/androidTest1.iml" filepath="$PROJECT_DIR$/UMLwork/app/src/androidTest/androidTest1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/UMLwork/app/src/main/main.iml" filepath="$PROJECT_DIR$/UMLwork/app/src/main/main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zzw_src/main/main1.iml" filepath="$PROJECT_DIR$/zzw_src/main/main1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zzw_src/test/test.iml" filepath="$PROJECT_DIR$/zzw_src/test/test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/UMLwork/app/src/test/test1.iml" filepath="$PROJECT_DIR$/UMLwork/app/src/test/test1.iml" />
     </modules>
   </component>
 </project>

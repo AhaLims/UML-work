@@ -4,16 +4,19 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.uml.umlwork.R;
-
 import java.util.List;
 import cdd.desk.model.card.Card;
 import cdd.desk.contract.deskContract;
@@ -25,9 +28,10 @@ import cdd.menu.view.MainActivity;
  */
 public class deskActivity extends AppCompatActivity implements deskContract.View{
 
-    private Button btnShowCards;
-    private Button btnSkip;
-    private Button btnReSelect;
+    private ImageButton btnShowCards;
+    private ImageButton btnSkip;
+    private ImageButton btnReSelect;
+    private ImageButton btnExitGame;
     private Button tiaozhuan;
     private PlayerHandCardsViewGroup playerCardSetLayout;
     private ShowedCardsViewGroup playerShowCardsLayout;
@@ -37,7 +41,63 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
     private TextView leftRobotRemainTextView;
     private TextView middleRobotRemainTextView;
     private TextView rightRobotRemainTextView;
+    private TextView timer0TextView;
+    private TextView timer1TextView;
+    private TextView timer2TextView;
+    private TextView timer3TextView;
     private Context context;
+
+    //由于不知道怎么在ui层判断轮次 所以只能写4个timer了
+    private CountDownTimer timer0 = new CountDownTimer(10000, 1000) {
+        @Override
+        public void onTick(long millisUntilFinished) {
+            timer0TextView.setText((millisUntilFinished / 1000) + "秒");
+        }
+
+        @Override
+        public void onFinish() {
+            timer0TextView.setText("");
+            if(mPresenter.isFirstHand(0)) {
+                playerCardSetLayout.selectFirstCard();
+                showCards();
+            }
+            else
+                mPresenter.playerPass();
+        }
+    };
+    private CountDownTimer timer1 = new CountDownTimer(10000, 1000) {
+        @Override
+        public void onTick(long millisUntilFinished) {
+            timer1TextView.setText((millisUntilFinished / 1000) + "秒");
+        }
+
+        @Override
+        public void onFinish() {
+            timer1TextView.setText("");
+        }
+    };
+    private CountDownTimer timer2 = new CountDownTimer(10000, 1000) {
+        @Override
+        public void onTick(long millisUntilFinished) {
+            timer2TextView.setText((millisUntilFinished / 1000) + "秒");
+        }
+
+        @Override
+        public void onFinish() {
+            timer2TextView.setText("");
+        }
+    };
+    private CountDownTimer timer3 = new CountDownTimer(10000, 1000) {
+        @Override
+        public void onTick(long millisUntilFinished) {
+            timer3TextView.setText((millisUntilFinished / 1000) + "秒");
+        }
+
+        @Override
+        public void onFinish() {
+            timer3TextView.setText("");
+        }
+    };
 
     private deskContract.Presenter mPresenter;
 
@@ -47,11 +107,12 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
         setContentView(R.layout.activity_desk);
         context = this;
 
-
         //绑定控件
         btnShowCards = findViewById(R.id.show_cards);
         btnSkip = findViewById(R.id.skip);
         btnReSelect = findViewById(R.id.reselect);
+        btnExitGame = findViewById(R.id.exit_game_btn);
+        btnExitGame.setScaleType(ImageView.ScaleType.CENTER_INSIDE);//ImageView.ScaleType.FIT_CENTER
         tiaozhuan = findViewById(R.id.tiaozhuan);
         playerCardSetLayout = findViewById(R.id.player_cardset_field);
         playerShowCardsLayout = findViewById(R.id.player_showcards_field);
@@ -61,8 +122,40 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
         leftRobotRemainTextView = findViewById(R.id.robot_remain1);
         middleRobotRemainTextView = findViewById(R.id.robot_remain2);
         rightRobotRemainTextView = findViewById(R.id.robot_remain3);
+        timer0TextView = findViewById(R.id.timer0);
+        timer1TextView = findViewById(R.id.timer1);
+        timer2TextView = findViewById(R.id.timer2);
+        timer3TextView = findViewById(R.id.timer3);
 
         //设置button监听事件
+        btnExitGame.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                // TODO Auto-generated method stub
+                switch (event.getAction()) {
+
+                    case MotionEvent.ACTION_DOWN:
+                        btnExitGame.setImageDrawable(getDrawable(R.drawable.exit_game_foucused));
+                        btnExitGame.setScaleType(ImageView.ScaleType.CENTER_INSIDE);//ImageView.ScaleType.FIT_CENTER
+                        popEscapeDialog();
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        btnExitGame.setImageDrawable(getDrawable(R.drawable.exit_game));
+                        btnExitGame.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                        break;
+                }
+                return true;
+            }
+        });
+
+        btnExitGame.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                popEscapeDialog();
+            }
+        });
+
         btnShowCards.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,6 +219,7 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
     @Override
     public void displayPlayerCards(List<Card> playerCards) {
         playerShowCardsLayout.displayCards(playerCards);
+        timer0.cancel();
         //System.out.print("这个时候应该显示 出的牌");
     }
 
@@ -135,14 +229,17 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
         {
             case 1:
                 leftRobotShowCardsLayout.displayCards(robotCards);
+                timer1.cancel();
                 break;
 
             case 2:
                 middleRobotShowCardsLayout.displayCards(robotCards);
+                timer2.cancel();
                 break;
 
             case 3:
                 rightRobotShowCardsLayout.displayCards(robotCards);
+                timer3.cancel();
                 break;
 
             default:
@@ -200,14 +297,18 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
         switch (role)
         {
             case 0:
+                timer0.cancel();
                 playerShowCardsLayout.displayPass();
             case 1:
+                timer1.cancel();
                 leftRobotShowCardsLayout.displayPass();
                 break;
             case 2:
+                timer2.cancel();
                 middleRobotShowCardsLayout.displayPass();
                 break;
             case 3:
+                timer3.cancel();
                 rightRobotShowCardsLayout.displayPass();
                 break;
             default:
@@ -292,6 +393,26 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
         });
         dialog.show();
 
+    }
+
+    public void startTimer(int role)
+    {
+        switch (role)
+        {
+            case 0:
+                timer0.start();
+                break;
+            case 1:
+                timer1.start();
+                break;
+            case 2:
+                timer2.start();
+                break;
+            case 3:
+                timer3.start();
+                break;
+            default:
+        }
     }
 
     /*
