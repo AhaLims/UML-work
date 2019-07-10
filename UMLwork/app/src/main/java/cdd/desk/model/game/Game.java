@@ -186,6 +186,8 @@ public class Game{
 			if(CardsManager.getCardsManager().isPermissible(LatestCards, currentCardsGroup, playGameCallBack))
 			{
 				playGameCallBack.displayPlayerCards(currentCardsGroup.getCardsGroup());
+
+				LatestCards = currentCardsGroup;//把当前玩家出的牌设置为最近的牌
 				roles[0].refreshCardsGroup(currentCardsGroup);//更新牌
 				playGameCallBack.displayPlayerHandCards(roles[0].getHandCards().getCardsGroup());//回调
 				IsLatestShow[0] = true;//记录一下出了牌
@@ -201,6 +203,7 @@ public class Game{
 		}
 		else if (CardsManager.getCardsManager().isPermissible(LatestCards, currentCardsGroup, playGameCallBack)){//先手 且 牌组中有方块三
 
+			LatestCards = currentCardsGroup;//把当前玩家出的牌设置为最近的牌
 			playGameCallBack.displayPlayerCards(currentCardsGroup.getCardsGroup());
 			roles[0].refreshCardsGroup(currentCardsGroup);//更新牌
 			playGameCallBack.displayPlayerHandCards(roles[0].getHandCards().getCardsGroup());//回调
@@ -217,6 +220,8 @@ public class Game{
 		//不是第一轮的先手或者后手
 		//合法的出牌
 		if (CardsManager.getCardsManager().isPermissible(LatestCards, currentCardsGroup, playGameCallBack)) {
+
+			LatestCards = currentCardsGroup;//把当前玩家出的牌设置为最近的牌
 			//通知presenter 并更新玩家的牌
 			playGameCallBack.displayPlayerCards(currentCardsGroup.getCardsGroup());
 			roles[0].refreshCardsGroup(currentCardsGroup);//更新牌
@@ -247,13 +252,8 @@ public class Game{
 		//三个机器人的牌局
 		deliveredCardsGroup currentCardsGroup;
 		for (int i = 1; i < 4; i++) {
-			playGameCallBack.onNext((i + 1) % 4);
-			//if(i < 4){//三个机器人都不出牌
-			//	playGameCallBack.onRolePass(i);
-			//	IsLatestShow[i] = false;
-			//	continue;
-			//}
 
+			IsFirstHand(i);
 			currentCardsGroup = roles[i].deliver(LatestCards);//这是根据上家的牌获取的机器人应该出的牌
 
 			if (currentCardsGroup.hasCards() == true) {//机器人是有牌出的

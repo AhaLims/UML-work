@@ -65,8 +65,7 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
                 mPresenter.playerPass();
         }
     };
-    //TODO 记得改回来
-    private CountDownTimer timer1 = new CountDownTimer(1000000, 1000) {
+    private CountDownTimer timer1 = new CountDownTimer(10000, 1000) {
         @Override
         public void onTick(long millisUntilFinished) {
             timer1TextView.setText((millisUntilFinished / 1000) + "秒");
