@@ -232,68 +232,51 @@ public class CardsManager {
 	{
 
 		System.out.println("现在应该判断牌的合法性了");
-		boolean validation = false;
 		CardsType currentType = current.getType();
 
 		//先看看有没有上家
 		if(previous.hasCards() == false) {//说明没有上家
+		    System.out.println("调用了isPermissible 且判断出来了 传进来的不是上家的牌");
 			switch (currentType){
-				case card0:
+				case card0://牌型不对
 					playGameCallBack.onCardsNotValid("不可以这样出牌哦");
 					return false;
-				case danzhang:
-				case yidui://两张相等的对子
-				case sanzhang://三张一样的
+				default://其他的牌都可以出
 					return true;
-				case sandaier://三带一
-				case sidaiyi://四带一
-				case tonghuashun://同花顺
-					playGameCallBack.onCardsNotValid("暂时不支持的牌型 但是后面会补充");
-					return false;
-				default:
-					return false;//要加一个default
+
 			}
 		}
 
 		CardsType previousType = previous.getType();
 		if(currentType != previousType){
-			playGameCallBack.onCardsNotValid("与商家的牌不匹配哦");
+			playGameCallBack.onCardsNotValid("与上家的牌不匹配哦");
+			return false;
 		}
 		switch (currentType){
 			case card0:
-				validation = false;
 				playGameCallBack.onCardsNotValid("不可以这样出牌哦");
 				System.out.println("这个时候的牌是不合法的");
 				return false;
-			//单牌 对子 三张一样的牌 判定规则一样，都是看
+			//单牌 对子 三张一样的牌 判定规则一样，
 			case danzhang://单牌
 			case yidui://两张相等的对子
 			case sanzhang://三张一样的
+			case sandaier://三带一
+			case sidaiyi://四带一
+			case tonghuashun://同花顺
 				int size1 = current.getCardsGroup().size();
 				int size2 = previous.getCardsGroup().size();
 				//比较相同的牌中权值最大的牌
 				if(current.getCardsGroup().get(size1 - 1).getWeight() > previous.getCardsGroup().get(size2 - 1).getWeight()) {
-					validation = true;
+					return true;
 				}
 				else{
 					playGameCallBack.onCardsNotValid("牌太小啦 换一种出牌方式吧");
+					return false;
 				}
-				System.out.println("单张或者两张或者三张");
-				break;
-			case sandaier://三带一
-			case sidaiyi://四带一
-			case tonghuashun://同花顺
-         /*int size1 = current.getCardsGroup().size();
-         int size2 = previous.getCardsGroup().size();
-         //比较相同的牌中权值最大的牌
-         if(currentType == previousType && current.getCardsGroup().get(size1 - 1).getWeight() > previous.getCardsGroup().get(size2 - 1).getWeight())
-            validation = true;
-         break;*/
-				System.out.println("三带一或者四带一或者同花顺");
-				validation = false;
-				playGameCallBack.onCardsNotValid("暂时不支持的牌型 后面完善了规则再补充");
+
 		}
-		return validation;
+		return false;
 	}
 	//能直接在Card类中重载某个参数 实现函数的重载吗......? 这里就直接调用 多好...
 	//不要写在这里...太丑了

@@ -23,8 +23,25 @@ public class CardsGroup{
 		for(int i = 0;i < len ; i++)
 		{
 			Card temp = card.get(i);
-			int weight = temp.getWeight();
-			System.out.println(weight);
+			int point = temp.getPoints();
+			System.out.print(point);
+			CardColor color = temp.getColor();
+
+			switch(color){
+				case Diamond:
+					System.out.println(" 方块");
+					break;
+				case Club:
+					System.out.println(" 梅花");
+					break;
+				case Heart:
+					System.out.println(" 红桃");
+					break;
+				case Spade:
+					System.out.println(" 黑桃");
+					break;
+
+		}
 		}
 		System.out.println("-----------end----------------------------------------");
 	}
@@ -82,17 +99,17 @@ public class CardsGroup{
 	public void addCard(Card c) {
 		this.card.add(c);
 	}
-	public void deleteSingleCard(int point,CardColor color) {
+	private void deleteSingleCard(int point,CardColor color) {
 		int index = canFindCard(point,color);
 		if(index == -1)return;//这个牌不在这里 所以找不到
 		deleteSingleCard(index);
 	}
 	
-	public void deleteSingleCard(int index) {
+	private void deleteSingleCard(int index) {
 		this.card.remove(index);//删除对应下标的牌
 	}
 	
-	public void deleteCardsGroup(CardsGroup cg)
+	public void deleteCardsGroup(CardsGroup cg)//cg是需要删除的牌组
 	{
 		int totalDeleteAmount = cg.cardsAmount();
 		for(int i = 0;i < totalDeleteAmount;i++)//遍历 删除牌
@@ -125,7 +142,8 @@ public class CardsGroup{
 	);
 	}
 	//将presenter所传进来的 选中的牌的index数组转换为 deliveredCardsGroup的牌
-	public deliveredCardsGroup packCardsGroup(List<Integer> list) {
+	//貌似没用上 所以先注释了
+	/*public deliveredCardsGroup packCardsGroup(List<Integer> list) {
 		deliveredCardsGroup DeliveredCardsGroup = new deliveredCardsGroup();
 		for(int i = 0;i < list.size();i++) {
 			int index = list.get(i).intValue();
@@ -133,10 +151,12 @@ public class CardsGroup{
 			DeliveredCardsGroup.addCard(c);//将加牌
 		}
 		return DeliveredCardsGroup;
-	}
+
+	}*/
 
 	public void clear() {
 		card.clear();
 	}
+
 
 }
