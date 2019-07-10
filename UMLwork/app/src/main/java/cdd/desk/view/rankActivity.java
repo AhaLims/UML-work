@@ -65,7 +65,7 @@ public class rankActivity extends AppCompatActivity {
             {
                 Toast.makeText(rankActivity.this, "请输入用户名！", Toast.LENGTH_LONG).show();
 
-                Intent intent = new Intent(rankActivity.this , MainActivity.class);
+                Intent intent = new Intent(rankActivity.this , mainActivityczf.class);
                 startActivity(intent);
             }
         });

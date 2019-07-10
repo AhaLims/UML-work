@@ -12,6 +12,7 @@ import com.example.uml.umlwork.R;
 
 import cdd.desk.model.role.Player;
 import cdd.desk.model.role.PlayerRepo;
+import cdd.bgm.view.bgmActivity;
 import cdd.desk.view.deskActivity;
 import cdd.desk.view.introduceActivity;
 import cdd.desk.view.rankActivity;
@@ -19,11 +20,11 @@ import cdd.desk.view.mainActivityczf;
 import cdd.menu.contract.menuContract;
 
 ;
-
 public class MainActivity extends AppCompatActivity implements menuContract.View{
     private Button btnStartGame;
     private Button btnShowRank;
     private Button btnIntroduce;
+    private Button btnSetBgm;
 
     PlayerRepo playerRepo=new PlayerRepo (this);
     Player player=new Player();
@@ -32,15 +33,13 @@ public class MainActivity extends AppCompatActivity implements menuContract.View
         //显示界面
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         Intent intent =getIntent();
         Bundle bundle=intent.getExtras();
         String useName=bundle.getString("useName");
         player=playerRepo.getPlayerByName(useName);
-
         //绑定开始游戏按钮
         btnStartGame  =  findViewById(R.id.start_game);
-
+        btnSetBgm=findViewById(R.id.set_bgm);
         //开始游戏按钮点击事件：跳转到deskActivity
         btnStartGame.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -50,6 +49,15 @@ public class MainActivity extends AppCompatActivity implements menuContract.View
             }
         });
 
+        //音效设置按钮事件，跳转到bgmactivity
+
+        btnSetBgm.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(MainActivity.this , bgmActivity.class);
+                startActivity(intent);
+            }
+        });
 
         //绑定查看排名按钮
         btnShowRank  =  (Button)findViewById(R.id.show_rank);
@@ -65,10 +73,7 @@ public class MainActivity extends AppCompatActivity implements menuContract.View
                 startActivity(intent);	//启动新的Activity
             }
         });
-
-
         btnIntroduce  =  findViewById(R.id.introduce);
-
         //开始游戏按钮点击事件：跳转到deskActivity
         btnIntroduce.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -78,6 +83,4 @@ public class MainActivity extends AppCompatActivity implements menuContract.View
             }
         });
     }
-
-
 }
