@@ -5,20 +5,22 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.TextView;
+
 import android.widget.Toast;
 import com.example.uml.umlwork.R;
 import cdd.desk.model.role.Player;
 import cdd.desk.view.mainActivityczf;
+import cdd.menu.view.MainActivity;
 import cdd.rank.contract.rankContract;
 import cdd.rank.presenter.rankPresenter;
 import cdd.tool.PlayerRepo;
 
 public class rankActivity extends AppCompatActivity implements rankContract.View{
     private Button btnReturn;
-    private EditText user_tv;		//显示用户名的TextView组件
-    private EditText score_tv;		//显示用户分数的TextView组件
-    private EditText rank_tv;       //获取显示用户名的TextView组件
+    private TextView user_tv;		//显示用户名的TextView组件
+    private TextView score_tv;		//显示用户分数的TextView组件
+    private TextView rank_tv;       //获取显示用户名的TextView组件
     private rankContract.Presenter mPresenter;
 
     PlayerRepo playerRepo = new PlayerRepo(this);//TODO MODEL
@@ -47,10 +49,9 @@ public class rankActivity extends AppCompatActivity implements rankContract.View
             @Override
             public void onClick(View v)
             {
-                Toast.makeText(rankActivity.this, "请输入用户名！", Toast.LENGTH_LONG).show();
-
-                Intent intent = new Intent(rankActivity.this , mainActivityczf.class);
-                startActivity(intent);
+                finish();
+//                Intent intent = new Intent(rankActivity.this , MainActivity.class);
+//                startActivity(intent);
             }
         });
 

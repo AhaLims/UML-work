@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             />
-        <EditText android:id="@+id/editText1"
+        <TextView android:id="@+id/editText1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minWidth="200px"/>
@@ -38,7 +38,7 @@
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
-        <EditText android:layout_height="wrap_content"
+        <TextView android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:id="@+id/editText2"/>
         <TextView />
@@ -54,7 +54,7 @@
             style="@style/sizeOfWord"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
-        <EditText android:layout_height="wrap_content"
+        <TextView android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:id="@+id/editText3"/>
         <TextView />

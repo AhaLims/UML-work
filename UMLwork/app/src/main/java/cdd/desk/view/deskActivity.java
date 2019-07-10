@@ -58,6 +58,7 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
         public void onFinish() {
             timer0TextView.setText("");
             if(mPresenter.isFirstHand(0)) {
+                playerCardSetLayout.reSelect();
                 playerCardSetLayout.selectFirstCard();
                 showCards();
             }

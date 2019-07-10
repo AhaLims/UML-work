@@ -29,6 +29,6 @@ public class rankPresenter implements rankContract.Presenter,DbCallBack.RankCall
 
     @Override
     public void getPlayer(String name) {
-        mRepo.getPlayerByName(name,this);
+//        mRepo.getPlayerByName(name,this);
     }
 }

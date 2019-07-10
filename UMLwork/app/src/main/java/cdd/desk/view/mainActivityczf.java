@@ -48,7 +48,7 @@ public class mainActivityczf extends AppCompatActivity {
                         intent.putExtras(bundle);	//将Bundle对象添加到Intent对象中
                         startActivity(intent);	//启动新的Activity
                     }
-
+                    else
                     {
                         Toast.makeText(mainActivityczf.this, "用户名未创建，将为你自动创建并进入主页面！", Toast.LENGTH_LONG).show();
                         player.player_name=useName;
@@ -60,6 +60,7 @@ public class mainActivityczf extends AppCompatActivity {
                         intent.putExtras(bundle);	//将Bundle对象添加到Intent对象中
                         startActivity(intent);	//启动新的Activity
                     }
+                    finish();
                 }
             }
         });
