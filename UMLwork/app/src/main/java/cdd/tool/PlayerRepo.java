@@ -71,10 +71,10 @@ public final class PlayerRepo {
         SQLiteDatabase db =  dbHelper.getReadableDatabase();
         String selectQuery = "SELECT " +
                 "name" + "," +
-                "name" +
+                " score" +
                 " FROM " + "Player"
                 + " WHERE " +
-                "score" + "=?";
+                "name" + "=?";
 
         int iCount = 0;
         Player player = new Player();
@@ -96,7 +96,7 @@ public final class PlayerRepo {
         String selectQuery = "SELECT " +
                 " name " + " FROM " +
                 "Player" + " WHERE " +
-                "score" + " =?";
+                " name" + " =?";
         Cursor cursor = db.rawQuery(selectQuery, new String[] {name});
         if (cursor.moveToFirst()) {
             System.out.println("用户已存在");
