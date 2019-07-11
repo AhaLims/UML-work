@@ -4,9 +4,12 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import cdd.desk.model.role.Player;
 
@@ -58,7 +61,7 @@ public final class PlayerRepo {
                 player.put("name", cursor.getString(
                         cursor.getColumnIndex("name")));
                 player.put("score", cursor.getString(
-                        cursor.getColumnIndex("name")));
+                        cursor.getColumnIndex("score")));
                 playerList.add(player);
             }while (cursor.moveToNext());
         }
@@ -77,17 +80,33 @@ public final class PlayerRepo {
                 "name" + "=?";
 
         int iCount = 0;
-        Player player = new Player();
+        Player player = new Player(name);
         Cursor cursor = db.rawQuery(selectQuery, new String[] {name});
         if (cursor.moveToFirst()) {
             do {
-                player.setPlayerName(cursor.getString(cursor.getColumnIndex("score")));
-                player.setScore((int)(cursor.getDouble(cursor.getColumnIndex("name"))));//这里做了类型转换
+                player.setPlayerName(cursor.getString(cursor.getColumnIndex("name")));
+                Log.e("", "getPlayerByName: " + name );
+                player.setScore((int)(cursor.getDouble(cursor.getColumnIndex("score"))));//这里做了类型转换
             }while (cursor.moveToNext());
         }
         cursor.close();
         db.close();
-        dbCallBack.dispalyRank(player.getPlayerName(),(int)(player.getScore()),1);//TODO 排名记得改
+
+        int score = 123;
+        int accout=0;
+//调用函数获取
+        List<HashMap<String,String>> list =getPlayerScore();
+        for(HashMap<String,String>item : list) {
+            Log.e("", "getPlayerByName: list:score" + item.get("score") );
+            Log.e(""," list:name" + item.get("name"));
+            if(Integer.valueOf(item.get("score"))> score)
+            accout++;
+        }
+
+
+
+        dbCallBack.dispalyRank(player.getPlayerName(),(int)(player.getScore()),accout);//TODO 排名记得改
+
         return player;
     }
 
@@ -96,7 +115,7 @@ public final class PlayerRepo {
         String selectQuery = "SELECT " +
                 " name " + " FROM " +
                 "Player" + " WHERE " +
-                " name" + " =?";
+                " name " + " =?";
         Cursor cursor = db.rawQuery(selectQuery, new String[] {name});
         if (cursor.moveToFirst()) {
             System.out.println("用户已存在");

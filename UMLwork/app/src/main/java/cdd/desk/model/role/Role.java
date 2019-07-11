@@ -16,7 +16,7 @@ public class Role {
 	//CardsGroup LasterCards;
 	int score;
 	int number;//该局游戏中的编号（也就是第几个出牌）
-
+	protected String player_name;
 	//String name;
 	//只是为了测试
 	public void showDetail() {
@@ -31,12 +31,6 @@ public class Role {
 		CurrentCards = new handCardsGroup();
 	}
 
-	public void setScore(int s){
-		score = s;
-	}
-	public int getScore(){
-		return score;
-	}
 
 
 	//在游戏初始阶段 获得单张牌
@@ -99,6 +93,18 @@ public class Role {
 	public handCardsGroup getHandCards(){
 	    return CurrentCards;
     }
+	public String getPlayerName(){
+		return player_name;
+	}
+	public void setPlayerName(String Name){
+		player_name = Name;
+	}
+	public int getScore(){
+		return  score;
+	}
+	public void setScore(int s){
+		score = s;
+	}
 
 }
 	

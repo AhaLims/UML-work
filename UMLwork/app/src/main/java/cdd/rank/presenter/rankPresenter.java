@@ -1,5 +1,7 @@
 package cdd.rank.presenter;
 
+import android.util.Log;
+
 import cdd.tool.DbCallBack;
 import cdd.tool.PlayerRepo;
 import cdd.rank.contract.rankContract;
@@ -25,10 +27,11 @@ public class rankPresenter implements rankContract.Presenter,DbCallBack.RankCall
     @Override
     public void dispalyRank(String name, int score, int rank) {
         mRankActivity.displayRank(name,score,rank);
+        Log.e("", "dispalyRank: name"+ name );
     }
 
     @Override
     public void getPlayer(String name) {
-        mRepo.getPlayerByName(name,this);
+       mRepo.getPlayerByName(name,this);
     }
 }

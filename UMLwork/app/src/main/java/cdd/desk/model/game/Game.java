@@ -1,5 +1,8 @@
 package cdd.desk.model.game;
 
+import android.content.Context;
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +16,8 @@ import cdd.desk.model.card.handCardsGroup;
 import cdd.desk.model.role.Player;
 import cdd.desk.model.role.Robot;
 import cdd.desk.model.role.Role;
+import cdd.tool.DbCallBack;
+import cdd.tool.PlayerRepo;
 
 
 //TODO 设置一个常量 玩家index = 0 可读性更强
@@ -27,10 +32,12 @@ public class Game{
 	private int turnTime;//轮数
 	private Role[] roles;
 	private boolean[] IsLatestShow;//用来判断最新是否出了牌
+	Context context;
 
     private static final int PlayID = 0;
 	//TODO 也许应该传进玩家的名字....然后....
-	public Game() {
+	public Game(Context context) {
+		this.context = context;
 		scorer = new Scorer();
 		//nextTurn = new int[4];
 		AllCards = PairCardsGroup.getPairOfCards();
@@ -39,17 +46,18 @@ public class Game{
 		LatestCards = new deliveredCardsGroup();
 		for(int i = 0;i < 4; i++) {
 			if(i == 0)
-				roles[i] = new Player();
+				continue;
 			else roles[i] = new Robot();
 			IsLatestShow[i] = false;//一开始大家都没有出牌
 		}
 	}
 
-	public Game(Player player){
+	public Game(String name,Context context){
+		this.context = context;
 		scorer = new Scorer();
-		//nextTurn = new int[4];
 		AllCards = PairCardsGroup.getPairOfCards();
 		roles = new Role[4];
+		Player player = new Player(name);
 		IsLatestShow = new boolean[4];
 		LatestCards = new deliveredCardsGroup();
 		for(int i = 0;i < 4; i++) {
@@ -235,6 +243,7 @@ public class Game{
 			//游戏结束了  需要进行分数的计算
 			if (roles[0].win() == true) {
 				gameEnd(0,playGameCallBack);
+
 				return;
 			}
 			//机器人出牌 并进行回调
@@ -285,9 +294,21 @@ public class Game{
 		for (int j = 0; j < 4; j++) {
 			hd[j] = roles[j].getHandCards();
 		}
-		int PlayerScore = scorer.getScore(0, hd) + roles[0].getScore();//玩家的新分数
+		PlayerRepo playerRepo=new PlayerRepo(context);
+		Log.e("", "gameEnd: "+ roles[0].getPlayerName());
+		int temp = playerRepo.getPlayerByName(roles[0].getPlayerName(), new DbCallBack.RankCallBack() {
+			@Override
+			public void dispalyRank(String name, int score, int rank) { }
+		}).getScore();
+
+
+		int PlayerScore = scorer.getScore(0, hd) + temp;//玩家的新分数
 
 		//TODO 更新数据库
+		Player player2=new Player(roles[0].getPlayerName());
+		player2.setScore(PlayerScore);
+		playerRepo.update(player2);
+
 
 		playGameCallBack.onGameEnd(winner,PlayerScore);
 	}

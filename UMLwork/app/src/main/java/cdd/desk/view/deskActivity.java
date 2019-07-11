@@ -46,6 +46,7 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
     private TextView timer2TextView;
     private TextView timer3TextView;
     private Context context;
+    private String useName;
 
     //由于不知道怎么在ui层判断轮次 所以只能写4个timer了
     private CountDownTimer timer0 = new CountDownTimer(10000, 1000) {
@@ -58,6 +59,7 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
         public void onFinish() {
             timer0TextView.setText("");
             if(mPresenter.isFirstHand(0)) {
+                playerCardSetLayout.reSelect();
                 playerCardSetLayout.selectFirstCard();
                 showCards();
             }
@@ -105,6 +107,9 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_desk);
+        Intent intent=getIntent();
+        Bundle bundle=intent.getExtras();
+        useName =bundle.getString("useName");
         context = this;
 
         //绑定控件
@@ -127,6 +132,11 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
         timer2TextView = findViewById(R.id.timer2);
         timer3TextView = findViewById(R.id.timer3);
 
+        //image resourses
+          btnShowCards.setImageDrawable(getDrawable(R.drawable.sendcard));
+          btnSkip.setImageDrawable(getDrawable(R.drawable.dontsend));
+          btnReSelect.setImageDrawable(getDrawable(R.drawable.again));
+          btnExitGame.setImageDrawable(getDrawable(R.drawable.fanhui));
         //设置button监听事件
         btnExitGame.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -135,13 +145,13 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
                 switch (event.getAction()) {
 
                     case MotionEvent.ACTION_DOWN:
-                        btnExitGame.setImageDrawable(getDrawable(R.drawable.exit_game_foucused));
+                        btnExitGame.setImageDrawable(getDrawable(R.drawable.fanhuipush));
                         btnExitGame.setScaleType(ImageView.ScaleType.CENTER_INSIDE);//ImageView.ScaleType.FIT_CENTER
                         popEscapeDialog();
                         break;
 
                     case MotionEvent.ACTION_UP:
-                        btnExitGame.setImageDrawable(getDrawable(R.drawable.exit_game));
+                        btnExitGame.setImageDrawable(getDrawable(R.drawable.fanhui));
                         btnExitGame.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
                         break;
                 }
@@ -149,31 +159,66 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
             }
         });
 
-        btnExitGame.setOnClickListener(new View.OnClickListener(){
+        btnShowCards.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
-                popEscapeDialog();
+            public boolean onTouch(View v, MotionEvent event) {
+                // TODO Auto-generated method stub
+                switch (event.getAction()) {
+
+                    case MotionEvent.ACTION_DOWN:
+                        btnShowCards.setImageDrawable(getDrawable(R.drawable.sendcardpush));
+                        btnShowCards.setScaleType(ImageView.ScaleType.CENTER_INSIDE);//ImageView.ScaleType.FIT_CENTER
+                        showCards();
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        btnShowCards.setImageDrawable(getDrawable(R.drawable.sendcard));
+                        btnShowCards.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                        break;
+                }
+                return true;
             }
         });
 
-        btnShowCards.setOnClickListener(new View.OnClickListener() {
+        btnSkip.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
-                showCards();
+            public boolean onTouch(View v, MotionEvent event) {
+                // TODO Auto-generated method stub
+                switch (event.getAction()) {
+
+                    case MotionEvent.ACTION_DOWN:
+                        btnSkip.setImageDrawable(getDrawable(R.drawable.dontsentpush));
+                        btnSkip.setScaleType(ImageView.ScaleType.CENTER_INSIDE);//ImageView.ScaleType.FIT_CENTER
+                        mPresenter.playerPass();
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        btnSkip.setImageDrawable(getDrawable(R.drawable.dontsend));
+                        btnSkip.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                        break;
+                }
+                return true;
             }
         });
 
-        btnSkip.setOnClickListener(new View.OnClickListener() {
+        btnReSelect.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
-                mPresenter.playerPass();
-            }
-        });
+            public boolean onTouch(View v, MotionEvent event) {
+                // TODO Auto-generated method stub
+                switch (event.getAction()) {
 
-        btnReSelect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                playerCardSetLayout.reSelect();
+                    case MotionEvent.ACTION_DOWN:
+                        btnReSelect.setImageDrawable(getDrawable(R.drawable.againpush));
+                        btnReSelect.setScaleType(ImageView.ScaleType.CENTER_INSIDE);//ImageView.ScaleType.FIT_CENTER
+                        playerCardSetLayout.reSelect();
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        btnReSelect.setImageDrawable(getDrawable(R.drawable.again));
+                        btnReSelect.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                        break;
+                }
+                return true;
             }
         });
 
@@ -185,7 +230,7 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
         });
 
         //设置presenter
-        mPresenter = new deskPresenter(this);
+        mPresenter = new deskPresenter(this,useName);
 
     }
 
@@ -352,10 +397,14 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
                 dialog.dismiss();//关闭对话框
             }
         });
+
         dialog.setButton(DialogInterface.BUTTON_NEUTRAL,"不了不了", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(deskActivity.this , MainActivity.class);
+                Bundle bundle=new Bundle();	//创建并实例化一个Bundle对象
+                        bundle.putCharSequence("useName", useName);	//保存用户名
+                        intent.putExtras(bundle);	//将Bundle对象添加到Intent对象中
                 startActivity(intent);
                 dialog.dismiss();//关闭对话框
             }

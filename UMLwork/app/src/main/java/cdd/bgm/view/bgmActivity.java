@@ -17,7 +17,7 @@ import cdd.bgm.contract.bgmContract;
 import cdd.menu.view.MainActivity;
 
 public class bgmActivity extends AppCompatActivity implements bgmContract.View{
-    private ImageButton btnReturn;
+//    private ImageButton btnReturn;
     private MediaPlayer mediaPlayer;//MediaPlayer对象
 
     @Override
@@ -26,18 +26,19 @@ public class bgmActivity extends AppCompatActivity implements bgmContract.View{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bgm);
 
-        btnReturn  =  findViewById(R.id.returnButton); //绑定返回菜单按钮
-
-        //开始游戏按钮点击事件：跳转到deskActivity
-       btnReturn.setOnClickListener(new View.OnClickListener()
-       {
-            @Override
-            public void onClick(View v)
-            {
-                Intent intent = new Intent(bgmActivity.this , MainActivity.class);
-                startActivity(intent);
-            }
-        });
+//        btnReturn  =  findViewById(R.id.returnButton); //绑定返回菜单按钮
+//
+//        //开始游戏按钮点击事件：跳转到deskActivity
+//       btnReturn.setOnClickListener(new View.OnClickListener()
+//       {
+//            @Override
+//            public void onClick(View v)
+//            {
+//
+//                Intent intent = new Intent(bgmActivity.this , MainActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
 
     }
