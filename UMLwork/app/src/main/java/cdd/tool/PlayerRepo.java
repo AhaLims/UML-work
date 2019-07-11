@@ -9,7 +9,6 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import cdd.desk.model.role.Player;
 
@@ -92,14 +91,13 @@ public final class PlayerRepo {
         cursor.close();
         db.close();
 
-        int score = 123;
-        int accout=0;
+        int accout=1;
 //调用函数获取
         List<HashMap<String,String>> list =getPlayerScore();
         for(HashMap<String,String>item : list) {
             Log.e("", "getPlayerByName: list:score" + item.get("score") );
             Log.e(""," list:name" + item.get("name"));
-            if(Integer.valueOf(item.get("score"))> score)
+            if(Integer.valueOf(item.get("score"))> player.getScore())
             accout++;
         }
 

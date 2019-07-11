@@ -18,8 +18,9 @@ public class Robot extends Role {
         if (previous.hasCards() == false) {
             //先手出牌
             //暂时默认出最小的那张牌
-            Card c = list.get(0);
-            dc.addCard(c);
+            if(list.size() != 0) {
+                Card c = list.get(0);
+            dc.addCard(c);}
         }
         else {
             //前面玩家出的牌
