@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements menuContract.View
         final String useName=bundle.getString("useName");
         player=playerRepo.getPlayerByName(useName, new DbCallBack.RankCallBack() {
             @Override
-            public void dispalyRank(String name, int score, int rank) {
+            public void dispalyRank(String name, int score, int rank,String ary[][]) {
 
             }
         });

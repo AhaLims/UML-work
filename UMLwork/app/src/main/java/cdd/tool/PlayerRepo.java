@@ -103,7 +103,40 @@ public final class PlayerRepo {
 
 
 
-        dbCallBack.dispalyRank(player.getPlayerName(),(int)(player.getScore()),accout);//TODO 排名记得改
+        String ary[][]=new String[200][2];
+        for(int i=0;i<=9;i++)
+        {
+            ary[i][0]="***";
+            ary[i][1]="0";
+        }
+        int num=0;
+        for(HashMap<String,String>item : list) {
+            ary[num][0]=item.get("name");
+            ary[num][1]=item.get("score");
+            num++;
+        }
+        for(int i=0;i<=num-2;i++)
+        {
+            int temp=i;
+            for(int j=i+1;j<=num-1;j++)
+            {
+                if(Integer.parseInt(ary[temp][1])<Integer.parseInt(ary[j][1]))
+                {
+                    temp=j;
+                }
+            }
+            if(temp!=i)
+            {
+                String temp_s1=ary[i][0];
+                String temp_s2=ary[i][1];
+                ary[i][0]=ary[temp][0];
+                ary[i][1]=ary[temp][1];
+                ary[temp][0]=temp_s1;
+                ary[temp][1]=temp_s2;
+            }
+        }
+
+        dbCallBack.dispalyRank(player.getPlayerName(),(int)(player.getScore()),accout,ary);//TODO 排名记得改
 
         return player;
     }

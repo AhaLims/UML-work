@@ -9,7 +9,7 @@ public interface rankContract {
     }
 
     interface View extends BaseView<rankContract.Presenter> {
-        void displayRank(String name, int score, int rank);
+        void displayRank(String name, int score, int rank,String ary[][]);
     }
 
     interface Presenter extends BasePresenter {

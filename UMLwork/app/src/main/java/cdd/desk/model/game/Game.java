@@ -306,7 +306,7 @@ public class Game{
 		Log.e("", "gameEnd: "+ roles[0].getPlayerName());
 		int temp = playerRepo.getPlayerByName(roles[0].getPlayerName(), new DbCallBack.RankCallBack() {
 			@Override
-			public void dispalyRank(String name, int score, int rank) { }
+			public void dispalyRank(String name, int score, int rank,String ary[][]) { }
 		}).getScore();
 
 		int GameScore = scorer.getScore(0, hd);//这局游戏的分数
@@ -326,7 +326,7 @@ public class Game{
 
 		int temp = playerRepo.getPlayerByName(roles[0].getPlayerName(), new DbCallBack.RankCallBack() {
 			@Override
-			public void dispalyRank(String name, int score, int rank) { }
+			public void dispalyRank(String name, int score, int rank,String ary[][]) { }
 		}).getScore();
 		int PlayerScore =  temp - 200;//玩家扣200分
 		//更新数据库

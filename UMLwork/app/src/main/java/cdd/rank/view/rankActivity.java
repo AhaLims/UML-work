@@ -114,47 +114,10 @@ public class rankActivity extends AppCompatActivity implements rankContract.View
     }
 
     @Override
-    public void displayRank(String name, int score, int rank) {
+    public void displayRank(String name, int score, int rank,String ary[][]) {
         user_tv.setText(name);		                    //获取输入的用户名并显示到TextView组件中
         score_tv.setText(String.valueOf(score));		//获取输入的用户分数并显示到TextView组件中
         rank_tv.setText(String.valueOf(rank));		    //获取输入的用户排名并显示到TextView组件中
-
-
-
-        PlayerRepo playerRepo=new PlayerRepo(this);
-        List<HashMap<String,String>> list =playerRepo.getPlayerScore();
-        String ary[][]=new String[200][2];
-        for(int i=0;i<=9;i++)
-        {
-            ary[i][0]="***";
-            ary[i][1]="0";
-        }
-        int num=0;
-        for(HashMap<String,String>item : list) {
-            ary[num][0]=item.get("name");
-            ary[num][1]=item.get("score");
-            num++;
-        }
-        for(int i=0;i<=num-2;i++)
-        {
-            int temp=i;
-            for(int j=i+1;j<=num-1;j++)
-            {
-                if(Integer.parseInt(ary[temp][1])<Integer.parseInt(ary[j][1]))
-                {
-                    temp=j;
-                }
-            }
-            if(temp!=i)
-            {
-                String temp_s1=ary[i][0];
-                String temp_s2=ary[i][1];
-                ary[i][0]=ary[temp][0];
-                ary[i][1]=ary[temp][1];
-                ary[temp][0]=temp_s1;
-                ary[temp][1]=temp_s2;
-            }
-        }
 
         btn12.setText(ary[0][0]);
         btn13.setText(ary[0][1]);
