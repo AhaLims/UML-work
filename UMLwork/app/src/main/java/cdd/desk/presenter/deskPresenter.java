@@ -82,6 +82,7 @@ public class deskPresenter implements deskContract.Presenter,PlayGameCallBack {
     {
         //mGame.escape
         //游戏需要处理分数事件....要扣分
+        mGame.escapeGame(this);//扣分事件....应该有对应的框？
     }
 
     @Override
