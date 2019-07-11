@@ -20,9 +20,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             />
-        <EditText android:id="@+id/editText1"
+        <TextView android:id="@+id/editText1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/sizeOfWord"
             android:minWidth="200px"/>
         <TextView />
     </TableRow>
@@ -38,8 +39,9 @@
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
-        <EditText android:layout_height="wrap_content"
+        <TextView android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            style="@style/sizeOfWord"
             android:id="@+id/editText2"/>
         <TextView />
     </TableRow>
@@ -54,8 +56,9 @@
             style="@style/sizeOfWord"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
-        <EditText android:layout_height="wrap_content"
+        <TextView android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            style="@style/sizeOfWord"
             android:id="@+id/editText3"/>
         <TextView />
         <!--上面这个也是组件，，，，，,,,,,,,,,,,,,,,,,,,，，一共4个组件-->

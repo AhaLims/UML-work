@@ -11,7 +11,7 @@
         android:theme="@style/AppTheme">
         <activity
 
-            android:name="cdd.desk.view.mainActivityczf"
+            android:name="cdd.login.view.loginActivity"
             android:screenOrientation="landscape"><!--横屏显示-->
 
             <intent-filter>

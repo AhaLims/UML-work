@@ -13,10 +13,10 @@ public class deskPresenter implements deskContract.Presenter,PlayGameCallBack {
     private final deskActivity mDeskActivity;
     private final cdd.desk.model.game.Game mGame;
 
-    public deskPresenter(deskActivity deskActivity) {
+    public deskPresenter(deskActivity deskActivity,String name) {
         this.mDeskActivity = deskActivity;
         mDeskActivity.setPresenter(this);
-        mGame = new Game();
+        mGame = new Game(name,deskActivity);
     }
 
     public void start() {
@@ -53,9 +53,6 @@ public class deskPresenter implements deskContract.Presenter,PlayGameCallBack {
     public void onCardsNotValid(String message) {
         mDeskActivity.displayIrregularity(message);
     }
-
-    // TODO robot不出牌
-
 
     //TODO 不出牌
     @Override
