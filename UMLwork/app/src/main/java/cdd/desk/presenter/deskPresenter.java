@@ -85,6 +85,7 @@ public class deskPresenter implements deskContract.Presenter,PlayGameCallBack {
         mGame.escapeGame(this);//扣分事件....应该有对应的框？
     }
 
+    //定时器
     @Override
     public void onNext(int role) {
         mDeskActivity.startTimer(role);

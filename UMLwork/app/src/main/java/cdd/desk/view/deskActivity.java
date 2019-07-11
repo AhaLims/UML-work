@@ -54,7 +54,6 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
         public void onTick(long millisUntilFinished) {
             timer0TextView.setText((millisUntilFinished / 1000) + "秒");
         }
-
         @Override
         public void onFinish() {
             timer0TextView.setText("");
@@ -190,6 +189,7 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
                         btnSkip.setImageDrawable(getDrawable(R.drawable.dontsentpush));
                         btnSkip.setScaleType(ImageView.ScaleType.CENTER_INSIDE);//ImageView.ScaleType.FIT_CENTER
                         mPresenter.playerPass();
+                        playerCardSetLayout.reSelect();
                         break;
 
                     case MotionEvent.ACTION_UP:

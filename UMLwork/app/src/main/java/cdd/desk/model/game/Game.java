@@ -120,6 +120,7 @@ public class Game{
 			deliveredCardsGroup deliveredCard;
 			for(int i = firstTurn;i < 4;i++){//机器人出牌 并进行回调
 				deliveredCard = roles[i].deliver(LatestCards);
+                playGameCallBack.onNext(i % 4);
 				if(deliveredCard.hasCards() == true)
 				{
 					roles[i].refreshCardsGroup(deliveredCard);//更新牌
@@ -130,6 +131,7 @@ public class Game{
 				playGameCallBack.setRobotHandCard( roles[i].getHandCards().getCardsGroup(),i);
 				System.out.println("初始化的时候机器人的出牌局");
 				playGameCallBack.onNext((i + 1) % 4);
+
 			}
 		}
 	}
@@ -162,6 +164,7 @@ public class Game{
 	//两个参数分别为:前端传来的牌的数组 以及presenter自己
 	public void turn(List<Integer> list,PlayGameCallBack playGameCallBack) {
 		deliveredCardsGroup currentCardsGroup;
+
 		if (list == null) {//处理不出牌的事件
 			System.out.println("不出牌事件");
 			if (IsFirstHand(0)) {
@@ -171,6 +174,8 @@ public class Game{
 				//合法的不出牌
 				IsLatestShow[0] = false;//记录一下没有出牌
 				//让三个机器人来出牌
+				playGameCallBack.onRolePass(1);
+				playGameCallBack.onNext(1);
 				ThreeRobotsTurn(playGameCallBack);
 				turnTime++;
 			}
@@ -205,6 +210,7 @@ public class Game{
 					return;
 				}
 				//机器人出牌 并进行回调
+				playGameCallBack.onNext(1);
 				ThreeRobotsTurn(playGameCallBack);
 				return;
 			}
@@ -222,6 +228,7 @@ public class Game{
 				return;
 			}
 			//机器人出牌 并进行回调
+			playGameCallBack.onNext(1);
 			ThreeRobotsTurn(playGameCallBack);
 			return;
 		}
@@ -247,6 +254,7 @@ public class Game{
 				return;
 			}
 			//机器人出牌 并进行回调
+			playGameCallBack.onNext(1);
 			ThreeRobotsTurn(playGameCallBack);
 			return;
 		}
@@ -257,7 +265,7 @@ public class Game{
 		}
 	}
 	private void ThreeRobotsTurn(PlayGameCallBack playGameCallBack) {
-		playGameCallBack.onNext(1);
+
 		//三个机器人的牌局
 		deliveredCardsGroup currentCardsGroup;
 		for (int i = 1; i < 4; i++) {
@@ -285,7 +293,7 @@ public class Game{
 				gameEnd(i,playGameCallBack);
 				return;
 			}
-
+			playGameCallBack.onNext((i + 1) % 4);
 		}
 	}
 

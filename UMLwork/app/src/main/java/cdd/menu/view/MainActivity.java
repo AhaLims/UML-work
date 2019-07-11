@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity implements menuContract.View
     private ImageButton btnShowRank;
     private ImageButton btnIntroduce;
     private ImageButton btnSetBgm;
-    private ImageButton btnExitGame;
 
     PlayerRepo playerRepo=new PlayerRepo (this);
     Player player=new Player("");
@@ -50,14 +49,12 @@ public class MainActivity extends AppCompatActivity implements menuContract.View
         btnSetBgm = findViewById(R.id.set_bgm);
         btnShowRank  =  (ImageButton)findViewById(R.id.show_rank);
         btnIntroduce  =  findViewById(R.id.introduce);
-        btnExitGame = findViewById(R.id.exit_game);
 
         //image resource
         btnStartGame.setImageDrawable(getDrawable(R.drawable.playgame));
         btnSetBgm.setImageDrawable(getDrawable(R.drawable.bgmsetting));
         btnShowRank.setImageDrawable(getDrawable(R.drawable.rank));
         btnIntroduce.setImageDrawable(getDrawable(R.drawable.introduction));
-        btnExitGame.setImageDrawable(getDrawable(R.drawable.exit));
 
         //开始游戏按钮点击事件：跳转到deskActivity
         btnStartGame.setOnTouchListener(new View.OnTouchListener() {
@@ -154,24 +151,5 @@ public class MainActivity extends AppCompatActivity implements menuContract.View
             }
         });
 
-        btnExitGame.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-
-                    case MotionEvent.ACTION_DOWN:
-                        btnExitGame.setImageDrawable(getDrawable(R.drawable.exitpush));
-                        btnExitGame.setScaleType(ImageView.ScaleType.CENTER_INSIDE);//ImageView.ScaleType.FIT_CENTER
-                        finish();
-                        break;
-
-                    case MotionEvent.ACTION_UP:
-                        btnExitGame.setImageDrawable(getDrawable(R.drawable.exit));
-                        btnExitGame.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-                        break;
-                }
-                return true;
-            }
-        });
     }
 }
