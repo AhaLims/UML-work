@@ -301,18 +301,31 @@ public class Game{
 			public void dispalyRank(String name, int score, int rank) { }
 		}).getScore();
 
+		int GameScore = scorer.getScore(0, hd);//这局游戏的分数
+		int PlayerScore =  GameScore + temp;//玩家的新分数
 
-		int PlayerScore = scorer.getScore(0, hd) + temp;//玩家的新分数
-
-		//TODO 更新数据库
+		//更新数据库
 		Player player2=new Player(roles[0].getPlayerName());
 		player2.setScore(PlayerScore);
 		playerRepo.update(player2);
 
 
-		playGameCallBack.onGameEnd(winner,PlayerScore);
+		playGameCallBack.onGameEnd(winner, GameScore);
 	}
 
+	public void escapeGame(PlayGameCallBack playGameCallBack) {
+		PlayerRepo playerRepo=new PlayerRepo(context);
 
+		int temp = playerRepo.getPlayerByName(roles[0].getPlayerName(), new DbCallBack.RankCallBack() {
+			@Override
+			public void dispalyRank(String name, int score, int rank) { }
+		}).getScore();
+		int PlayerScore =  temp - 200;//玩家扣200分
+		//更新数据库
+		Player player2=new Player(roles[0].getPlayerName());
+		player2.setScore(PlayerScore);
+		playerRepo.update(player2);
+		//TODO 还要补一个逃跑对话框 告诉玩家逃跑有惩罚
+	}
 
 }
