@@ -51,6 +51,11 @@ public class loginActivity extends AppCompatActivity implements loginContract.Vi
                     Toast.makeText(loginActivity.this, "请输入用户名！", Toast.LENGTH_LONG).show();
 
                 }
+                else if(useName.length()>=5)
+                {
+                    Toast.makeText(loginActivity.this, "字符长度不能超过5个字符！", Toast.LENGTH_LONG).show();
+
+                }
                 else
                 {
                     mPresenter.login(useName);
