@@ -174,7 +174,7 @@ public class Game{
 				//合法的不出牌
 				IsLatestShow[0] = false;//记录一下没有出牌
 				//让三个机器人来出牌
-				playGameCallBack.onRolePass(1);
+                playGameCallBack.onRolePass(0);
 				playGameCallBack.onNext(1);
 				ThreeRobotsTurn(playGameCallBack);
 				turnTime++;
