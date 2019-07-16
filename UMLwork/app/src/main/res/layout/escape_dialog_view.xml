@@ -23,7 +23,7 @@
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="149dp"
-            android:text="游戏逃跑会受到扣分惩罚，请三思而后行"
+            android:text="游戏逃跑会被扣掉200分哦，请三思而后行"
             android:textAlignment="center"
             android:textSize="14sp" />
 
