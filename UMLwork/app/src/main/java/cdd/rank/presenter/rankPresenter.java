@@ -25,8 +25,8 @@ public class rankPresenter implements rankContract.Presenter,DbCallBack.RankCall
 
 
     @Override
-    public void dispalyRank(String name, int score, int rank) {
-        mRankActivity.displayRank(name,score,rank);
+    public void dispalyRank(String name, int score, int rank,String ary[][]) {
+        mRankActivity.displayRank(name,score,rank,ary);
         Log.e("", "dispalyRank: name"+ name );
     }
 

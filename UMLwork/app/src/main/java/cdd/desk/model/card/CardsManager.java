@@ -261,7 +261,7 @@ public class CardsManager {
 			case danzhang://单牌
 			case yidui://两张相等的对子
 			case sanzhang://三张一样的
-			case sandaier://三带一
+			case sandaier://三带二
 			case sidaiyi://四带一
 			case tonghuashun://同花顺
 				int size1 = current.getCardsGroup().size();

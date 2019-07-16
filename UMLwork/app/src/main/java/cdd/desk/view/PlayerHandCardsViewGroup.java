@@ -3,10 +3,10 @@ package cdd.desk.view;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
+
 import java.util.LinkedList;
 import java.util.List;
 
-import static android.os.SystemClock.sleep;
 import static cdd.desk.view.State.DOWN;
 import static cdd.desk.view.State.UP;
 
@@ -89,8 +89,10 @@ public class PlayerHandCardsViewGroup extends CardsViewGroup {
 
     public void selectFirstCard()
     {
-        CardView temp = (CardView)(getChildAt(0));
-        temp.setPos(UP);
-        temp.setTranslationY(-30);
+        if(getChildCount()!=0) {
+            CardView temp = (CardView) (getChildAt(0));
+            temp.setPos(UP);
+            temp.setTranslationY(-30);
+        }
     }
 }

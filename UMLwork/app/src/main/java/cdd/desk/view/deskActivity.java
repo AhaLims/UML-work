@@ -32,7 +32,6 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
     private ImageButton btnSkip;
     private ImageButton btnReSelect;
     private ImageButton btnExitGame;
-    private Button tiaozhuan;
     private PlayerHandCardsViewGroup playerCardSetLayout;
     private ShowedCardsViewGroup playerShowCardsLayout;
     private ShowedCardsViewGroup leftRobotShowCardsLayout;
@@ -54,7 +53,6 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
         public void onTick(long millisUntilFinished) {
             timer0TextView.setText((millisUntilFinished / 1000) + "秒");
         }
-
         @Override
         public void onFinish() {
             timer0TextView.setText("");
@@ -118,7 +116,6 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
         btnReSelect = findViewById(R.id.reselect);
         btnExitGame = findViewById(R.id.exit_game_btn);
         btnExitGame.setScaleType(ImageView.ScaleType.CENTER_INSIDE);//ImageView.ScaleType.FIT_CENTER
-        tiaozhuan = findViewById(R.id.tiaozhuan);
         playerCardSetLayout = findViewById(R.id.player_cardset_field);
         playerShowCardsLayout = findViewById(R.id.player_showcards_field);
         leftRobotShowCardsLayout = findViewById(R.id.robot1_cardset_field);
@@ -190,6 +187,7 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
                         btnSkip.setImageDrawable(getDrawable(R.drawable.dontsentpush));
                         btnSkip.setScaleType(ImageView.ScaleType.CENTER_INSIDE);//ImageView.ScaleType.FIT_CENTER
                         mPresenter.playerPass();
+                        playerCardSetLayout.reSelect();
                         break;
 
                     case MotionEvent.ACTION_UP:
@@ -222,12 +220,6 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
             }
         });
 
-        tiaozhuan.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                popResultDialog(0,0);
-            }
-        });
 
         //设置presenter
         mPresenter = new deskPresenter(this,useName);
@@ -416,6 +408,7 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
 
     public void popEscapeDialog()
     {
+
         android.support.v7.app.AlertDialog.Builder builder = new AlertDialog.Builder(context);
         View view = View.inflate(context, R.layout.escape_dialog_view, null);   // 布局文件，自定义
 
@@ -424,6 +417,7 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
 
         AlertDialog dialog = builder.create();
         dialog.setView(view);
+
         dialog.setButton(DialogInterface.BUTTON_POSITIVE,"继续游戏", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -434,8 +428,10 @@ public class deskActivity extends AppCompatActivity implements deskContract.View
             @Override
             public void onClick(DialogInterface dialog, int which) {
                mPresenter.escape();
-
                Intent intent = new Intent(deskActivity.this , MainActivity.class);
+               Bundle bundle=new Bundle();
+               bundle.putCharSequence("useName",useName);
+               intent.putExtras(bundle);
                startActivity(intent);
                dialog.dismiss();//关闭对话框
             }
